@@ -106,4 +106,50 @@ class Backup
 
         return $stmt->fetch();
     }
+    public function restaurarSQL(
+        $archivoTmp
+    ) {
+
+        try {
+            $this->conexion->exec(
+                "SET FOREIGN_KEY_CHECKS=0"
+            );
+
+            $sql =
+                file_get_contents(
+                    $archivoTmp
+                );
+
+            $consultas =
+                explode(
+                    ";",
+                    $sql
+                );
+
+            foreach (
+                $consultas as $consulta
+            ) {
+
+                $consulta =
+                    trim($consulta);
+
+                if (
+                    !empty($consulta)
+                ) {
+
+                    $this->conexion->exec(
+                        $consulta
+                    );
+                }
+            }
+            $this->conexion->exec(
+                "SET FOREIGN_KEY_CHECKS=1"
+            );
+
+            return true;
+        } catch (Exception $e) {
+
+            return false;
+        }
+    }
 }

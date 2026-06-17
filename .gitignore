@@ -1,0 +1,15 @@
+# Archivos temporales
+*.tmp
+*.temp
+*.cache
+
+# SUBIDAS DE USUARIOS
+
+public/uploads/*
+
+# BACKUPS DE BASE DE DATOS
+
+database/backup/*
+
+# Configuración personal de VS Code
+.vscode/

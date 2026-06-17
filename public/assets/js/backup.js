@@ -115,7 +115,38 @@ async function restaurarSQL() {
 
   if (data.success) {
     alert("Base de datos restaurada");
+    location.reload();
   } else {
     alert(data.mensaje || "Error al restaurar");
+  }
+}
+async function restaurarArchivos() {
+  let archivo = document.getElementById("archivo_zip").files[0];
+
+  if (!archivo) {
+    alert("Seleccione un ZIP");
+    return;
+  }
+
+  if (!confirm("Los archivos actuales serán reemplazados. ¿Continuar?")) {
+    return;
+  }
+
+  let formData = new FormData();
+
+  formData.append("archivo_zip", archivo);
+
+  let response = await fetch(IRL + "/api/backup/restaurar_zip.php", {
+    method: "POST",
+    body: formData,
+  });
+
+  let data = await response.json();
+
+  if (data.success) {
+    alert("Archivos restaurados");
+    location.reload();
+  } else {
+    alert("Error al restaurar");
   }
 }

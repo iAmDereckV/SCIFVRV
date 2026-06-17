@@ -159,3 +159,5 @@ FROM
     INNER JOIN usuarios u ON u.id = v.usuario_id
 WHERE
     v.id = 28;
+
+SELECT * FROM roles;

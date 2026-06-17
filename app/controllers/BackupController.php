@@ -204,4 +204,100 @@ class BackupController
         unlink($rutaZip);
         exit;
     }
+    public function restaurarSQL(
+        $archivoTmp
+    ) {
+        return $this->backup
+            ->restaurarSQL(
+                $archivoTmp
+            );
+    }
+    public function restaurarZip($archivoTmp)
+    {
+        try {
+
+            $zip = new ZipArchive();
+
+            if ($zip->open($archivoTmp) !== TRUE) {
+                return false;
+            }
+
+            $destino =
+                __DIR__ .
+                '/../../public/uploads/';
+
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+
+                $nombre =
+                    $zip->getNameIndex($i);
+
+                if (
+                    strpos(
+                        $nombre,
+                        'uploads/'
+                    ) !== 0
+                ) {
+                    continue;
+                }
+
+                $rutaRelativa =
+                    substr(
+                        $nombre,
+                        strlen('uploads/')
+                    );
+
+                if (empty($rutaRelativa)) {
+                    continue;
+                }
+
+                $rutaDestino =
+                    $destino .
+                    $rutaRelativa;
+
+                if (
+                    substr($nombre, -1)
+                    == '/'
+                ) {
+
+                    if (
+                        !is_dir($rutaDestino)
+                    ) {
+                        mkdir(
+                            $rutaDestino,
+                            0777,
+                            true
+                        );
+                    }
+                } else {
+
+                    $carpeta =
+                        dirname(
+                            $rutaDestino
+                        );
+
+                    if (
+                        !is_dir($carpeta)
+                    ) {
+                        mkdir(
+                            $carpeta,
+                            0777,
+                            true
+                        );
+                    }
+
+                    copy(
+                        "zip://{$archivoTmp}#{$nombre}",
+                        $rutaDestino
+                    );
+                }
+            }
+
+            $zip->close();
+
+            return true;
+        } catch (Exception $e) {
+
+            return false;
+        }
+    }
 }
