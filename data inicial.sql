@@ -146,6 +146,165 @@ VALUES (
         '001-000000-0000A'
     );
 
+INSERT INTO
+    permisos (codigo, descripcion)
+VALUES (
+        'dashboard_ver',
+        'Ver dashboard'
+    ),
+    (
+        'productos_ver',
+        'Ver productos'
+    ),
+    (
+        'productos_crear',
+        'Crear productos'
+    ),
+    (
+        'productos_editar',
+        'Editar productos'
+    ),
+    (
+        'productos_eliminar',
+        'Eliminar productos'
+    ),
+    ('marcas_ver', 'Ver marcas'),
+    (
+        'marcas_crear',
+        'Crear marcas'
+    ),
+    (
+        'marcas_editar',
+        'Editar marcas'
+    ),
+    (
+        'marcas_eliminar',
+        'Eliminar marcas'
+    ),
+    (
+        'categorias_ver',
+        'Ver categorias'
+    ),
+    (
+        'categorias_crear',
+        'Crear categorias'
+    ),
+    (
+        'categorias_editar',
+        'Editar categorias'
+    ),
+    (
+        'categorias_eliminar',
+        'Eliminar categorias'
+    ),
+    ('kardex_ver', 'Ver kardex'),
+    (
+        'clientes_ver',
+        'Ver clientes'
+    ),
+    (
+        'clientes_crear',
+        'Crear clientes'
+    ),
+    (
+        'clientes_editar',
+        'Editar clientes'
+    ),
+    (
+        'clientes_eliminar',
+        'Eliminar clientes'
+    ),
+    (
+        'proveedores_ver',
+        'Ver proveedores'
+    ),
+    (
+        'proveedores_crear',
+        'Crear proveedores'
+    ),
+    (
+        'proveedores_editar',
+        'Editar proveedores'
+    ),
+    (
+        'proveedores_eliminar',
+        'Eliminar proveedores'
+    ),
+    ('ventas_ver', 'Ver ventas'),
+    (
+        'ventas_crear',
+        'Crear ventas'
+    ),
+    (
+        'ventas_anular',
+        'Anular ventas'
+    ),
+    ('compras_ver', 'Ver compras'),
+    (
+        'compras_crear',
+        'Crear compras'
+    ),
+    (
+        'compras_editar',
+        'Editar compras'
+    ),
+    ('gastos_ver', 'Ver gastos'),
+    (
+        'gastos_crear',
+        'Crear gastos'
+    ),
+    (
+        'gastos_editar',
+        'Editar gastos'
+    ),
+    (
+        'reportes_ver',
+        'Ver reportes'
+    ),
+    (
+        'excel_exportar',
+        'Exportar excel'
+    ),
+    (
+        'usuarios_ver',
+        'Ver usuarios'
+    ),
+    (
+        'usuarios_crear',
+        'Crear usuarios'
+    ),
+    (
+        'usuarios_editar',
+        'Editar usuarios'
+    ),
+    ('roles_ver', 'Ver roles'),
+    (
+        'roles_editar',
+        'Editar roles'
+    ),
+    ('backup_ver', 'Ver backup'),
+    (
+        'backup_generar',
+        'Generar backup'
+    ),
+    (
+        'backup_restaurar',
+        'Restaurar backup'
+    ),
+    (
+        'backup_reiniciar',
+        'Reiniciar backup'
+    ),
+    (
+        'empresa_configurar',
+        'Configurar empresa'
+    );
+
+INSERT INTO
+    rol_permisos (rol_id, permiso_id)
+SELECT 1, id
+FROM permisos;
+
 SHOW CREATE TABLE roles;
 
 SHOW CREATE TABLE marcas;

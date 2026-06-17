@@ -35,7 +35,6 @@
         </div>
     </div>
     <script>
-    console.log('../api/auth/login.php')
     document.getElementById('formLogin')
         .addEventListener('submit', async function(e) {
 

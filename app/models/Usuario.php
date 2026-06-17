@@ -14,16 +14,20 @@ class Usuario
 
     public function buscarPorUsuario($usuario)
     {
-        $sql = "SELECT * FROM usuarios
-                WHERE usuario = :usuario
-                LIMIT 1";
-
+        $sql = "SELECT
+                u.*,
+                r.nombre AS rol_nombre
+            FROM usuarios u
+            INNER JOIN roles r
+                ON r.id = u.rol_id
+            WHERE u.usuario = :usuario
+            LIMIT 1";
         $stmt = $this->conexion->prepare($sql);
-
-        $stmt->bindParam(':usuario', $usuario);
-
+        $stmt->bindParam(
+            ':usuario',
+            $usuario
+        );
         $stmt->execute();
-
         return $stmt->fetch();
     }
 
@@ -174,5 +178,28 @@ class Usuario
             ':foto' => $foto,
             ':id'   => $id
         ]);
+    }
+    public function obtenerPermisos($rol_id)
+    {
+        $sql = "
+
+        SELECT
+            p.codigo
+        FROM rol_permisos rp
+        INNER JOIN permisos p
+            ON p.id = rp.permiso_id
+        WHERE rp.rol_id = :rol_id
+
+    ";
+        $stmt =
+            $this->conexion->prepare($sql);
+
+        $stmt->execute([
+            ':rol_id' => $rol_id
+        ]);
+
+        return $stmt->fetchAll(
+            PDO::FETCH_COLUMN
+        );
     }
 }

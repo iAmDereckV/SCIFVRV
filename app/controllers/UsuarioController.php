@@ -82,4 +82,11 @@ class UsuarioController
                 $foto
             );
     }
+    public function obtenerPermisos($rol_id)
+    {
+        return $this->usuario
+            ->obtenerPermisos(
+                $rol_id
+            );
+    }
 }

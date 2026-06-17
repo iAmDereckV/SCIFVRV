@@ -1,5 +1,4 @@
 <?php
-// echo __DIR__ . '../app/middleware/AuthMiddleware.php';
 require_once __DIR__ . '/../../app/middleware/AuthMiddleware.php';
 
 
@@ -52,6 +51,7 @@ AuthMiddleware::verificar();
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Estado</th>
+                <th>Acciones</th>
 
             </tr>
 
@@ -61,6 +61,39 @@ AuthMiddleware::verificar();
 
     </table>
 
-</div>
 
+    <div class="modal fade" id="modalPermisos" tabindex="-1">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5>Permisos del Rol</h5>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div id="listaPermisos"></div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-primary" onclick="guardarPermisos()">
+
+                        Guardar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
 <script src="assets/js/roles.js"></script>

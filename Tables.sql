@@ -22,12 +22,6 @@ CREATE TABLE usuarios (
     FOREIGN KEY (rol_id) REFERENCES roles (id)
 );
 
-CREATE TABLE permisos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion VARCHAR(255)
-);
-
 CREATE TABLE rol_permiso (
     id INT AUTO_INCREMENT PRIMARY KEY,
     rol_id INT NOT NULL,
@@ -228,4 +222,18 @@ CREATE TABLE detalle_compras (
     subtotal DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (compra_id) REFERENCES compras (id),
     FOREIGN KEY (producto_id) REFERENCES productos (id)
+);
+
+CREATE TABLE permisos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(255)
+);
+
+CREATE TABLE rol_permisos (
+    rol_id INT NOT NULL,
+    permiso_id INT NOT NULL,
+    PRIMARY KEY (rol_id, permiso_id),
+    FOREIGN KEY (rol_id) REFERENCES roles (id),
+    FOREIGN KEY (permiso_id) REFERENCES permisos (id)
 );
