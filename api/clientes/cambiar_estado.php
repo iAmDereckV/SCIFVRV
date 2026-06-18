@@ -1,6 +1,10 @@
 <?php
 
 require_once '../../app/controllers/ClienteController.php';
+require_once '../../app/helpers/permisos.php';
+requierePermiso(
+    'clientes_eliminar'
+);
 
 header('Content-Type: application/json');
 

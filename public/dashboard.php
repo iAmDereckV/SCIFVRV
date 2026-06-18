@@ -1,6 +1,4 @@
 <?php
-
-
 require_once __DIR__ . '/../app/middleware/AuthMiddleware.php';
 
 AuthMiddleware::verificar();

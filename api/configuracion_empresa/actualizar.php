@@ -1,7 +1,11 @@
 <?php
 
 require_once '../../app/controllers/ConfiguracionEmpresaController.php';
+require_once '../../app/helpers/Permisos.php';
 
+requierePermiso(
+    'empresa_configurar'
+);
 $controller =
     new ConfiguracionEmpresaController();
 

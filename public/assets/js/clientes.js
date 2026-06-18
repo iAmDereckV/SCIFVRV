@@ -14,6 +14,33 @@ async function cargarClientes() {
   let html = "";
 
   data.forEach((cliente) => {
+    let acciones = "";
+
+    if (PUEDE_EDITAR_CLIENTES) {
+      acciones += `
+    <button
+      class="btn btn-warning btn-sm"
+      onclick="editarCliente(${cliente.id})">
+
+      Editar
+
+    </button>
+  `;
+    }
+    if (PUEDE_CAMBIAR_ESTADO_CLIENTES) {
+      acciones += `
+    <button
+      class="btn btn-danger btn-sm"
+      onclick="cambiarEstado(
+        ${cliente.id},
+        '${cliente.estado}'
+      )">
+
+      Estado
+
+    </button>
+  `;
+    }
     html += `
       <tr>
 
@@ -29,28 +56,7 @@ async function cargarClientes() {
 
         <td>${cliente.estado}</td>
 
-        <td>
-
-          <button
-            class="btn btn-warning btn-sm"
-            onclick="editarCliente(${cliente.id})">
-
-            Editar
-
-          </button>
-
-          <button
-            class="btn btn-danger btn-sm"
-            onclick="cambiarEstado(
-              ${cliente.id},
-              '${cliente.estado}'
-            )">
-
-            Estado
-
-          </button>
-
-        </td>
+        <td>${acciones} </td>
 
       </tr>
     `;
@@ -85,7 +91,17 @@ async function guardarCliente(e) {
   );
 
   let id = document.getElementById("formCliente").dataset.id;
+  if (!id && !PUEDE_CREAR_CLIENTES) {
+    alert("No tiene permiso para crear clientes");
 
+    return;
+  }
+
+  if (id && !PUEDE_EDITAR_CLIENTES) {
+    alert("No tiene permiso para editar clientes");
+
+    return;
+  }
   if (id) {
     formData.append("id", id);
   }

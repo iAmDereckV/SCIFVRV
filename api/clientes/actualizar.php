@@ -1,7 +1,11 @@
 <?php
 
 require_once '../../app/controllers/ClienteController.php';
+require_once '../../app/helpers/Permisos.php';
 
+requierePermiso(
+    'clientes_editar'
+);
 header('Content-Type: application/json');
 
 $controller = new ClienteController();

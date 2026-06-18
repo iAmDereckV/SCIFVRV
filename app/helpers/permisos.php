@@ -13,3 +13,28 @@ function tienePermiso($permiso)
             []
     );
 }
+function requierePermiso($permiso)
+{
+    Session::iniciar();
+
+    if (
+        !in_array(
+            $permiso,
+            $_SESSION['permisos']
+                ??
+                []
+        )
+    ) {
+
+        header(
+            'Content-Type: application/json'
+        );
+
+        echo json_encode([
+            'success' => false,
+            'mensaje' => 'Acceso denegado'
+        ]);
+
+        exit;
+    }
+}

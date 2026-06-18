@@ -8,7 +8,6 @@ async function cargarRoles() {
   let data = await response.json();
 
   let html = "";
-
   data.forEach((rol) => {
     html += `
 <tr>
@@ -24,6 +23,17 @@ async function cargarRoles() {
             onclick="editarPermisos(${rol.id})">
 
             Permisos
+
+        </button>
+        <button
+            class="btn btn-danger btn-sm"
+            onclick="
+            cambiarEstado(
+                ${rol.id},
+                '${rol.estado}'
+            )">
+
+            Estado
 
         </button>
 
@@ -70,6 +80,26 @@ async function editarPermisos(id) {
   document.getElementById("listaPermisos").innerHTML = html;
 
   new bootstrap.Modal(document.getElementById("modalPermisos")).show();
+}
+async function cambiarEstado(id, estadoActual) {
+  let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
+
+  let formData = new FormData();
+
+  formData.append("id", id);
+
+  formData.append("estado", nuevoEstado);
+
+  let response = await fetch(IRL + "/api/roles/cambiar_estados.php", {
+    method: "POST",
+    body: formData,
+  });
+
+  let data = await response.json();
+
+  if (data.success) {
+    cargarRoles();
+  }
 }
 async function guardarPermisos() {
   let permisos = [];

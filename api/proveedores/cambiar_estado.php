@@ -1,7 +1,11 @@
 <?php
 
 require_once '../../app/controllers/ProveedorController.php';
+require_once '../../app/helpers/Permisos.php';
 
+requierePermiso(
+    'proveedores_eliminar'
+);
 $resultado =
     (
         new ProveedorController()

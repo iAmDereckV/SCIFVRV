@@ -1,5 +1,10 @@
+<?= tienePermiso('clientes_ver') ? '' : header("Location: index.php"); ?>
 <h2>Clientes</h2>
-
+<?php if (
+    tienePermiso('clientes_crear')
+    ||
+    tienePermiso('clientes_editar')
+): ?>
 <form id="formCliente">
 
     <input type="text" id="nombres" class="form-control mb-2" placeholder="Nombres">
@@ -22,14 +27,17 @@
 
     </select>
 
+
     <button type="submit" class="btn btn-primary">
 
         Guardar
 
     </button>
 
-</form>
 
+
+</form>
+<?php endif; ?>
 <hr>
 
 <table class="table table-bordered" id="tablaClientes">
@@ -53,5 +61,19 @@
     <tbody></tbody>
 
 </table>
+<script>
+const PUEDE_EDITAR_CLIENTES =
+    <?= tienePermiso('clientes_editar')
+            ? 'true'
+            : 'false' ?>;
+const PUEDE_CREAR_CLIENTES =
+    <?= tienePermiso(
+            'clientes_crear'
+        ) ? 'true' : 'false' ?>;
+const PUEDE_CAMBIAR_ESTADO_CLIENTES =
+    <?= tienePermiso('clientes_eliminar')
+            ? 'true'
+            : 'false' ?>;
+</script>
 
 <script src="assets/js/clientes.js"></script>
