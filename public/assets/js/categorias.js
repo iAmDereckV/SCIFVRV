@@ -65,7 +65,17 @@ async function guardarCategoria(e) {
   formData.append("descripcion", document.getElementById("descripcion").value);
 
   let id = document.getElementById("formCategoria").dataset.id;
+  if (!id && !PUEDE_CREAR_CATEGORIAS) {
+    alert("No tiene permiso para crear categorias");
 
+    return;
+  }
+
+  if (id && !PUEDE_EDITAR_CATEGORIAS) {
+    alert("No tiene permiso para editar categorias");
+
+    return;
+  }
   if (id) {
     formData.append("id", id);
   }
@@ -113,6 +123,10 @@ async function cambiarEstado(id, estadoActual) {
   formData.append("id", id);
 
   formData.append("estado", nuevoEstado);
+  if (!PUEDE_CAMBIAR_ESTADO_CATEGORIAS) {
+    alert(`No tiene permiso para poner categorias ${nuevoEstado}`);
+    return;
+  }
 
   let response = await fetch(IRL + "/api/categorias/cambiar_estado.php", {
     method: "POST",

@@ -1,3 +1,4 @@
+<?= tienePermiso('ventas_crear') ? '' : header("Location: index.php"); ?>
 <h2>Nueva Venta</h2>
 
 <div class="row">
@@ -127,8 +128,8 @@
     </div>
 
 </div>
+<br>
 
-<hr>
 
 <button class="btn btn-primary" onclick="guardarVenta()">
 

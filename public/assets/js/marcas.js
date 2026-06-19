@@ -63,7 +63,17 @@ async function guardarMarca(e) {
   formData.append("descripcion", document.getElementById("descripcion").value);
 
   let id = document.getElementById("formMarca").dataset.id;
+  if (!id && !PUEDE_CREAR_MARCAS) {
+    alert("No tiene permiso para crear marcas");
 
+    return;
+  }
+
+  if (id && !PUEDE_EDITAR_MARCAS) {
+    alert("No tiene permiso para editar marcas");
+
+    return;
+  }
   if (id) {
     formData.append("id", id);
   }
@@ -109,7 +119,11 @@ async function cambiarEstado(id, estadoActual) {
   formData.append("id", id);
 
   formData.append("estado", nuevoEstado);
+  if (!PUEDE_CAMBIAR_ESTADO_MARCAS) {
+    alert(`No tiene permiso para poner marcas ${nuevoEstado}`);
 
+    return;
+  }
   let response = await fetch(IRL + "/api/marcas/cambiar_estado.php", {
     method: "POST",
     body: formData,

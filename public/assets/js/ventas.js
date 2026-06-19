@@ -200,7 +200,10 @@ async function guardarVenta() {
   formData.append("total", total);
 
   formData.append("detalle", JSON.stringify(detalleVenta));
-
+  if (!PUEDE_CREAR_VENTAS) {
+    alert("No tiene permiso para crear ventas");
+    return;
+  }
   let response = await fetch(IRL + "/api/ventas/guardar.php", {
     method: "POST",
     body: formData,
@@ -268,21 +271,4 @@ function calcularTotales() {
   document.getElementById("descuento").value = descuento.toFixed(2);
 
   document.getElementById("total").value = total.toFixed(2);
-}
-async function anularVenta(id) {
-  if (!confirm("¿Desea anular esta venta?")) {
-    return;
-  }
-
-  let response = await fetch(IRL + "/api/ventas/anular.php?id=" + id);
-
-  let data = await response.json();
-
-  if (data.success) {
-    alert("Venta anulada");
-
-    buscarReporte();
-  } else {
-    alert("No se pudo anular");
-  }
 }

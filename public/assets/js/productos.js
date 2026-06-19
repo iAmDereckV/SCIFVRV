@@ -166,7 +166,17 @@ async function guardarProducto(e) {
   formData.append("ubicacion", document.getElementById("ubicacion").value);
 
   let id = document.getElementById("formProducto").dataset.id;
+  if (!id && !PUEDE_CREAR_PRODUCTOS) {
+    alert("No tiene permiso para crear productos");
 
+    return;
+  }
+
+  if (id && !PUEDE_EDITAR_PRODUCTOS) {
+    alert("No tiene permiso para editar productos");
+
+    return;
+  }
   if (id) {
     formData.append("id", id);
   }
@@ -233,7 +243,11 @@ async function cambiarEstado(id, estadoActual) {
   formData.append("id", id);
 
   formData.append("estado", nuevoEstado);
+  if (!PUEDE_CAMBIAR_ESTADO_PRODUCTOS) {
+    alert(`No tiene permiso para poner productos ${nuevoEstado}`);
 
+    return;
+  }
   let response = await fetch(IRL + "/api/productos/cambiar_estado.php", {
     method: "POST",
     body: formData,
@@ -246,6 +260,10 @@ async function cambiarEstado(id, estadoActual) {
   }
 }
 function cambiarImagen(id) {
+  if (!PUEDE_CAMBIAR_ESTADO_PRODUCTOS) {
+    alert("No tiene permiso para imagen");
+    return;
+  }
   document.getElementById("producto_imagen_id").value = id;
 
   let modal = new bootstrap.Modal(document.getElementById("modalImagen"));

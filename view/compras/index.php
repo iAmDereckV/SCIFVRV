@@ -1,3 +1,7 @@
+<?= tienePermiso('compras_crear') || tienePermiso('compras_ver')  ? '' : header("Location: index.php"); ?>
+<?php if (
+    tienePermiso('compras_crear')
+): ?>
 <h2>Compras</h2>
 
 <div class="row">
@@ -26,7 +30,6 @@
     </div>
 
 </div>
-
 <hr>
 
 <div class="row">
@@ -69,7 +72,6 @@
     </div>
 
 </div>
-
 <hr>
 
 <table class="table" id="tablaDetalle">
@@ -115,7 +117,10 @@
 </button>
 <hr>
 
-
+<?php endif; ?>
+<?php if (
+    tienePermiso('compras_ver')
+): ?>
 
 <h3>Historial de Compras</h3>
 
@@ -139,4 +144,19 @@
     <tbody></tbody>
 
 </table>
+<?php endif; ?>
+<script>
+const PUEDE_CREAR_COMPRAS =
+    <?= tienePermiso(
+            'compras_crear'
+        ) ? 'true' : 'false' ?>;
+const PUEDE_CAMBIAR_ESTADO_CLIENTES =
+    <?= tienePermiso('clientes_eliminar')
+            ? 'true'
+            : 'false' ?>;
+const PUEDE_EDITAR_CLIENTES =
+    <?= tienePermiso('clientes_editar')
+            ? 'true'
+            : 'false' ?>;
+</script>
 <script src="assets/js/compras.js"></script>

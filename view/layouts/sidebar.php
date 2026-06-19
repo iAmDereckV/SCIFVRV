@@ -62,7 +62,7 @@ Session::iniciar();
                     </a>
                 </li>
                 <?php endif; ?>
-                <?php if (tienePermiso('ventas_ver')): ?>
+                <?php if (tienePermiso('ventas_crear')): ?>
                 <li class="nav-item">
                     <a href="index.php?modulo=ventas"
                         class="nav-link  text-white <?= $modulo == 'ventas' ? 'active' : '' ?>" aria-current="page">
@@ -78,7 +78,7 @@ Session::iniciar();
                     </a>
                 </li>
                 <?php endif; ?>
-                <?php if (tienePermiso('compras_ver')): ?>
+                <?php if (tienePermiso('compras_ver') || tienePermiso('compras_crear')): ?>
                 <li class="nav-item">
                     <a href="index.php?modulo=compras"
                         class="nav-link  text-white <?= $modulo == 'compras' ? 'active' : '' ?>" aria-current="page">

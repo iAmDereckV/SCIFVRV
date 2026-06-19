@@ -14,33 +14,28 @@ async function cargarClientes() {
   let html = "";
 
   data.forEach((cliente) => {
-    let acciones = "";
-
-    if (PUEDE_EDITAR_CLIENTES) {
-      acciones += `
-    <button
-      class="btn btn-warning btn-sm"
-      onclick="editarCliente(${cliente.id})">
-
-      Editar
-
-    </button>
-  `;
-    }
-    if (PUEDE_CAMBIAR_ESTADO_CLIENTES) {
-      acciones += `
-    <button
-      class="btn btn-danger btn-sm"
-      onclick="cambiarEstado(
-        ${cliente.id},
-        '${cliente.estado}'
-      )">
-
-      Estado
-
-    </button>
-  `;
-    }
+    // let acciones = "";
+    //   if (PUEDE_EDITAR_CLIENTES) {
+    //     acciones += `
+    //   <button
+    //     class="btn btn-warning btn-sm"
+    //     onclick="editarCliente(${cliente.id})">
+    //     Editar
+    //   </button>
+    // `;
+    //   }
+    //   if (PUEDE_CAMBIAR_ESTADO_CLIENTES) {
+    //     acciones += `
+    //   <button
+    //     class="btn btn-danger btn-sm"
+    //     onclick="cambiarEstado(
+    //       ${cliente.id},
+    //       '${cliente.estado}'
+    //     )">
+    //     Estado
+    //   </button>
+    // `;
+    // }
     html += `
       <tr>
 
@@ -56,7 +51,24 @@ async function cargarClientes() {
 
         <td>${cliente.estado}</td>
 
-        <td>${acciones} </td>
+        <td><button
+     class="btn btn-warning btn-sm"
+      onclick="editarCliente(${cliente.id})">
+
+      Editar
+
+    </button>
+       <button
+      class="btn btn-danger btn-sm"
+      onclick="cambiarEstado(
+        ${cliente.id},
+        '${cliente.estado}'
+      )">
+
+      Estado
+
+    </button>
+   </td>
 
       </tr>
     `;
@@ -159,6 +171,11 @@ async function cambiarEstado(id, estadoActual) {
   formData.append("id", id);
 
   formData.append("estado", nuevoEstado);
+  if (!PUEDE_CAMBIAR_ESTADO_CLIENTES) {
+    alert(`No tiene permiso para poner clientes ${nuevoEstado}`);
+
+    return;
+  }
 
   let response = await fetch(IRL + "/api/clientes/cambiar_estado.php", {
     method: "POST",

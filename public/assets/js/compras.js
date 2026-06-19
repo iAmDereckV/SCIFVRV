@@ -158,7 +158,11 @@ async function guardarCompra() {
   formData.append("total", total);
 
   formData.append("productos", JSON.stringify(detalleCompra));
+  if (!PUEDE_CREAR_COMPRAS) {
+    alert("No tiene permiso para realizar ventas");
 
+    return;
+  }
   let response = await fetch(IRL + "/api/compras/guardar.php", {
     method: "POST",
     body: formData,

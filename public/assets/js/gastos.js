@@ -82,7 +82,17 @@ async function guardarGasto(e) {
 
   formData.append("fecha", document.getElementById("fecha").value);
   let id = document.getElementById("formGasto").dataset.id;
+  if (!id && !PUEDE_CREAR_GASTOS) {
+    alert("No tiene permiso para crear gastos");
 
+    return;
+  }
+
+  if (id && !PUEDE_EDITAR_GASTOS) {
+    alert("No tiene permiso para editar gastos");
+
+    return;
+  }
   if (id) {
     formData.append("id", id);
   }
@@ -142,6 +152,11 @@ async function editarGasto(id) {
   document.getElementById("formGasto").dataset.id = gasto.id;
 }
 async function cambiarComprobante(id) {
+  if (!PUEDE_EDITAR_GASTOS) {
+    alert("No tiene permiso para cambiar comprobante");
+
+    return;
+  }
   let input = document.createElement("input");
 
   input.type = "file";
@@ -165,11 +180,7 @@ async function cambiarComprobante(id) {
     );
 
     let data = await response.json();
-    // let texto = await response.text();
 
-    // console.log(texto);
-
-    // return;
     if (data.success) {
       alert("Comprobante actualizado");
 

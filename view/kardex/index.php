@@ -1,3 +1,4 @@
+<?= tienePermiso('kardex_ver') ? '' : header("Location: index.php"); ?>
 <h2>Kardex de Inventario</h2>
 
 <div class="row">

@@ -1,7 +1,11 @@
 <?php
 
 require_once '../../app/controllers/ProductoController.php';
+require_once '../../app/helpers/Permisos.php';
 
+requierePermiso(
+    'productos_editar'
+);
 $nombreImagen = null;
 
 if (

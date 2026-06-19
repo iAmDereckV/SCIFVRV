@@ -1,5 +1,11 @@
-<h2>Productos</h2>
+<?= tienePermiso('productos_ver') ? '' : header("Location: index.php"); ?>
 
+<h2>Productos</h2>
+<?php if (
+    tienePermiso('productos_crear')
+    ||
+    tienePermiso('productos_editar')
+): ?>
 <form id="formProducto">
 
     <input type="text" id="codigo" class="form-control mb-2" placeholder="Código">
@@ -33,7 +39,7 @@
     </button>
 
 </form>
-
+<?php endif; ?>
 <hr>
 
 <table class="table table-bordered" id="tablaProductos">
@@ -97,4 +103,18 @@
     </div>
 
 </div>
+<script>
+const PUEDE_EDITAR_PRODUCTOS =
+    <?= tienePermiso('productos_editar')
+            ? 'true'
+            : 'false' ?>;
+const PUEDE_CREAR_PRODUCTOS =
+    <?= tienePermiso(
+            'productos_crear'
+        ) ? 'true' : 'false' ?>;
+const PUEDE_CAMBIAR_ESTADO_PRODUCTOS =
+    <?= tienePermiso('productos_eliminar')
+            ? 'true'
+            : 'false' ?>;
+</script>
 <script src="assets/js/productos.js"></script>

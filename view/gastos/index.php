@@ -1,5 +1,10 @@
+<?= tienePermiso('gastos_ver') ? '' : header("Location: index.php"); ?>
 <h2>Control de Gastos</h2>
-
+<?php if (
+    tienePermiso('clientes_crear')
+    ||
+    tienePermiso('clientes_editar')
+): ?>
 <form id="formGasto">
     <select id="categoria_id" class="form-control mb-2">
 
@@ -20,7 +25,7 @@
     </button>
 
 </form>
-
+<?php endif; ?>
 <hr>
 
 <table class="table">
@@ -47,5 +52,14 @@
     </tbody>
 
 </table>
-
+<script>
+const PUEDE_EDITAR_GASTOS =
+    <?= tienePermiso('gastos_editar')
+            ? 'true'
+            : 'false' ?>;
+const PUEDE_CREAR_GASTOS =
+    <?= tienePermiso(
+            'gastos_crear'
+        ) ? 'true' : 'false' ?>;
+</script>
 <script src="assets/js/gastos.js"></script>

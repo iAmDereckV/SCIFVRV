@@ -1,5 +1,10 @@
+<?= tienePermiso('proveedores_ver') ? '' : header("Location: index.php"); ?>
 <h2>Proveedores</h2>
-
+<?php if (
+    tienePermiso('proveedores_crear')
+    ||
+    tienePermiso('proveedores_editar')
+): ?>
 <form id="formProveedor">
 
     <input type="text" id="nombre" class="form-control mb-2" placeholder="Nombre">
@@ -17,7 +22,7 @@
     </button>
 
 </form>
-
+<?php endif; ?>
 <hr>
 
 <table class="table" id="tablaProveedores">
@@ -40,5 +45,18 @@
     <tbody></tbody>
 
 </table>
-
+<script>
+const PUEDE_EDITAR_PROVEEDORES =
+    <?= tienePermiso('proveedores_editar')
+            ? 'true'
+            : 'false' ?>;
+const PUEDE_CREAR_PROVEEDORES =
+    <?= tienePermiso(
+            'proveedores_crear'
+        ) ? 'true' : 'false' ?>;
+const PUEDE_CAMBIAR_ESTADO_PROVEEDORES =
+    <?= tienePermiso('proveedores_eliminar')
+            ? 'true'
+            : 'false' ?>;
+</script>
 <script src="assets/js/proveedores.js"></script>
