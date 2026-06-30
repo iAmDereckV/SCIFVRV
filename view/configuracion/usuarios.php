@@ -1,3 +1,4 @@
+<?= tienePermiso('usuarios_ver') ? '' : header("Location: index.php"); ?>
 <h2>Usuarios</h2>
 
 <form id="formUsuario">
@@ -43,5 +44,18 @@
     <tbody></tbody>
 
 </table>
-
+<script>
+    const PUEDE_EDITAR_USUARIOS =
+        <?= tienePermiso('usuarios_editar')
+            ? 'true'
+            : 'false' ?>;
+    const PUEDE_CREAR_USUARIOS =
+        <?= tienePermiso(
+            'usuarios_crear'
+        ) ? 'true' : 'false' ?>;
+    const PUEDE_CAMBIAR_ESTADO_USUARIOS =
+        <?= tienePermiso('usuarios_eliminar')
+            ? 'true'
+            : 'false' ?>;
+</script>
 <script src="assets/js/usuarios.js"></script>

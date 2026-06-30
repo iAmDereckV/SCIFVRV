@@ -62,7 +62,7 @@ Session::iniciar();
                     </a>
                 </li>
                 <?php endif; ?>
-                <?php if (tienePermiso('ventas_crear')): ?>
+                <?php if (tienePermiso('ventas_ver')): ?>
                 <li class="nav-item">
                     <a href="index.php?modulo=ventas"
                         class="nav-link  text-white <?= $modulo == 'ventas' ? 'active' : '' ?>" aria-current="page">
@@ -86,30 +86,49 @@ Session::iniciar();
                     </a>
                 </li>
                 <?php endif; ?>
+                <?php if (
+
+                    tienePermiso('reportes_ventas')
+                    ||
+                    tienePermiso('reportes_gastos')
+                    ||
+                    tienePermiso('reportes_compras')
+                    ||
+                    tienePermiso('reportes_detalle_maestro')
+                    ||
+                    tienePermiso('excel_exportar')
+
+                ): ?>
                 <li>
                     <a href="#" class="nav-link text-white dropdown-toggle <?= $reporteActivo ? 'active' : '' ?>"
                         id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-bar-chart-line"></i> Reportes
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <?php if (tienePermiso('reportes_ventas')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=reportes_ventas"><i
                                     class="bi bi-cart-check"></i>
-                                Ventas</a></li>
+                                Ventas</a></li> <?php endif; ?>
+                        <?php if (tienePermiso('gastos_ver')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=reportes_gastos"><i
                                     class="bi bi-cash-stack"></i>
-                                Gastos</a></li>
+                                Gastos</a></li><?php endif; ?>
+                        <?php if (tienePermiso('reportes_compras')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=reportes_compras"><i
                                     class="bi bi-bag-plus"></i>
-                                Compras</a></li>
+                                Compras</a></li><?php endif; ?>
+                        <?php if (tienePermiso('reportes_detalle_maestro')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=maestro_detalle"><i
                                     class="bi bi-card-list"></i>
-                                Detalle Maestro</a></li>
+                                Detalle Maestro</a></li><?php endif; ?>
+                        <?php if (tienePermiso('excel_exportar')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=excel"><i class="bi bi-download"></i>
-                                Excel</a></li>
+                                Excel</a></li><?php endif; ?>
 
                     </ul>
                 </li>
 
+                <?php endif; ?>
             </ul>
             <hr>
             <?php if (

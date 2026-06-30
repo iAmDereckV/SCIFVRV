@@ -1,4 +1,6 @@
+<?= tienePermiso('roles_ver') ? '' : header("Location: index.php"); ?>
 <?php
+
 require_once __DIR__ . '/../../app/middleware/AuthMiddleware.php';
 
 
@@ -96,4 +98,18 @@ AuthMiddleware::verificar();
 
     </div>
 </div>
+<script>
+const PUEDE_EDITAR_ROLES =
+    <?= tienePermiso('roles_editar')
+            ? 'true'
+            : 'false' ?>;
+const PUEDE_CREAR_ROLES =
+    <?= tienePermiso(
+            'roles_crear'
+        ) ? 'true' : 'false' ?>;
+const PUEDE_CAMBIAR_ESTADO_ROLES =
+    <?= tienePermiso('roles_eliminar')
+            ? 'true'
+            : 'false' ?>;
+</script>
 <script src="assets/js/roles.js"></script>

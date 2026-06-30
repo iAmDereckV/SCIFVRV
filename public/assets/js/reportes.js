@@ -158,7 +158,10 @@ async function anularVenta(id) {
   if (!confirm("¿Desea anular esta venta?")) {
     return;
   }
-
+  if (!PUEDE_CAMBIAR_ESTADO_VENTAS) {
+    alert(`No tiene permiso para poner ventas ${nuevoEstado}`);
+    return;
+  }
   let response = await fetch(IRL + "/api/ventas/anular.php?id=" + id);
 
   let data = await response.json();

@@ -2,160 +2,160 @@
 <?php if (
     tienePermiso('compras_crear')
 ): ?>
-<h2>Compras</h2>
+    <h2>Compras</h2>
 
-<div class="row">
+    <div class="row">
 
-    <div class="col-md-4">
+        <div class="col-md-4">
 
-        <label>Proveedor</label>
+            <label>Proveedor</label>
 
-        <select id="proveedor_id" class="form-control mb-2">
-        </select>
+            <select id="proveedor_id" class="form-control mb-2">
+            </select>
 
-    </div>
+        </div>
 
-    <div class="col-md-4">
+        <div class="col-md-4">
 
-        <label>Número Factura</label>
+            <label>Número Factura</label>
 
-        <input type="text" id="factura" class="form-control mb-2">
+            <input type="text" id="factura" class="form-control mb-2">
 
-        <label class="mt-2">
-            Archivo Factura
-        </label>
+            <label class="mt-2">
+                Archivo Factura
+            </label>
 
-        <input type="file" id="archivo_factura" class="form-control" accept=".jpg,.jpeg,.png,.pdf">
+            <input type="file" id="archivo_factura" class="form-control" accept=".jpg,.jpeg,.png,.pdf">
 
-    </div>
-
-</div>
-<hr>
-
-<div class="row">
-
-    <div class="col-md-4">
-
-        <label>Producto</label>
-
-        <select id="producto_id" class="form-control">
-        </select>
+        </div>
 
     </div>
+    <hr>
 
-    <div class="col-md-2">
+    <div class="row">
 
-        <label>Cantidad</label>
+        <div class="col-md-4">
 
-        <input type="number" id="cantidad" class="form-control">
+            <label>Producto</label>
+
+            <select id="producto_id" class="form-control">
+            </select>
+
+        </div>
+
+        <div class="col-md-2">
+
+            <label>Cantidad</label>
+
+            <input type="number" id="cantidad" class="form-control">
+
+        </div>
+
+        <div class="col-md-2">
+
+            <label>Costo</label>
+
+            <input type="number" step="0.01" id="costo" class="form-control">
+
+        </div>
+
+        <div class="col-md-2">
+
+            <label>&nbsp;</label>
+
+            <button class="btn btn-success form-control" onclick="agregarProducto()">
+
+                Agregar
+
+            </button>
+
+        </div>
 
     </div>
+    <hr>
 
-    <div class="col-md-2">
+    <table class="table" id="tablaDetalle">
 
-        <label>Costo</label>
+        <thead>
 
-        <input type="number" step="0.01" id="costo" class="form-control">
+            <tr>
 
-    </div>
+                <th>Producto</th>
 
-    <div class="col-md-2">
+                <th>Cantidad</th>
 
-        <label>&nbsp;</label>
+                <th>Costo</th>
 
-        <button class="btn btn-success form-control" onclick="agregarProducto()">
+                <th>Subtotal</th>
 
-            Agregar
+                <th></th>
 
-        </button>
+            </tr>
 
-    </div>
+        </thead>
 
-</div>
-<hr>
+        <tbody>
 
-<table class="table" id="tablaDetalle">
+        </tbody>
 
-    <thead>
+    </table>
 
-        <tr>
+    <h4>
 
-            <th>Producto</th>
+        Total:
+        C$
+        <span id="total">
+            0.00
+        </span>
 
-            <th>Cantidad</th>
+    </h4>
 
-            <th>Costo</th>
+    <button class="btn btn-primary" onclick="guardarCompra()">
 
-            <th>Subtotal</th>
+        Guardar Compra
 
-            <th></th>
-
-        </tr>
-
-    </thead>
-
-    <tbody>
-
-    </tbody>
-
-</table>
-
-<h4>
-
-    Total:
-    C$
-    <span id="total">
-        0.00
-    </span>
-
-</h4>
-
-<button class="btn btn-primary" onclick="guardarCompra()">
-
-    Guardar Compra
-
-</button>
-<hr>
+    </button>
+    <hr>
 
 <?php endif; ?>
 <?php if (
     tienePermiso('compras_ver')
 ): ?>
 
-<h3>Historial de Compras</h3>
+    <h3>Historial de Compras</h3>
 
-<table class="table" id="tablaCompras">
+    <table class="table" id="tablaCompras">
 
-    <thead>
+        <thead>
 
-        <tr>
+            <tr>
 
-            <th>ID</th>
-            <th>Fecha</th>
-            <th>Proveedor</th>
-            <th>Factura</th>
-            <th>Total</th>
-            <th>Acciones</th>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Proveedor</th>
+                <th>Factura</th>
+                <th>Total</th>
+                <th>Acciones</th>
 
-        </tr>
+            </tr>
 
-    </thead>
+        </thead>
 
-    <tbody></tbody>
+        <tbody></tbody>
 
-</table>
+    </table>
 <?php endif; ?>
 <script>
-const PUEDE_CREAR_COMPRAS =
-    <?= tienePermiso(
+    const PUEDE_CREAR_COMPRAS =
+        <?= tienePermiso(
             'compras_crear'
         ) ? 'true' : 'false' ?>;
-const PUEDE_CAMBIAR_ESTADO_CLIENTES =
-    <?= tienePermiso('clientes_eliminar')
+    const PUEDE_CAMBIAR_ESTADO_CLIENTES =
+        <?= tienePermiso('clientes_eliminar')
             ? 'true'
             : 'false' ?>;
-const PUEDE_EDITAR_CLIENTES =
-    <?= tienePermiso('clientes_editar')
+    const PUEDE_EDITAR_CLIENTES =
+        <?= tienePermiso('clientes_editar')
             ? 'true'
             : 'false' ?>;
 </script>

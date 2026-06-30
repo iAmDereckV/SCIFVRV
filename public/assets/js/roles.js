@@ -48,6 +48,11 @@ async function cargarRoles() {
 let rolSeleccionado = null;
 
 async function editarPermisos(id) {
+  if (id && !PUEDE_EDITAR_ROLES) {
+    alert("No tiene permiso para editar permisos");
+
+    return;
+  }
   rolSeleccionado = id;
 
   let response = await fetch(IRL + "/api/roles/permisos.php?id=" + id);
@@ -89,7 +94,11 @@ async function cambiarEstado(id, estadoActual) {
   formData.append("id", id);
 
   formData.append("estado", nuevoEstado);
+  if (!PUEDE_CAMBIAR_ESTADO_ROLES) {
+    alert(`No tiene permiso para poner roles ${nuevoEstado}`);
 
+    return;
+  }
   let response = await fetch(IRL + "/api/roles/cambiar_estados.php", {
     method: "POST",
     body: formData,

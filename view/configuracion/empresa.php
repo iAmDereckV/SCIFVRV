@@ -1,3 +1,4 @@
+<?= tienePermiso('empresa_configurar') ? '' : header("Location: index.php"); ?>
 <h2>
 
     Configuración Empresa
@@ -38,5 +39,10 @@
     </button>
 
 </form>
-
+<script>
+    const PUEDE_EDITAR_EMPRESA =
+        <?= tienePermiso('empresa_configurar')
+            ? 'true'
+            : 'false' ?>;
+</script>
 <script src="assets/js/configuracion_empresa.js"></script>

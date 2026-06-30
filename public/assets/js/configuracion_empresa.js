@@ -53,7 +53,11 @@ async function guardarConfiguracion(e) {
   }
 
   formData.append("slogan", document.getElementById("slogan").value);
+  if (!PUEDE_EDITAR_EMPRESA) {
+    alert("No tiene permiso para editar datos de empresa");
 
+    return;
+  }
   let response = await fetch(
     IRL + "/api/configuracion_empresa/actualizar.php",
     {

@@ -110,6 +110,18 @@ async function guardarUsuario(e) {
   }
   let id = document.getElementById("formUsuario").dataset.id;
 
+  if (!id && !PUEDE_CREAR_USUARIOS) {
+    alert("No tiene permiso para crear usuarios");
+
+    return;
+  }
+
+  if (id && !PUEDE_EDITAR_USUARIOS) {
+    alert("No tiene permiso para editar usuarios");
+
+    return;
+  }
+
   let response = await fetch(
     id
       ? IRL + "/api/usuarios/actualizar.php"
@@ -142,7 +154,11 @@ async function cambiarEstado(id, estadoActual) {
   formData.append("id", id);
 
   formData.append("estado", nuevoEstado);
+  if (!PUEDE_CAMBIAR_ESTADO_USUARIOS) {
+    alert(`No tiene permiso para poner usuarios ${nuevoEstado}`);
 
+    return;
+  }
   let response = await fetch(IRL + "/api/usuarios/cambiar_estado.php", {
     method: "POST",
     body: formData,
@@ -171,12 +187,16 @@ async function editarUsuario(id) {
   document.getElementById("formUsuario").dataset.id = usuario.id;
 }
 async function cambiarFoto(id) {
+  if (!PUEDE_EDITAR_USUARIOS) {
+    alert("No tiene permiso para editar foto");
+
+    return;
+  }
   let input = document.createElement("input");
 
   input.type = "file";
 
   input.accept = "image/*";
-
   input.onchange = async () => {
     let archivo = input.files[0];
 

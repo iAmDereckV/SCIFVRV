@@ -1,3 +1,4 @@
+<?= tienePermiso('reportes_ventas') ? '' : header("Location: index.php"); ?>
 <h2>Reporte de Ventas</h2>
 
 <div class="row">
@@ -57,5 +58,10 @@
     </span>
 
 </h4>
-
+<script>
+    const PUEDE_CAMBIAR_ESTADO_VENTAS =
+        <?= tienePermiso('ventas_anular')
+            ? 'true'
+            : 'false' ?>;
+</script>
 <script src="assets/js/reportes.js"></script>
