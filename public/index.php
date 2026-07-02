@@ -63,7 +63,7 @@ switch ($modulo) {
         include '../view/configuracion/usuarios.php';
         break;
     case 'clientes':
-        include '../view/clientes/clientes.php';
+        include '../view/clientes/index.php';
         break;
     case 'productos':
         include '../view/inventario/productos.php';
@@ -84,7 +84,7 @@ switch ($modulo) {
         include '../view/inventario/categorias.php';
         break;
     case 'ventas':
-        include '../view/ventas/ventas.php';
+        include '../view/ventas/index.php';
         break;
     case 'gastos':
         include '../view/gastos/index.php';

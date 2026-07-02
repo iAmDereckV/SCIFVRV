@@ -58,9 +58,9 @@
 
 </h4>
 <script>
-const PUEDE_CAMBIAR_ESTADO_VENTAS =
-    <?= tienePermiso('ventas_anular')
-            ? 'true'
-            : 'false' ?>;
+    const PUEDE_CAMBIAR_ESTADO_VENTAS =
+        <?= tienePermiso(
+            'ventas_anular'
+        ) ? 'true' : 'false' ?>;
 </script>
 <script src="assets/js/reportes.js"></script>

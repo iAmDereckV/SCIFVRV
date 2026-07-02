@@ -64,10 +64,6 @@
         <?= tienePermiso('compras_anular')
             ? 'true'
             : 'false' ?>;
-    const PUEDE_CAMBIAR_ESTADO_VENTAS =
-        <?= tienePermiso(
-            'ventas_anular'
-        ) ? 'true' : 'false' ?>;
     const PUEDE_EDITAR_COMPRAS =
         <?= tienePermiso('compras_editar') ? 'true' : 'false' ?>;
 </script>
