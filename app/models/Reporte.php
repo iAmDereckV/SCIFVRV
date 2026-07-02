@@ -59,15 +59,11 @@ class Reporte
         $fin
     ) {
 
-        $sql = "
-
-        SELECT
-
-            c.id,
-
-            c.fecha,
+        $sql = "SELECT c.id,c.fecha,
 
             c.total,
+            c.estado,
+            c.archivo_factura,
 
             p.nombre proveedor,
 
@@ -118,6 +114,7 @@ class Reporte
             g.fecha,
 
             g.descripcion,
+            g.archivo_factura,
 
             g.monto,
 

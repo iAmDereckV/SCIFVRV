@@ -35,6 +35,7 @@
             <th>Descripción</th>
             <th>Usuario</th>
             <th>Monto</th>
+            <th>Comprobante</th>
 
         </tr>
 

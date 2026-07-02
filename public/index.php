@@ -5,12 +5,7 @@ require_once '../app/middleware/AuthMiddleware.php';
 require_once '../app/helpers/permisos.php';
 
 AuthMiddleware::verificar();
-
-$modulo =
-    $_GET['modulo']
-    ??
-    'dashboard';
-
+$modulo = $_GET['modulo'] ?? '';
 $inventarioActivo = in_array(
     $modulo,
     ['productos', 'marcas', 'categorias', 'kardex']
@@ -31,14 +26,13 @@ $configActivo = in_array(
         'carta_recomendacion'
     ]
 );
-$modulo = $_GET['modulo'] ?? '';
 
 $mapaPermisos = [
     'categorias' => 'categorias_ver',
     'marcas' => 'marcas_ver',
     'productos' => 'productos_ver',
     'clientes' => 'clientes_ver',
-    'compras' => 'compras_crear' || 'compras_ver',
+    'compras' => 'compras_crear',
     'proveedores' => 'proveedores_ver',
     'bitacora' => 'bitacora_ver',
     'usuarios' => 'usuarios_ver',
@@ -49,7 +43,7 @@ $mapaPermisos = [
     'gastos' => 'gastos_ver',
     'maestro_detalle' => 'reportes_detalle_maestro',
     'excel' => 'excel_exportar',
-    'ventas' => 'ventas_ver',
+    'ventas' => 'ventas_crear',
     'reportes_ventas' => 'reportes_ventas',
     'reportes_gastos' => 'reportes_gastos',
     'reportes_compras' => 'reportes_compras',

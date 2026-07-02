@@ -209,6 +209,7 @@ CREATE TABLE compras (
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10, 2) DEFAULT 0,
     archivo_factura VARCHAR(255) NULL,
+    estado ENUM('COMPLETADA', 'ANULADA') DEFAULT 'COMPLETADA',
     FOREIGN KEY (proveedor_id) REFERENCES proveedores (id),
     FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
 );

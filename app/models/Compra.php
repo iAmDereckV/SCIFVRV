@@ -270,4 +270,90 @@ class Compra
 
         return $stmt->fetchAll();
     }
+    public function anular($compra_id)
+    {
+        try {
+
+            $sql = "SELECT estado
+                FROM compras
+                WHERE id = :id";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute([
+                ':id' => $compra_id
+            ]);
+
+            $compra = $stmt->fetch();
+
+            if ($compra['estado'] === 'ANULADA') {
+                return false;
+            }
+
+            $this->conexion->beginTransaction();
+
+            $sql = "SELECT
+                    producto_id,
+                    cantidad
+                FROM detalle_compras
+                WHERE compra_id = :compra_id";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute([
+                ':compra_id' => $compra_id
+            ]);
+
+            $productos = $stmt->fetchAll();
+
+            foreach ($productos as $producto) {
+
+                $sqlStock = "UPDATE productos
+                         SET stock = stock - :cantidad
+                         WHERE id = :producto_id";
+
+                $stmtStock = $this->conexion->prepare($sqlStock);
+
+                $stmtStock->execute([
+                    ':cantidad'   => $producto['cantidad'],
+                    ':producto_id' => $producto['producto_id']
+                ]);
+            }
+
+            $sqlCompra = "UPDATE compras
+                      SET estado='ANULADA'
+                      WHERE id = :id";
+
+            $stmtCompra = $this->conexion->prepare($sqlCompra);
+
+            $stmtCompra->execute([
+                ':id' => $compra_id
+            ]);
+
+            $this->conexion->commit();
+
+            return true;
+        } catch (Exception $e) {
+
+            $this->conexion->rollBack();
+
+            return false;
+        }
+    }
+    public function actualizarComprobante(
+        $id,
+        $archivo
+    ) {
+
+        $sql = "UPDATE compras
+            SET archivo_factura = :archivo
+            WHERE id = :id";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        return $stmt->execute([
+            ':archivo' => $archivo,
+            ':id'      => $id
+        ]);
+    }
 }

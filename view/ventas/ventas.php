@@ -135,5 +135,10 @@
     Finalizar Venta
 
 </button>
-
+<script>
+const PUEDE_CREAR_VENTAS =
+    <?= tienePermiso(
+            'ventas_crear'
+        ) ? 'true' : 'false' ?>;
+</script>
 <script src="assets/js/ventas.js"></script>

@@ -79,6 +79,7 @@ class Rol
 
             p.id,
             p.codigo,
+            p.descripcion,
 
             IF(
                 rp.permiso_id IS NULL,

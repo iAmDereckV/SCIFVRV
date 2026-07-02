@@ -57,4 +57,18 @@ class CompraController
             $total
         );
     }
+    public function anular($id)
+    {
+        return $this->compra
+            ->anular($id);
+    }
+    public function actualizarComprobante(
+        $id,
+        $archivo
+    ) {
+        return $this->compra->actualizarComprobante(
+            $id,
+            $archivo
+        );
+    }
 }

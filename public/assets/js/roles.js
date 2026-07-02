@@ -74,7 +74,7 @@ async function editarPermisos(id) {
 
             <label class="form-check-label">
 
-                ${permiso.codigo}
+                ${permiso.descripcion}
 
             </label>
 
