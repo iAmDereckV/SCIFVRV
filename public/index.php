@@ -2,6 +2,7 @@
 
 require_once '../app/helpers/Session.php';
 require_once '../app/middleware/AuthMiddleware.php';
+require_once '../app/helpers/permisos.php';
 
 AuthMiddleware::verificar();
 
@@ -30,6 +31,33 @@ $configActivo = in_array(
         'carta_recomendacion'
     ]
 );
+$modulo = $_GET['modulo'] ?? '';
+
+$mapaPermisos = [
+    'categorias' => 'categorias_ver',
+    'marcas' => 'marcas_ver',
+    'productos' => 'productos_ver',
+    'clientes' => 'clientes_ver',
+    'compras' => 'compras_crear' || 'compras_ver',
+    'proveedores' => 'proveedores_ver',
+    'bitacora' => 'bitacora_ver',
+    'usuarios' => 'usuarios_ver',
+    'roles' => 'roles_ver',
+    'backup' => 'backup_ver',
+    'kardex' => 'kardex_ver',
+    'configuracion_empresa' => 'empresa_configurar',
+    'gastos' => 'gastos_ver',
+    'maestro_detalle' => 'reportes_detalle_maestro',
+    'excel' => 'excel_exportar',
+    'ventas' => 'ventas_ver',
+    'reportes_ventas' => 'reportes_ventas',
+    'reportes_gastos' => 'reportes_gastos',
+    'reportes_compras' => 'reportes_compras',
+];
+
+if (isset($mapaPermisos[$modulo])) {
+    requierePermisoVista($mapaPermisos[$modulo]);
+}
 
 include '../view/layouts/header.php';
 include '../view/layouts/navbar.php';
@@ -40,11 +68,9 @@ switch ($modulo) {
     case 'usuarios':
         include '../view/configuracion/usuarios.php';
         break;
-
     case 'clientes':
         include '../view/clientes/clientes.php';
         break;
-
     case 'productos':
         include '../view/inventario/productos.php';
         break;
@@ -63,18 +89,12 @@ switch ($modulo) {
     case 'categorias':
         include '../view/inventario/categorias.php';
         break;
-
     case 'ventas':
         include '../view/ventas/ventas.php';
-        break;
-
-    case 'historial':
-        include '../view/ventas/historial.php';
         break;
     case 'gastos':
         include '../view/gastos/index.php';
         break;
-
     case 'reportes_ventas':
         include  '../view/reportes/ventas.php';
         break;
@@ -96,21 +116,15 @@ switch ($modulo) {
     case 'backup':
         include  '../view/configuracion/backup.php';
         break;
-
     case 'bitacora':
-
         include '../view/bitacora/index.php';
-
         break;
     case 'maestro_detalle':
-
         include '../view/maestro_detalle/index.php';
-
         break;
     default:
         // include '../view/layouts/dashboard.php';
         include './dashboard.php';
-
         break;
 }
 

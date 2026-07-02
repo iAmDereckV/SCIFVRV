@@ -1,4 +1,3 @@
-<?= tienePermiso('proveedores_ver') ? '' : header("Location: index.php"); ?>
 <h2>Proveedores</h2>
 <?php if (
     tienePermiso('proveedores_crear')

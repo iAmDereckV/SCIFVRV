@@ -1,4 +1,3 @@
-<?= tienePermiso('marcas_ver') ? '' : header("Location: index.php"); ?>
 <h2>Marcas</h2>
 <?php if (
     tienePermiso('marcas_crear')

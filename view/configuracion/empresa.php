@@ -1,4 +1,3 @@
-<?= tienePermiso('empresa_configurar') ? '' : header("Location: index.php"); ?>
 <h2>
 
     Configuración Empresa
@@ -40,8 +39,8 @@
 
 </form>
 <script>
-    const PUEDE_EDITAR_EMPRESA =
-        <?= tienePermiso('empresa_configurar')
+const PUEDE_EDITAR_EMPRESA =
+    <?= tienePermiso('empresa_configurar')
             ? 'true'
             : 'false' ?>;
 </script>

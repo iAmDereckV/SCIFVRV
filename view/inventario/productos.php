@@ -1,5 +1,3 @@
-<?= tienePermiso('productos_ver') ? '' : header("Location: index.php"); ?>
-
 <h2>Productos</h2>
 <?php if (
     tienePermiso('productos_crear')

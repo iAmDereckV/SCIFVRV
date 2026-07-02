@@ -1,4 +1,3 @@
-<?= tienePermiso('roles_ver') ? '' : header("Location: index.php"); ?>
 <?php
 
 require_once __DIR__ . '/../../app/middleware/AuthMiddleware.php';

@@ -38,3 +38,17 @@ function requierePermiso($permiso)
         exit;
     }
 }
+function requierePermisoVista($permiso)
+{
+    Session::iniciar();
+
+    if (
+        !in_array(
+            $permiso,
+            $_SESSION['permisos'] ?? []
+        )
+    ) {
+        header("Location: index.php");
+        exit;
+    }
+}

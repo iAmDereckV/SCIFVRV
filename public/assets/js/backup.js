@@ -1,4 +1,9 @@
 async function reiniciarSistema() {
+  if (!PUEDE_REINICIAR_EMPRESA) {
+    alert("No tiene permiso para reiniciar datos");
+
+    return;
+  }
   if (!confirm("Se eliminarán todos los datos. ¿Desea continuar?")) {
     return;
   }
@@ -18,7 +23,6 @@ async function cargarRespaldos() {
   let response = await fetch(IRL + "/api/backup/listar.php");
 
   let data = await response.json();
-  console.log(data);
 
   let html = "";
   data.forEach((respaldo) => {
@@ -35,11 +39,9 @@ async function cargarRespaldos() {
 <td>
 
 <a
-    href="${IRL}/api/backup/descargar.php?archivo=${respaldo.archivo}"
-    class="btn btn-success btn-sm">
-
+    onclick="descargarBackup('${respaldo.archivo}')"
+    class="btn btn-success btn-sm"> 
     Descargar
-
 </a>
 
 <button
@@ -59,6 +61,10 @@ async function cargarRespaldos() {
   document.querySelector("#tablaRespaldos tbody").innerHTML = html;
 }
 async function eliminarRespaldo(id) {
+  if (!PUEDE_ELIMINAR_BACKUP) {
+    alert("No tiene permiso para eliminar backup");
+    return;
+  }
   if (!confirm("¿Eliminar respaldo?")) {
     return;
   }
@@ -81,6 +87,10 @@ async function eliminarRespaldo(id) {
   }
 }
 function generarBackup() {
+  if (!PUEDE_GENRERAR_BACKUP) {
+    alert("No tiene permiso para generar backup");
+    return;
+  }
   window.location.href = IRL + "/api/backup/exportar_sql.php";
 
   setTimeout(() => {
@@ -88,9 +98,19 @@ function generarBackup() {
   }, 1000);
 }
 async function backupCompleto() {
+  if (!PUEDE_GENRERAR_BACKUP) {
+    alert("No tiene permiso para generar backup");
+
+    return;
+  }
   window.location.href = IRL + "/api/backup/exportar_zip.php";
 }
 async function restaurarSQL() {
+  if (!PUEDE_RESTAURAR_BACKUP) {
+    alert("No tiene permiso para restaurar backup");
+
+    return;
+  }
   let archivo = document.getElementById("archivo_sql").files[0];
 
   if (!archivo) {
@@ -121,6 +141,11 @@ async function restaurarSQL() {
   }
 }
 async function restaurarArchivos() {
+  if (!PUEDE_RESTAURAR_BACKUP) {
+    alert("No tiene permiso para restaurar backup");
+
+    return;
+  }
   let archivo = document.getElementById("archivo_zip").files[0];
 
   if (!archivo) {
@@ -149,4 +174,11 @@ async function restaurarArchivos() {
   } else {
     alert("Error al restaurar");
   }
+}
+async function descargarBackup(nombre) {
+  if (!PUEDE_GENRERAR_BACKUP) {
+    alert("No tiene permiso para generar backup");
+    return;
+  }
+  window.location.href = `${IRL}/api/backup/descargar.php?archivo=${nombre}`;
 }

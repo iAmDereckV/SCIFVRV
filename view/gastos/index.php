@@ -1,4 +1,3 @@
-<?= tienePermiso('gastos_ver') ? '' : header("Location: index.php"); ?>
 <h2>Control de Gastos</h2>
 <?php if (
     tienePermiso('clientes_crear')

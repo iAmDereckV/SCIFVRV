@@ -2,7 +2,7 @@
 *.tmp
 *.temp
 *.cache
-
+README.md
 # SUBIDAS DE USUARIOS
 
 public/uploads/*

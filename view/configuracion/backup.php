@@ -110,4 +110,22 @@
     </tbody>
 
 </table>
+<script>
+const PUEDE_GENRERAR_BACKUP =
+    <?= tienePermiso('backup_generar')
+            ? 'true'
+            : 'false' ?>;
+const PUEDE_RESTAURAR_BACKUP =
+    <?= tienePermiso(
+            'backup_restaurar'
+        ) ? 'true' : 'false' ?>;
+const PUEDE_REINICIAR_EMPRESA =
+    <?= tienePermiso('backup_reiniciar')
+            ? 'true'
+            : 'false' ?>;
+const PUEDE_ELIMINAR_BACKUP =
+    <?= tienePermiso('backup_eliminar')
+            ? 'true'
+            : 'false' ?>;
+</script>
 <script src="assets/js/backup.js"></script>

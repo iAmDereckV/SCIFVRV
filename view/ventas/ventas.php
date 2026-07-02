@@ -1,4 +1,3 @@
-<?= tienePermiso('ventas_ver') ? '' : header("Location: index.php"); ?>
 <h2>Nueva Venta</h2>
 
 <div class="row">

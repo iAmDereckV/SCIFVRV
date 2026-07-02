@@ -1,4 +1,3 @@
-<?= tienePermiso('reportes_ventas') ? '' : header("Location: index.php"); ?>
 <h2>Reporte de Ventas</h2>
 
 <div class="row">
@@ -59,8 +58,8 @@
 
 </h4>
 <script>
-    const PUEDE_CAMBIAR_ESTADO_VENTAS =
-        <?= tienePermiso('ventas_anular')
+const PUEDE_CAMBIAR_ESTADO_VENTAS =
+    <?= tienePermiso('ventas_anular')
             ? 'true'
             : 'false' ?>;
 </script>
