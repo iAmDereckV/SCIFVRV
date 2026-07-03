@@ -1,14 +1,17 @@
 <?php
 
 require_once __DIR__ . '/../models/Backup.php';
+require_once __DIR__ . '/../helpers/Reset.php';
 
 class BackupController
 {
     private $backup;
+    private $reset;
 
     public function __construct()
     {
         $this->backup = new Backup();
+        $this->reset = new Reset();
     }
 
     public function generarSQL()
@@ -94,7 +97,10 @@ class BackupController
         return $this->backup
             ->obtenerRespaldo($id);
     }
-
+    public function reiniciar()
+    {
+        return $this->reset->reiniciar();
+    }
     public function eliminarRespaldo($id)
     {
         return $this->backup

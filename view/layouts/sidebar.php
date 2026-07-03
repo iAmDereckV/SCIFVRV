@@ -109,7 +109,7 @@ Session::iniciar();
                         <li><a class="dropdown-item" href="index.php?modulo=reportes_ventas"><i
                                     class="bi bi-cart-check"></i>
                                 Ventas</a></li> <?php endif; ?>
-                        <?php if (tienePermiso('gastos_ver')): ?>
+                        <?php if (tienePermiso('reportes_gastos')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=reportes_gastos"><i
                                     class="bi bi-cash-stack"></i>
                                 Gastos</a></li><?php endif; ?>

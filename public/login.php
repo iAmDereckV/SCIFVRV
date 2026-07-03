@@ -48,7 +48,6 @@
             );
 
             let data = await response.json();
-
             if (data.success) {
                 window.location.href =
                     'index.php ';
