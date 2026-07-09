@@ -16,6 +16,43 @@ class Dashboard
 
     public function resumen()
     {
+        $ventasMes = $this->conexion
+            ->query("
+        SELECT IFNULL(SUM(total),0) total
+        FROM ventas
+        WHERE estado='COMPLETADA'
+        AND MONTH(fecha)=MONTH(CURDATE())
+        AND YEAR(fecha)=YEAR(CURDATE())
+    ")
+            ->fetch();
+
+        $comprasMes = $this->conexion
+            ->query("
+        SELECT IFNULL(SUM(total),0) total
+        FROM compras
+        WHERE estado='COMPLETADA'
+        AND MONTH(fecha)=MONTH(CURDATE())
+        AND YEAR(fecha)=YEAR(CURDATE())
+    ")
+            ->fetch();
+
+        $gastosMes = $this->conexion
+            ->query("
+        SELECT IFNULL(SUM(monto),0) total
+        FROM gastos
+        WHERE MONTH(fecha)=MONTH(CURDATE())
+        AND YEAR(fecha)=YEAR(CURDATE())
+    ")
+            ->fetch();
+
+        $stockBajo = $this->conexion
+            ->query("
+        SELECT COUNT(*) total
+        FROM productos
+        WHERE stock<=stock_minimo
+        AND estado='ACTIVO'
+    ")
+            ->fetch();
         $ventas =
             $this->conexion
             ->query("
@@ -54,17 +91,18 @@ class Dashboard
             ->fetch();
 
         return [
-            'ventas_hoy' =>
-            $ventas['total'],
-
-            'productos' =>
-            $productos['total'],
-
-            'clientes' =>
-            $clientes['total'],
-
-            'facturas' =>
-            $facturas['total']
+            'ventas_hoy' => $ventas['total'],
+            'ventas_mes' => $ventasMes['total'],
+            'compras_mes' => $comprasMes['total'],
+            'gastos_mes' => $gastosMes['total'],
+            'utilidad' =>
+            $ventasMes['total']
+                -
+                $gastosMes['total'],
+            'productos' => $productos['total'],
+            'clientes' => $clientes['total'],
+            'facturas' => $facturas['total'],
+            'stock_bajo' => $stockBajo['total']
         ];
     }
     public function ventasMes()
@@ -109,43 +147,5 @@ class Dashboard
         return $this->conexion
             ->query($sql)
             ->fetchAll();
-    }
-    public function resumenFinanciero()
-    {
-        $ventas = $this->conexion
-            ->query("
-            SELECT
-                IFNULL(SUM(total),0) total
-            FROM ventas
-            WHERE MONTH(fecha)=MONTH(CURDATE())
-            AND YEAR(fecha)=YEAR(CURDATE())
-        ")
-            ->fetch();
-
-        $gastos = $this->conexion
-            ->query("
-            SELECT
-                IFNULL(SUM(monto),0) total
-            FROM gastos
-            WHERE MONTH(fecha)=MONTH(CURDATE())
-            AND YEAR(fecha)=YEAR(CURDATE())
-        ")
-            ->fetch();
-
-        return [
-
-            'ventas' =>
-            $ventas['total'],
-
-            'gastos' =>
-            $gastos['total'],
-
-            'utilidad' => (
-                $ventas['total']
-                -
-                $gastos['total']
-            )
-
-        ];
     }
 }

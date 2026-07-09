@@ -4,21 +4,30 @@ async function cargarResumen() {
   let response = await fetch(IRL + "/api/dashboard/resumen.php");
 
   let data = await response.json();
+  document.getElementById("ventasHoy").innerText =
+    "C$ " + Number(data.ventas_hoy).toFixed(2);
 
-  document.getElementById("ventasHoy").innerText = data.ventas_hoy;
+  document.getElementById("ventasMes").innerText =
+    "C$ " + Number(data.ventas_mes).toFixed(2);
+
+  document.getElementById("compras_mes").innerText =
+    "C$ " + Number(data.compras_mes).toFixed(2);
+
+  document.getElementById("utilidadMes").innerText =
+    "C$ " + Number(data.utilidad).toFixed(2);
 
   document.getElementById("productos").innerText = data.productos;
 
   document.getElementById("clientes").innerText = data.clientes;
 
   document.getElementById("facturas").innerText = data.facturas;
+  document.getElementById("stock_bajo").innerText = data.stock_bajo;
 }
 document.addEventListener("DOMContentLoaded", () => {
   cargarResumen();
   cargarVentasMes();
   cargarProductosVendidos();
   cargarStockBajo();
-  cargarResumenFinanciero();
 });
 async function cargarVentasMes() {
   let response = await fetch(IRL + "/api/dashboard/ventas_mes.php");
@@ -96,15 +105,4 @@ async function cargarStockBajo() {
       ],
     },
   });
-}
-async function cargarResumenFinanciero() {
-  let response = await fetch(IRL + "/api/dashboard/resumen_financiero.php");
-
-  let data = await response.json();
-
-  document.getElementById("ventasMes").innerText = "C$ " + data.ventas;
-
-  document.getElementById("gastosMes").innerText = "C$ " + data.gastos;
-
-  document.getElementById("utilidadMes").innerText = "C$ " + data.utilidad;
 }

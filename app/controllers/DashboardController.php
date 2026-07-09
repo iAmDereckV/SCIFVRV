@@ -31,9 +31,4 @@ class DashboardController
     {
         return $this->dashboard->stockBajo();
     }
-    public function resumenFinanciero()
-    {
-        return $this->dashboard
-            ->resumenFinanciero();
-    }
 }

@@ -9,191 +9,317 @@ AuthMiddleware::verificar();
 
 
 
-<div class="d-flex">
+<div class="d-flex bg-light">
 
     <div class="container-fluid p-4">
-        <h2>Dashboard</h2>
-        <h4>
-            Bienvenido:
-            <?= $_SESSION['nombre'] ?>
-        </h4>
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <hr>
+            <div>
 
-        <div class="row">
+                <h2 class="fw-bold mb-1">
 
-            <div class="col-md-3">
+                    Dashboard
 
-                <div class="card">
+                </h2>
 
-                    <div class="card-body">
+                <p class="text-muted mb-0">
 
-                        <h5>Ventas Hoy</h5>
+                    Bienvenido,
+                    <strong><?= $_SESSION['nombre'] ?></strong>
 
-                        <h3 id="ventasHoy">
-                            0
-                        </h3>
-
-                    </div>
-
-                </div>
+                </p>
 
             </div>
 
-            <div class="col-md-3">
+            <div class="text-end">
 
-                <div class="card">
+                <span class="badge bg-primary fs-6">
 
-                    <div class="card-body">
+                    <?= date('d/m/Y') ?>
 
-                        <h5>Productos</h5>
-
-                        <h3 id="productos">
-                            0
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <h5>Clientes</h5>
-
-                        <h3 id="clientes">
-                            0
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <h5>Facturas</h5>
-
-                        <h3 id="facturas">
-                            0
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="col-md-3">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <h5>Gastos Mes</h5>
-
-                        <h3 id="gastosMes">
-                            0
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <h5>Utilidad</h5>
-
-                        <h3 id="utilidadMes">
-                            0
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="col-md-3">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <h5>Ventas Mes</h5>
-
-                        <h3 id="ventasMes">
-                            0
-                        </h3>
-
-                    </div>
-
-
-
-                </div>
-
-
-
-            </div>
-        </div>
-        <hr>
-
-        <div class="row">
-
-            <div class="col-md-6">
-
-                <canvas id="graficoVentas">
-                </canvas>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <canvas id="graficoProductos">
-                </canvas>
+                </span>
 
             </div>
 
         </div>
+        <div class="row g-3 mb-3">
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">
+                                    Ventas Hoy
+                                </small>
+                                <h3 id="ventasHoy" class="fw-bold text-success mt-2">
+                                    C$ 0
+                                </h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-cart-check fs-1 text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">
+                                    Ventas Mes
+                                </small>
+                                <h3 id="ventasMes" class="fw-bold text-primary mt-2">
+                                    C$ 0
+                                </h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-graph-up-arrow fs-1 text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">
+                                    Compras Mes
+                                </small>
+                                <h3 id="compras_mes" class="fw-bold text-info mt-2">
+                                    C$ 0
+                                </h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-cart-plus fs-1 text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">
+                                    Utilidad Mes
+                                </small>
+                                <h3 id="utilidadMes" class="fw-bold text-warning mt-2">
+                                    C$ 0
+                                </h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-cash-coin fs-1 text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">
+                                    Productos
+                                </small>
+                                <h3 id="productos" class="fw-bold text-dark mt-2">
+                                    C$ 0
+                                </h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-box-seam fs-1 text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">
+                                    Cliente
+                                </small>
+                                <h3 id="clientes" class="fw-bold text-secondary mt-2">
+                                    C$ 0
+                                </h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-people-fill fs-1 text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">
+                                    Facturas
+                                </small>
+                                <h3 id="facturas" class="fw-bold text-primary mt-2">
+                                    C$ 0
+                                </h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-receipt fs-1 text-secondary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">
+                                    Stock Critico
+                                </small>
+                                <h3 id="stock_bajo" class="fw-bold text-danger mt-2">
+                                    C$ 0
+                                </h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="bi bi-exclamation-triangle-fill fs-1 text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="card shadow-sm border-0 mt-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">
+                        Resumen Financiero
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Ventas
+                        </div>
+                        <div class="col-md-3">
+                            Compras
+                        </div>
+                        <div class="col-md-3">
+                            Gastos
+                        </div>
+                        <div class="col-md-3">
+                            Utilidad
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4">
 
-        <br>
+                <div class="col-lg-6">
+                    <div class="card-header fw-bold">
 
-        <div class="row">
+                        Ventas mensuales
 
-            <div class="col-md-12">
+                    </div>
 
-                <canvas id="graficoStock">
-                </canvas>
+                    <div class="card-body">
+
+                        <canvas id="graficoVentas"></canvas>
+
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="card-header fw-bold">
+
+                        Productos Mas Vendido
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <canvas id="graficoStock"></canvas>
+
+                    </div>
+
+                </div>
 
             </div>
 
+            <div class="row mt-3">
+
+                <div class="col-lg-6">
+
+                    <div class="card-header fw-bold">
+
+                        Compras Mensuales
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <canvas id="graficoProductos"></canvas>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    gastos Por Categorias
+
+                </div>
+
+            </div>
+            <hr>
+            <div class="row mt-4">
+
+                <div class="col-lg-6">
+
+                    Productos con Stock Bajo
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    Últimas Ventas
+
+                </div>
+
+            </div>
+
+            <div class="row mt-3">
+
+                <div class="col-lg-6">
+
+                    Últimas Compras
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    Actividad Reciente
+
+                </div>
+
+            </div>
+
+
+
         </div>
-
-
-
-
     </div>
-</div>
-<canvas id="graficoVentas"></canvas>
-<script src="assets/js/dashboard.js"></script>
+
+    <script src="assets/js/dashboard.js"></script>
 
 
-<!-- <?php include './../view/layouts/footer.php'; ?> -->
+    <!-- <?php include './../view/layouts/footer.php'; ?> -->
