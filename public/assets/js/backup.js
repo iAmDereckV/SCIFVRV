@@ -11,7 +11,9 @@ async function reiniciarSistema() {
   let response = await fetch(IRL + "/api/backup/reiniciar.php");
 
   let data = await response.json();
-
+  // let data = await response.text();
+  // console.log(data);
+  // return;
   if (data.success) {
     alert("Sistema reiniciado");
   }

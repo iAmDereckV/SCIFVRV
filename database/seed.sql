@@ -244,7 +244,6 @@ VALUES (2, 1),
     (3, 1),
     (4, 1);
 -- ? USUARIOS
-ALTER TABLE usuarios AUTO_INCREMENT = 2;
 
 INSERT INTO
     `usuarios` (
@@ -263,5 +262,7 @@ VALUES (
         '$2y$10$7HwIDR5f5K1WUzoWgGVsX.Cne1VLYzp9TLAf7/HXjFLk0dHMGozAe',
         'ACTIVO'
     );
+
+ALTER TABLE usuarios AUTO_INCREMENT = 2;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -14,18 +14,16 @@ class Reset
     public function reiniciar()
     {
         try {
-            $this->conexion->beginTransaction();
             $this->conexion->exec("SET FOREIGN_KEY_CHECKS = 0");
             $this->limpiarTablas();
             $this->ejecutarSeed();
             $this->conexion->exec("SET FOREIGN_KEY_CHECKS = 1");
-            $this->conexion->commit();
             $this->eliminarArchivos();
             return true;
         } catch (Exception $e) {
-
-            $this->conexion->rollBack();
-
+            if ($this->conexion->inTransaction()) {
+                $this->conexion->rollBack();
+            }
             throw $e;
         }
     }
@@ -91,14 +89,14 @@ class Reset
     }
     private function ejecutarSeed()
     {
-        $archivo =
-            file_get_contents(
-                __DIR__ . '/../../database/seed.sql'
-            );
+        $archivo = __DIR__ . '/../../database/seed.sql';
+
         if (!file_exists($archivo)) {
             throw new Exception('No se encontró el archivo seed.sql');
         }
+
         $sql = file_get_contents($archivo);
+
         $this->conexion->exec($sql);
     }
 }
