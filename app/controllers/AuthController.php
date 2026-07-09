@@ -17,6 +17,18 @@ class AuthController
                 'mensaje' => 'Usuario no encontrado'
             ];
         }
+        if ($datos['estado'] !== 'ACTIVO') {
+            return [
+                'success' => false,
+                'mensaje' => 'El usuario se encuentra inactivo.'
+            ];
+        }
+        if ($datos['rol_estado'] !== 'ACTIVO') {
+            return [
+                'success' => false,
+                'mensaje' => 'El rol asignado al usuario se encuentra inactivo.'
+            ];
+        }
         if (!Security::verifyPassword($password, $datos['password']))
         // if ($password != $datos['password'])
         {

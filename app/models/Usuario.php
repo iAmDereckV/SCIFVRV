@@ -15,13 +15,14 @@ class Usuario
     public function buscarPorUsuario($usuario)
     {
         $sql = "SELECT
-                u.*,
-                r.nombre AS rol_nombre
-            FROM usuarios u
-            INNER JOIN roles r
-                ON r.id = u.rol_id
-            WHERE u.usuario = :usuario
-            LIMIT 1";
+            u.*,
+            r.nombre AS rol_nombre,
+            r.estado AS rol_estado
+        FROM usuarios u
+        INNER JOIN roles r
+            ON r.id = u.rol_id
+        WHERE u.usuario = :usuario
+        LIMIT 1";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(
             ':usuario',
@@ -201,5 +202,25 @@ class Usuario
         return $stmt->fetchAll(
             PDO::FETCH_COLUMN
         );
+    }
+    public function verificarSesion($id)
+    {
+        $sql = "SELECT
+                u.id,
+                u.estado,
+                r.estado AS rol_estado
+            FROM usuarios u
+            INNER JOIN roles r
+                ON r.id = u.rol_id
+            WHERE u.id = :id
+            LIMIT 1";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        return $stmt->fetch();
     }
 }
