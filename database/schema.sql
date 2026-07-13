@@ -141,6 +141,7 @@ CREATE TABLE detalle_compras (
     FOREIGN KEY (compra_id) REFERENCES compras (id),
     FOREIGN KEY (producto_id) REFERENCES productos (id)
 );
+
 -- ? VENTAS
 CREATE TABLE clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -175,6 +176,7 @@ CREATE TABLE detalle_ventas (
     producto_id INT NOT NULL,
     cantidad INT NOT NULL,
     precio_unitario DECIMAL(10, 2) NOT NULL,
+    costo_unitario DECIMAL(10, 2),
     subtotal DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (venta_id) REFERENCES ventas (id),
     FOREIGN KEY (producto_id) REFERENCES productos (id)

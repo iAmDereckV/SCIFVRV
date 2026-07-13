@@ -94,56 +94,52 @@ class Venta
             :total
         )";
 
-            $stmtVenta =
-                $this->conexion->prepare($sqlVenta);
+            $stmtVenta = $this->conexion->prepare($sqlVenta);
 
             $stmtVenta->execute([
                 ':cliente_id' => $cliente_id,
                 ':usuario_id' => $usuario_id,
-                ':subtotal' => $subtotal,
-                ':impuesto' => $impuesto,
-                ':descuento' => $descuento,
-                ':total' => $total
+                ':subtotal'   => $subtotal,
+                ':impuesto'   => $impuesto,
+                ':descuento'  => $descuento,
+                ':total'      => $total
             ]);
 
-            $venta_id =
-                $this->conexion->lastInsertId();
+            $venta_id = $this->conexion->lastInsertId();
 
             foreach ($detalle as $item) {
-                //? VERIFICAR STOCK
-                $sqlVerificar = "SELECT stock
-                     FROM productos
-                     WHERE id = :producto_id";
 
-                $stmtVerificar =
-                    $this->conexion->prepare(
-                        $sqlVerificar
-                    );
+                // Obtener stock y costo actual del producto
+                $sqlProducto = "SELECT stock, precio_compra
+                            FROM productos
+                            WHERE id = :producto_id";
 
-                $stmtVerificar->execute([
-                    ':producto_id' =>
-                    $item['producto_id']
+                $stmtProducto = $this->conexion->prepare($sqlProducto);
+
+                $stmtProducto->execute([
+                    ':producto_id' => $item['producto_id']
                 ]);
 
-                $producto =
-                    $stmtVerificar->fetch();
+                $producto = $stmtProducto->fetch();
 
-                if (
-                    $producto['stock']
-                    <
-                    $item['cantidad']
-                ) {
+                if (!$producto) {
+                    throw new Exception("Producto no encontrado.");
+                }
+
+                if ($producto['stock'] < $item['cantidad']) {
                     throw new Exception(
-                        'Stock insuficiente'
+                        "Stock insuficiente para el producto."
                     );
                 }
-                // ?VERIFICAR STOCK
+
+                // Guardar detalle
                 $sqlDetalle = "INSERT INTO detalle_ventas
             (
                 venta_id,
                 producto_id,
                 cantidad,
                 precio_unitario,
+                costo_unitario,
                 subtotal
             )
             VALUES
@@ -152,29 +148,30 @@ class Venta
                 :producto_id,
                 :cantidad,
                 :precio,
+                :costo,
                 :subtotal
             )";
 
-                $stmtDetalle =
-                    $this->conexion->prepare($sqlDetalle);
+                $stmtDetalle = $this->conexion->prepare($sqlDetalle);
 
                 $stmtDetalle->execute([
-                    ':venta_id' => $venta_id,
+                    ':venta_id'   => $venta_id,
                     ':producto_id' => $item['producto_id'],
-                    ':cantidad' => $item['cantidad'],
-                    ':precio' => $item['precio'],
-                    ':subtotal' => $item['subtotal']
+                    ':cantidad'   => $item['cantidad'],
+                    ':precio'     => $item['precio'],
+                    ':costo'      => $producto['precio_compra'],
+                    ':subtotal'   => $item['subtotal']
                 ]);
 
+                // Descontar stock
                 $sqlStock = "UPDATE productos
                          SET stock = stock - :cantidad
                          WHERE id = :producto_id";
 
-                $stmtStock =
-                    $this->conexion->prepare($sqlStock);
+                $stmtStock = $this->conexion->prepare($sqlStock);
 
                 $stmtStock->execute([
-                    ':cantidad' => $item['cantidad'],
+                    ':cantidad'    => $item['cantidad'],
                     ':producto_id' => $item['producto_id']
                 ]);
             }
@@ -183,10 +180,10 @@ class Venta
 
             return $venta_id;
         } catch (Exception $e) {
+
             $this->conexion->rollBack();
 
-            die("ERROR VENTA: " .
-                $e->getMessage());
+            die("ERROR VENTA: " . $e->getMessage());
         }
     }
     public function anular($venta_id)
@@ -324,6 +321,7 @@ class Venta
             dv.cantidad,
 
             dv.precio_unitario,
+            dv.costo_unitario,
 
             dv.subtotal,
 

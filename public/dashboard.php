@@ -43,6 +43,7 @@ AuthMiddleware::verificar();
 
         </div>
         <div class="row g-3 mb-3">
+            <!-- //? CARD -->
             <div class="col-lg-3 col-md-6">
                 <div class="card shadow-sm border-0 h-100">
                     <div class="card-body">
@@ -56,7 +57,7 @@ AuthMiddleware::verificar();
                                 </h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="bi bi-cart-check fs-1 text-primary"></i>
+                                <i class="bi bi-cart-check fs-1 text-success"></i>
                             </div>
                         </div>
                     </div>
@@ -75,7 +76,7 @@ AuthMiddleware::verificar();
                                 </h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="bi bi-graph-up-arrow fs-1 text-success"></i>
+                                <i class="bi bi-graph-up-arrow fs-1 text-primary"></i>
                             </div>
                         </div>
                     </div>
@@ -94,7 +95,7 @@ AuthMiddleware::verificar();
                                 </h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="bi bi-cart-plus fs-1 text-warning"></i>
+                                <i class="bi bi-cart-plus fs-1 text-info"></i>
                             </div>
                         </div>
                     </div>
@@ -113,7 +114,7 @@ AuthMiddleware::verificar();
                                 </h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="bi bi-cash-coin fs-1 text-success"></i>
+                                <i class="bi bi-cash-coin fs-1 text-warning"></i>
                             </div>
                         </div>
                     </div>
@@ -132,7 +133,7 @@ AuthMiddleware::verificar();
                                 </h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="bi bi-box-seam fs-1 text-info"></i>
+                                <i class="bi bi-box-seam fs-1 text-dark"></i>
                             </div>
                         </div>
                     </div>
@@ -151,7 +152,7 @@ AuthMiddleware::verificar();
                                 </h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="bi bi-people-fill fs-1 text-primary"></i>
+                                <i class="bi bi-people-fill fs-1 text-secondary"></i>
                             </div>
                         </div>
                     </div>
@@ -170,7 +171,7 @@ AuthMiddleware::verificar();
                                 </h3>
                             </div>
                             <div class="align-self-center">
-                                <i class="bi bi-receipt fs-1 text-secondary"></i>
+                                <i class="bi bi-receipt fs-1 text-primary"></i>
                             </div>
                         </div>
                     </div>
@@ -195,37 +196,79 @@ AuthMiddleware::verificar();
                     </div>
                 </div>
             </div>
-            <hr>
+            <!--//? Resumen Financiero  -->
             <div class="card shadow-sm border-0 mt-4">
+
                 <div class="card-header bg-white">
                     <h5 class="mb-0">
                         Resumen Financiero
                     </h5>
                 </div>
+
                 <div class="card-body">
-                    <div class="row">
+
+                    <div class="row text-center">
+
                         <div class="col-md-3">
-                            Ventas
+
+                            <small class="text-muted">
+                                Ventas
+                            </small>
+
+                            <h4 id="rfVentas" class="text-success">
+                                C$ 0.00
+                            </h4>
+
                         </div>
+
                         <div class="col-md-3">
-                            Compras
+
+                            <small class="text-muted">
+                                Costos
+                            </small>
+
+                            <h4 id="rfCostos" class="text-warning">
+                                C$ 0.00
+                            </h4>
+
                         </div>
+
                         <div class="col-md-3">
-                            Gastos
+
+                            <small class="text-muted">
+                                Gastos
+                            </small>
+
+                            <h4 id="rfGastos" class="text-danger">
+                                C$ 0.00
+                            </h4>
+
                         </div>
+
                         <div class="col-md-3">
-                            Utilidad
+
+                            <small class="text-muted">
+                                Utilidad
+                            </small>
+
+                            <h4 id="rfUtilidad" class="text-primary">
+                                C$ 0.00
+                            </h4>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
-            <hr>
+            <!-- //? Graficos -->
             <div class="row mt-4">
 
                 <div class="col-lg-6">
                     <div class="card-header fw-bold">
 
-                        Ventas mensuales
+                        Ventas vs Compras
 
                     </div>
 
@@ -237,13 +280,12 @@ AuthMiddleware::verificar();
 
 
                 </div>
-
                 <div class="col-lg-6">
 
                     <div class="card-header fw-bold">
 
-                        Productos Mas Vendido
 
+                        Stock crítico
                     </div>
 
                     <div class="card-body">
@@ -254,15 +296,15 @@ AuthMiddleware::verificar();
 
                 </div>
 
+
             </div>
 
-            <div class="row mt-3">
-
+            <div class="row mt-4">
                 <div class="col-lg-6">
 
                     <div class="card-header fw-bold">
 
-                        Compras Mensuales
+                        Top productos vendidos
 
                     </div>
 
@@ -274,41 +316,180 @@ AuthMiddleware::verificar();
 
                 </div>
 
+
                 <div class="col-lg-6">
 
-                    gastos Por Categorias
+                    <div class="card-header fw-bold">
+
+                        Ventas por vendedor
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <canvas id="graficoVendedores"></canvas>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- //? tablas -->
+            <div class="col-lg-6">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-header bg-white">
+
+                        <h6 class="mb-0">
+                            <i class="bi bi-exclamation-triangle text-warning"></i>
+                            Productos con Stock Bajo
+                        </h6>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover table-sm mb-0">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>Producto</th>
+                                    <th>Stock</th>
+                                    <th>Mínimo</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="tablaStockBajo">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                 </div>
 
             </div>
-            <hr>
-            <div class="row mt-4">
+            <div class="col-lg-6">
 
-                <div class="col-lg-6">
+                <div class="card shadow-sm border-0 h-100">
 
-                    Productos con Stock Bajo
+                    <div class="card-header bg-white">
 
-                </div>
+                        <h6 class="mb-0">
+                            <i class="bi bi-receipt text-success"></i>
+                            Últimas Ventas
+                        </h6>
 
-                <div class="col-lg-6">
+                    </div>
 
-                    Últimas Ventas
+                    <div class="table-responsive">
+
+                        <table class="table table-hover table-sm mb-0">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>#</th>
+                                    <th>Cliente</th>
+                                    <th>Total</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="tablaUltimasVentas">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                 </div>
 
             </div>
+            <div class="col-lg-6 mt-4">
 
-            <div class="row mt-3">
+                <div class="card shadow-sm border-0 h-100">
 
-                <div class="col-lg-6">
+                    <div class="card-header bg-white">
 
-                    Últimas Compras
+                        <h6 class="mb-0">
+                            <i class="bi bi-cart-check text-primary"></i>
+                            Últimas Compras
+                        </h6>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover table-sm mb-0">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>#</th>
+                                    <th>Proveedor</th>
+                                    <th>Total</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="tablaUltimasCompras">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                 </div>
 
-                <div class="col-lg-6">
+            </div>
+            <div class="col-lg-6 mt-4">
 
-                    Actividad Reciente
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-header bg-white">
+
+                        <h6 class="mb-0">
+                            <i class="bi bi-clock-history text-secondary"></i>
+                            Actividad Reciente
+                        </h6>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover table-sm mb-0">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>Hora</th>
+                                    <th>Usuario</th>
+                                    <th>Acción</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="tablaActividad">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                 </div>
 

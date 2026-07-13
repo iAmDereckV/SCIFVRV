@@ -38,6 +38,7 @@ echo "
     <th>Cantidad</th>
 
     <th>Precio</th>
+    <th>Costo</th>
 
     <th>Subtotal</th>
 

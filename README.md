@@ -1,24 +1,10 @@
 gastos_categorias editar
 
 1. Dashboard Ejecutivo (lo más importante)
-   1.1 Ventas del día.
-   1.2 Compras del día. ✅
-   1.3 Gastos del día. ✅
-   1.4 Productos con stock bajo. ✅
-   1.5 Productos más vendidos. ✅
-   1.6 Ventas por mes.
-   1.7 Compras por mes.
-   1.8 Gastos por mes.
-   1.9 Últimas ventas. ✅
-   1.10 Últimas compras. ✅
-   ✅ Rediseñar completamente la interfaz del dashboard con Bootstrap 5 (sin tocar el backend).
-   ✅ Agregar iconos, colores y mejor distribución.
-   ✅ Agregar nuevas tarjetas (Compras del mes, Stock crítico, etc.).
-   ✅ Agregar actividad reciente (últimas ventas y compras).
-   ✅ Agregar alertas de stock.
-   ✅ Agregar nuevas gráficas.
-   ✅ Agregar el resumen financiero completo.
-   ✅ Agregar metas de ventas y otros indicadores.
+   1.2 resumen financiero
+   1.3 graficos
+   1.4 tablas
+
 2. Diseño final
    2.1 Ajustar colores.
    2.2 Espaciados.

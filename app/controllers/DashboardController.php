@@ -17,9 +17,9 @@ class DashboardController
         return $this->dashboard->resumen();
     }
 
-    public function ventasMes()
+    public function ventasComprasMes()
     {
-        return $this->dashboard->ventasMes();
+        return $this->dashboard->ventasComprasMes();
     }
 
     public function productosVendidos()
@@ -30,5 +30,34 @@ class DashboardController
     public function stockBajo()
     {
         return $this->dashboard->stockBajo();
+    }
+    public function ventasPorVendedor()
+    {
+        return $this->dashboard
+            ->ventasPorVendedor();
+    }
+    public function resumenFinanciero()
+    {
+        return $this->dashboard
+            ->resumenFinanciero();
+    }
+    public function stockBajoTabla()
+    {
+        return $this->dashboard->stockBajoTabla();
+    }
+
+    public function ultimasVentas()
+    {
+        return $this->dashboard->ultimasVentas();
+    }
+
+    public function ultimasCompras()
+    {
+        return $this->dashboard->ultimasCompras();
+    }
+
+    public function actividadReciente()
+    {
+        return $this->dashboard->actividadReciente();
     }
 }
