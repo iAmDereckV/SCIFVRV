@@ -5,7 +5,7 @@ require_once '../app/middleware/AuthMiddleware.php';
 require_once '../app/helpers/permisos.php';
 
 AuthMiddleware::verificar();
-$modulo = $_GET['modulo'] ?? '';
+$modulo = $_GET['modulo'] ?? 'dashboard';
 $inventarioActivo = in_array(
     $modulo,
     ['productos', 'marcas', 'categorias', 'kardex']
@@ -28,6 +28,7 @@ $configActivo = in_array(
 );
 
 $mapaPermisos = [
+    'dashboard' => 'dashboard_ver',
     'categorias' => 'categorias_ver',
     'marcas' => 'marcas_ver',
     'productos' => 'productos_ver',

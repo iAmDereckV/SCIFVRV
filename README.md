@@ -1,10 +1,4 @@
-gastos_categorias editar
-
-1. Dashboard Ejecutivo (lo más importante)
-   1.2 resumen financiero
-   1.3 graficos
-   1.4 tablas
-
+1. gastos_categorias editar
 2. Diseño final
    2.1 Ajustar colores.
    2.2 Espaciados.

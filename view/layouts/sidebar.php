@@ -12,8 +12,9 @@ Session::iniciar();
 
     <div class="row">
 
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark col-md-2 min-vh-100">
-            <img src="" width=" 80" id="navlogo" class="rounded-circle  me-2" alt="logo_empresa">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white col-md-2 min-vh-100 sidebar"><img src=""
+                id="navlogo" class="rounded-circle mx-auto d-block shadow" width="85" height="85"
+                style="object-fit:cover;background:white;padding:5px;">
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <?php if (tienePermiso('dashboard_ver')): ?>
@@ -27,10 +28,10 @@ Session::iniciar();
                 <?php if (tienePermiso('productos_ver') || tienePermiso('marcas_ver') || tienePermiso('categorias_ver') || tienePermiso('kardex_ver')): ?>
                 <li>
                     <a href="#" class="nav-link text-white dropdown-toggle <?= $inventarioActivo ? 'active' : '' ?>"
-                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        id="dropdownInventario" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-boxes"></i> Inventario
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownInventario">
                         <?php if (tienePermiso('productos_ver')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=productos"><i class="bi bi-box-seam"></i>
                                 Productos</a></li> <?php endif; ?>
@@ -101,10 +102,10 @@ Session::iniciar();
                 ): ?>
                 <li>
                     <a href="#" class="nav-link text-white dropdown-toggle <?= $reporteActivo ? 'active' : '' ?>"
-                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        id="dropdownReportes" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-bar-chart-line"></i> Reportes
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownReportes">
                         <?php if (tienePermiso('reportes_ventas')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=reportes_ventas"><i
                                     class="bi bi-cart-check"></i>
@@ -145,11 +146,12 @@ Session::iniciar();
             <ul class="nav nav-pills flex-column">
                 <li>
                     <a href="#" class="nav-link text-white dropdown-toggle <?= $configActivo ? 'active' : '' ?>"
-                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        id="dropdownConfiguracion" data-bs-toggle="dropdown" aria-expanded="false">
 
                         <i class="bi bi-gear"></i> Configuración
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow"
+                        aria-labelledby="dropdownConfiguracion">
                         <?php if (tienePermiso('usuarios_ver')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=usuarios"><i class="bi bi-person-badge"></i>
                                 Usuarios</a></li><?php endif; ?>

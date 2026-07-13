@@ -1,25 +1,52 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
 
     <div class="container-fluid">
 
-        <span class="navbar-brand">
+        <a class="navbar-brand d-flex align-items-center" href="#">
 
-            <h1 id="navtitle"></h1>
+            <i class="bi bi-speedometer2 fs-3 me-2 text-warning"></i>
 
-        </span>
+            <div>
 
-        <div>
+                <h5 class="mb-0 fw-bold" id="navtitle"></h5>
 
-            <?= $_SESSION['nombre'] ?>
-            <img src="<?= $_SESSION['ufoto'] ? 'uploads/usuarios/' . $_SESSION['ufoto'] : 'assets/img/sin-imagen.png' ?> "
-                width=" 80" class="rounded-circle me-2">
+                <small class="text-light opacity-75">
+                    Sistema de Inventario
+                </small>
 
-            <a class="btn btn-danger btn-sm" href="./../api/auth/logout.php">
+            </div>
 
-                Cerrar sesión
+        </a>
+
+        <div class="d-flex align-items-center">
+
+            <div class="text-end me-3">
+
+                <div class="fw-bold text-white">
+
+                    <?= $_SESSION['nombre'] ?>
+
+                </div>
+
+                <small class="text-light opacity-75">
+
+                    <?= $_SESSION['rol_nombre'] ?>
+
+                </small>
+
+            </div>
+
+            <img src="<?= $_SESSION['ufoto'] ? 'uploads/usuarios/' . $_SESSION['ufoto'] : 'assets/img/sin-imagen.png' ?>"
+                class="rounded-circle border border-2 border-warning shadow-sm me-3" width="55" height="55"
+                style="object-fit:cover;">
+
+            <a href="./../api/auth/logout.php" class="btn btn-outline-light">
+
+                <i class="bi bi-box-arrow-right me-1"></i>
+
+                Salir
 
             </a>
-
 
         </div>
 

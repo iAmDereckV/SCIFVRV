@@ -1,4 +1,5 @@
 <h2>Productos</h2>
+
 <?php if (
     tienePermiso('productos_crear')
     ||
