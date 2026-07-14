@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  cargarProductos();
   cargarCategorias();
   cargarMarcas();
+  cargarProductos();
 
   document
     .getElementById("formProducto")
@@ -9,8 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function cargarProductos() {
+  if ($.fn.DataTable.isDataTable("#tablaProductos")) {
+    $("#tablaProductos").DataTable().destroy();
+  }
   let response = await fetch(IRL + "/api/productos/listar.php");
-
   let data = await response.json();
 
   let html = "";
@@ -19,6 +21,14 @@ async function cargarProductos() {
     let foto = producto.imagen
       ? `uploads/productos/${producto.imagen}`
       : `assets/img/sin-imagen.png`;
+    let estado =
+      producto.estado == "ACTIVO"
+        ? `<span class="badge bg-success">Activo</span>`
+        : `<span class="badge bg-danger">Inactivo</span>`;
+    let stock =
+      producto.stock <= producto.stock_minimo
+        ? `<span class="badge bg-danger">${producto.stock}</span>`
+        : `<span class="badge bg-success">${producto.stock}</span>`;
     html += `
       <tr>
 
@@ -26,10 +36,13 @@ async function cargarProductos() {
 <td>
 
 <img
-    src="${foto}"
-    width="60"
-    height="60"
-    style="object-fit:cover;">
+src="${foto}"
+class="rounded-circle shadow-sm border"
+style="
+width:55px;
+height:55px;
+object-fit:cover;
+">
 
 </td>
         <td>${producto.nombre}</td>
@@ -38,49 +51,85 @@ async function cargarProductos() {
 
         <td>${producto.marca}</td>
 
-        <td>${producto.precio_venta}</td>
+        <td>C$ ${Number(producto.precio_venta).toFixed(2)}</td>
 
-        <td>${producto.stock}</td>
+        <td>${stock}</td>
         <td>${producto.vehiculo_aplicable}</td>
         <td>${producto.descripcion}</td>
         <td>${producto.ubicacion}</td>
 
-        <td>${producto.estado}</td>
+        <td>${estado}</td>
 
         <td>
-
+<div class="btn-group">
           <button
-            class="btn btn-warning btn-sm"
-            onclick="editarProducto(${producto.id})">
+          title="Editar"
+            class="btn btn-sm btn-outline-primary"
+            onclick="editarProducto(${producto.id})" >
 
-            Editar
+            <i class="bi bi-pencil"></i>
 
           </button>
 
           <button
-            class="btn btn-danger btn-sm"
+          title="Estado"
+            
+class="btn btn-sm btn-outline-danger"
             onclick="cambiarEstado(
               ${producto.id},
               '${producto.estado}'
             )">
 
-            Estado
+            <i class="bi bi-arrow-repeat"></i>
 
           </button>
 <button
-    class="btn btn-warning btn-sm"
+   title="Foto"
+            class="btn btn-sm btn-outline-warning"
     onclick="cambiarImagen(${producto.id})">
 
-    Foto
+    <i class="bi bi-image"></i>
 
 </button>
+</div>
         </td>
 
       </tr>
     `;
   });
-
   document.querySelector("#tablaProductos tbody").innerHTML = html;
+  if ($.fn.DataTable.isDataTable("#tablaProductos")) {
+    $("#tablaProductos").DataTable().destroy();
+  }
+
+  $("#tablaProductos").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+
+    responsive: true,
+
+    pageLength: 10,
+
+    lengthMenu: [
+      [10, 25, 50, 100, -1],
+      [10, 25, 50, 100, "Todos"],
+    ],
+
+    order: [[2, "asc"]],
+  });
 }
 
 async function cargarCategorias() {
@@ -166,17 +215,7 @@ async function guardarProducto(e) {
   formData.append("ubicacion", document.getElementById("ubicacion").value);
 
   let id = document.getElementById("formProducto").dataset.id;
-  if (!id && !PUEDE_CREAR_PRODUCTOS) {
-    alert("No tiene permiso para crear productos");
 
-    return;
-  }
-
-  if (id && !PUEDE_EDITAR_PRODUCTOS) {
-    alert("No tiene permiso para editar productos");
-
-    return;
-  }
   if (id) {
     formData.append("id", id);
   }
@@ -199,12 +238,19 @@ async function guardarProducto(e) {
     document.getElementById("formProducto").reset();
 
     delete document.getElementById("formProducto").dataset.id;
-
+    bootstrap.Modal.getInstance(
+      document.getElementById("modalProducto"),
+    ).hide();
     cargarProductos();
   }
 }
 
 async function editarProducto(id) {
+  if (!PUEDE_EDITAR_PRODUCTOS) {
+    alert("No tiene permiso para editar productos");
+
+    return;
+  }
   let response = await fetch(IRL + "/api/productos/obtener.php?id=" + id);
 
   let producto = await response.json();
@@ -233,6 +279,7 @@ async function editarProducto(id) {
   document.getElementById("ubicacion").value = producto.ubicacion;
 
   document.getElementById("formProducto").dataset.id = producto.id;
+  new bootstrap.Modal(document.getElementById("modalProducto")).show();
 }
 
 async function cambiarEstado(id, estadoActual) {
@@ -301,4 +348,15 @@ async function guardarImagen() {
   } else {
     alert("Error");
   }
+}
+function nuevoProducto() {
+  if (!PUEDE_CREAR_PRODUCTOS) {
+    alert("No tiene permiso para crear productos");
+    return;
+  }
+  document.getElementById("formProducto").reset();
+
+  delete document.getElementById("formProducto").dataset.id;
+
+  new bootstrap.Modal(document.getElementById("modalProducto")).show();
 }

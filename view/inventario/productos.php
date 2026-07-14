@@ -1,47 +1,213 @@
-<h2>Productos</h2>
+<div class="d-flex justify-content-between align-items-center mb-3">
 
-<?php if (
-    tienePermiso('productos_crear')
-    ||
-    tienePermiso('productos_editar')
-): ?>
-<form id="formProducto">
+    <h2 class="mb-0">
+        Productos
+    </h2>
 
-    <input type="text" id="codigo" class="form-control mb-2" placeholder="Código">
+    <button class="btn btn-primary" onclick="nuevoProducto()">
 
-    <input type="text" id="nombre" class="form-control mb-2" placeholder="Nombre">
+        <i class="bi bi-plus-circle"></i>
+        Nuevo Producto
 
-    <textarea id="descripcion" class="form-control mb-2" placeholder="Descripción"></textarea>
-
-    <textarea id="vehiculo_aplicable" class="form-control mb-2" placeholder="Vehículo aplicable"></textarea>
-
-    <select id="categoria_id" class="form-control mb-2">
-    </select>
-
-    <select id="marca_id" class="form-control mb-2">
-    </select>
-
-    <input type="number" step="0.01" id="precio_compra" class="form-control mb-2" placeholder="Precio compra">
-
-    <input type="number" step="0.01" id="precio_venta" class="form-control mb-2" placeholder="Precio venta">
-
-    <input type="number" id="stock" class="form-control mb-2" placeholder="Stock">
-
-    <input type="number" id="stock_minimo" class="form-control mb-2" placeholder="Stock mínimo">
-    <label>Imagen</label>
-
-    <input type="file" id="imagen" class="form-control" accept="image/*">
-    <input type="text" id="ubicacion" class="form-control mb-2" placeholder="Ubicación">
-
-    <button type="submit" class="btn btn-primary">
-        Guardar
     </button>
 
-</form>
-<?php endif; ?>
+</div>
+
+<div class="modal fade" id="modalProducto" tabindex="-1">
+
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+
+        <div class="modal-content">
+
+            <form id="formProducto">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+
+                        <i class="bi bi-box-seam text-white"></i>
+
+                        Producto
+
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row g-3">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    <i class="bi bi-upc-scan"></i>
+                                    Código
+                                </label>
+
+                                <input type="text" id="codigo" class="form-control" placeholder="Código del producto">
+                            </div>
+
+                            <div class="col-md-8">
+                                <label class="form-label">
+                                    <i class="bi bi-box"></i>
+                                    Nombre
+                                </label>
+
+                                <input type="text" id="nombre" class="form-control" placeholder="Nombre del producto">
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    <i class="bi bi-tags"></i>
+                                    Categoría
+                                </label>
+
+                                <select id="categoria_id" class="form-select">
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    <i class="bi bi-bookmark-star"></i>
+                                    Marca
+                                </label>
+
+                                <select id="marca_id" class="form-select">
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Precio Compra
+                                </label>
+
+                                <input type="number" step="0.01" id="precio_compra" class="form-control">
+
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Precio Venta
+                                </label>
+
+                                <input type="number" step="0.01" id="precio_venta" class="form-control">
+
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Ubicación
+                                </label>
+
+                                <input type="text" id="ubicacion" class="form-control">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Stock
+                                </label>
+
+                                <input type="number" id="stock" class="form-control">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Stock mínimo
+                                </label>
+
+                                <input type="number" id="stock_minimo" class="form-control">
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Vehículo aplicable
+                                </label>
+
+                                <textarea id="vehiculo_aplicable" class="form-control" rows="2"></textarea>
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Descripción
+                                </label>
+
+                                <textarea id="descripcion" class="form-control" rows="3"></textarea>
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Imagen
+                                </label>
+
+                                <input type="file" id="imagen" class="form-control" accept="image/*">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="reset" class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+
+                        Limpiar
+
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Cancelar
+
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Guardar Producto
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 <hr>
 
-<table class="table table-bordered" id="tablaProductos">
+<table class="table table-hover align-middle" id="tablaProductos">
 
     <thead>
 
@@ -64,10 +230,11 @@
 
     </thead>
 
-    <tbody></tbody>
+    <tbody class="table-light"></tbody>
 
 </table>
-<div class="modal fade" id="modalImagen">
+
+<div class=" modal fade" id="modalImagen">
 
     <div class="modal-dialog">
 
@@ -103,16 +270,16 @@
 
 </div>
 <script>
-const PUEDE_EDITAR_PRODUCTOS =
-    <?= tienePermiso('productos_editar')
+    const PUEDE_EDITAR_PRODUCTOS =
+        <?= tienePermiso('productos_editar')
             ? 'true'
             : 'false' ?>;
-const PUEDE_CREAR_PRODUCTOS =
-    <?= tienePermiso(
+    const PUEDE_CREAR_PRODUCTOS =
+        <?= tienePermiso(
             'productos_crear'
         ) ? 'true' : 'false' ?>;
-const PUEDE_CAMBIAR_ESTADO_PRODUCTOS =
-    <?= tienePermiso('productos_eliminar')
+    const PUEDE_CAMBIAR_ESTADO_PRODUCTOS =
+        <?= tienePermiso('productos_eliminar')
             ? 'true'
             : 'false' ?>;
 </script>
