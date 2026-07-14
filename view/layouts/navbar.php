@@ -10,8 +10,7 @@
 
                 <h5 class="mb-0 fw-bold" id="navtitle"></h5>
 
-                <small class="text-light opacity-75">
-                    Sistema de Inventario
+                <small class="text-light opacity-75" id="navslogan">
                 </small>
 
             </div>

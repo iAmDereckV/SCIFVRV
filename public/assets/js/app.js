@@ -14,6 +14,7 @@
 
   if (!data) return;
   document.getElementById("navtitle").textContent = data.nombre_empresa ?? "";
+  document.getElementById("navslogan").innerText = data.slogan ?? "";
   if (data.logo) {
     let img = document.getElementById("navlogo");
 

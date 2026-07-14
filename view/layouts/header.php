@@ -10,7 +10,7 @@
     </title>
 
     <script>
-    const IRL = "/SCIFVRV";
+        const IRL = "/SCIFVRV";
     </script>
 
 
@@ -25,4 +25,4 @@
 </head>
 
 <body>
-    <main>
+    <main class="bg-light">

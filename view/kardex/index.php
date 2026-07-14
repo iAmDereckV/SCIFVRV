@@ -2,7 +2,7 @@
 
 <div class="row">
 
-    <div class="col-md-6">
+    <div class="col-md-4">
 
         <label>Producto</label>
 
@@ -24,42 +24,67 @@
     </div>
 
 </div>
-<div id="infoProducto" class="row mb-3" style="display:none;">
 
-    <div class="col-md-2">
+<div id="infoProducto" class="card shadow-sm border-0 mb-4 mt-4" style="display:none;">
 
-        <img id="fotoProducto" src="" class="img-thumbnail" style="
-                width:120px;
-                height:120px;
-                object-fit:cover;
-            ">
+    <div class="card-body">
 
-    </div>
+        <div class="row align-items-center">
 
-    <div class="col-md-10">
+            <div class="col-md-2 text-center">
 
-        <h4 id="nombreProducto"></h4>
+                <img id="fotoProducto" src="" class="img-fluid rounded shadow-sm producto-card-img">
 
-        <p>
+            </div>
 
-            Código:
-            <strong id="codigoProducto"></strong>
+            <div class="col-md-10">
 
-        </p>
+                <h4 id="nombreProducto" class="fw-bold text-primary mb-3"></h4>
 
-        <p>
+                <div class="row">
 
-            Stock Actual:
-            <strong id="stockProducto"></strong>
+                    <div class="col-md-4">
 
-        </p>
+                        <small class="text-muted">
+                            Código
+                        </small>
+
+                        <h6 id="codigoProducto" class="fw-bold"></h6>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <small class="text-muted">
+                            Stock Actual
+                        </small>
+
+                        <h6 id="stockProducto" class="fw-bold text-success"></h6>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <small class="text-muted">
+                            Estado
+                        </small>
+
+                        <h6 id="estadoProducto"></h6>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
 <hr>
 
-<table class="table" id="tablaKardex">
+<table class="table table-hover align-middle" id="tablaKardex">
 
     <thead>
 

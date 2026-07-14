@@ -9,7 +9,7 @@ AuthMiddleware::verificar();
 
 
 
-<div class="d-flex bg-light">
+<div class="d-flex">
 
     <div class="container-fluid p-4">
         <div class="d-flex justify-content-between align-items-center mb-4">

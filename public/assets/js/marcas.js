@@ -78,11 +78,11 @@ async function cargarMarcas() {
 
     responsive: true,
 
-    pageLength: 10,
+    pageLength: 5,
 
     lengthMenu: [
-      [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "Todos"],
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "Todos"],
     ],
 
     order: [[2, "asc"]],
@@ -169,7 +169,6 @@ async function cambiarEstado(id, estadoActual) {
 function nuevaMarca() {
   if (!PUEDE_CREAR_MARCAS) {
     alert("No tiene permiso para crear marcas");
-
     return;
   }
   document.getElementById("formMarca").reset();

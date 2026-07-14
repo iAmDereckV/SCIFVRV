@@ -17,11 +17,9 @@ class Kardex
     public function consultar(
         $producto_id
     ) {
-        $sql = "
-
-        SELECT
-
-            fecha,
+        $sql = "SELECT
+            DATE_FORMAT(fecha, '%d/%m/%Y %H:%i:%s') AS fecha,
+            fecha AS fecha_orden,
             'COMPRA' tipo,
             cantidad,
             CONCAT(
@@ -39,8 +37,8 @@ class Kardex
         UNION ALL
 
         SELECT
-
-            fecha,
+            DATE_FORMAT(fecha, '%d/%m/%Y %H:%i:%s') AS fecha,
+            fecha AS fecha_orden,
             'VENTA' tipo,
             cantidad,
             CONCAT(
@@ -55,7 +53,7 @@ class Kardex
 
         WHERE producto_id = :producto_id
 
-        ORDER BY fecha ASC
+        ORDER BY fecha_orden ASC
         ";
 
         $stmt =
@@ -77,6 +75,7 @@ class Kardex
                 codigo,
                 nombre,
                 stock,
+                stock_minimo,
                 imagen
 
             FROM productos

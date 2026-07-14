@@ -355,3 +355,78 @@ textarea.form-control{
     overflow-y:auto;
 
 }
+/* Tarjeta del producto */
+
+#infoProducto{
+
+    border-radius:18px;
+
+    border:none;
+
+    overflow:hidden;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    transition:.25s;
+
+}
+
+#infoProducto:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+
+}
+
+/* Imagen */
+
+.producto-card-img{
+
+    width:120px;
+
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:15px;
+
+    border:4px solid #eef4ff;
+
+    background:#f8f9fa;
+
+}
+
+/* Nombre */
+
+#nombreProducto{
+
+    color:var(--primary);
+
+    font-size:1.5rem;
+
+}
+
+/* Etiquetas */
+
+#infoProducto small{
+
+    font-weight:600;
+
+    color:#6c757d;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+}
+
+/* Valores */
+
+#infoProducto h6{
+
+    font-size:1.05rem;
+
+    margin-top:3px;
+
+}

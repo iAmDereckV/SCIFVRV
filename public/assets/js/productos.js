@@ -26,9 +26,12 @@ async function cargarProductos() {
         ? `<span class="badge bg-success">Activo</span>`
         : `<span class="badge bg-danger">Inactivo</span>`;
     let stock =
-      producto.stock <= producto.stock_minimo
+      producto.stock < producto.stock_minimo
         ? `<span class="badge bg-danger">${producto.stock}</span>`
         : `<span class="badge bg-success">${producto.stock}</span>`;
+    console.log(
+      `valor ${stock} Nstock ${producto.stock} Nstckm ${producto.stock_minimo}`,
+    );
     html += `
       <tr>
 
@@ -52,7 +55,7 @@ object-fit:cover;
         <td>${producto.marca}</td>
 
         <td>C$ ${Number(producto.precio_venta).toFixed(2)}</td>
-
+      
         <td>${stock}</td>
         <td>${producto.vehiculo_aplicable}</td>
         <td>${producto.descripcion}</td>
@@ -117,11 +120,11 @@ object-fit:cover;
 
     responsive: true,
 
-    pageLength: 10,
+    pageLength: 5,
 
     lengthMenu: [
-      [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "Todos"],
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "Todos"],
     ],
 
     order: [[2, "asc"]],

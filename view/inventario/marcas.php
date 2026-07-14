@@ -22,7 +22,7 @@
 
                     <h5 class="modal-title">
 
-                        <i class="bi bi-box-seam text-white"></i>
+                        <i class="bi bi-bookmark-star text-white"></i>
 
                         Marca
 

@@ -252,7 +252,6 @@ async function cargarResumenFinanciero() {
   let response = await fetch(IRL + "/api/dashboard/resumen_financiero.php");
 
   let data = await response.json();
-  console.log(data);
   document.getElementById("rfVentas").innerText =
     "C$ " + Number(data.ventas).toFixed(2);
 
