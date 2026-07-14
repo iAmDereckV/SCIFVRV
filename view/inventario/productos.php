@@ -40,133 +40,131 @@
 
                     <div class="row g-3">
 
-                        <div class="row g-3">
 
-                            <div class="col-md-4">
-                                <label class="form-label">
-                                    <i class="bi bi-upc-scan"></i>
-                                    Código
-                                </label>
+                        <div class="col-md-4">
+                            <label class="form-label">
+                                <i class="bi bi-upc-scan"></i>
+                                Código
+                            </label>
 
-                                <input type="text" id="codigo" class="form-control" placeholder="Código del producto">
-                            </div>
+                            <input type="text" id="codigo" class="form-control" placeholder="Código del producto">
+                        </div>
 
-                            <div class="col-md-8">
-                                <label class="form-label">
-                                    <i class="bi bi-box"></i>
-                                    Nombre
-                                </label>
+                        <div class="col-md-8">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Nombre
+                            </label>
 
-                                <input type="text" id="nombre" class="form-control" placeholder="Nombre del producto">
-                            </div>
+                            <input type="text" id="nombre" class="form-control" placeholder="Nombre del producto">
+                        </div>
 
-                            <div class="col-md-6">
+                        <div class="col-md-6">
 
-                                <label class="form-label">
-                                    <i class="bi bi-tags"></i>
-                                    Categoría
-                                </label>
+                            <label class="form-label">
+                                <i class="bi bi-tags"></i>
+                                Categoría
+                            </label>
 
-                                <select id="categoria_id" class="form-select">
-                                </select>
+                            <select id="categoria_id" class="form-select">
+                            </select>
 
-                            </div>
+                        </div>
 
-                            <div class="col-md-6">
+                        <div class="col-md-6">
 
-                                <label class="form-label">
-                                    <i class="bi bi-bookmark-star"></i>
-                                    Marca
-                                </label>
+                            <label class="form-label">
+                                <i class="bi bi-bookmark-star"></i>
+                                Marca
+                            </label>
 
-                                <select id="marca_id" class="form-select">
-                                </select>
+                            <select id="marca_id" class="form-select">
+                            </select>
 
-                            </div>
+                        </div>
 
-                            <div class="col-md-4">
+                        <div class="col-md-4">
 
-                                <label class="form-label">
-                                    Precio Compra
-                                </label>
+                            <label class="form-label">
+                                Precio Compra
+                            </label>
 
-                                <input type="number" step="0.01" id="precio_compra" class="form-control">
+                            <input type="number" step="0.01" id="precio_compra" class="form-control">
 
-                            </div>
+                        </div>
 
-                            <div class="col-md-4">
+                        <div class="col-md-4">
 
-                                <label class="form-label">
-                                    Precio Venta
-                                </label>
+                            <label class="form-label">
+                                Precio Venta
+                            </label>
 
-                                <input type="number" step="0.01" id="precio_venta" class="form-control">
+                            <input type="number" step="0.01" id="precio_venta" class="form-control">
 
-                            </div>
+                        </div>
 
-                            <div class="col-md-4">
+                        <div class="col-md-4">
 
-                                <label class="form-label">
-                                    Ubicación
-                                </label>
+                            <label class="form-label">
+                                Ubicación
+                            </label>
 
-                                <input type="text" id="ubicacion" class="form-control">
+                            <input type="text" id="ubicacion" class="form-control">
 
-                            </div>
+                        </div>
 
-                            <div class="col-md-6">
+                        <div class="col-md-6">
 
-                                <label class="form-label">
-                                    Stock
-                                </label>
+                            <label class="form-label">
+                                Stock
+                            </label>
 
-                                <input type="number" id="stock" class="form-control">
+                            <input type="number" id="stock" class="form-control">
 
-                            </div>
+                        </div>
 
-                            <div class="col-md-6">
+                        <div class="col-md-6">
 
-                                <label class="form-label">
-                                    Stock mínimo
-                                </label>
+                            <label class="form-label">
+                                Stock mínimo
+                            </label>
 
-                                <input type="number" id="stock_minimo" class="form-control">
+                            <input type="number" id="stock_minimo" class="form-control">
 
-                            </div>
+                        </div>
 
-                            <div class="col-md-12">
+                        <div class="col-md-12">
 
-                                <label class="form-label">
-                                    Vehículo aplicable
-                                </label>
+                            <label class="form-label">
+                                Vehículo aplicable
+                            </label>
 
-                                <textarea id="vehiculo_aplicable" class="form-control" rows="2"></textarea>
+                            <textarea id="vehiculo_aplicable" class="form-control" rows="2"></textarea>
 
-                            </div>
+                        </div>
 
-                            <div class="col-md-12">
+                        <div class="col-md-12">
 
-                                <label class="form-label">
-                                    Descripción
-                                </label>
+                            <label class="form-label">
+                                Descripción
+                            </label>
 
-                                <textarea id="descripcion" class="form-control" rows="3"></textarea>
+                            <textarea id="descripcion" class="form-control" rows="3"></textarea>
 
-                            </div>
+                        </div>
 
-                            <div class="col-md-12">
+                        <div class="col-md-12">
 
-                                <label class="form-label">
-                                    Imagen
-                                </label>
+                            <label class="form-label">
+                                Imagen
+                            </label>
 
-                                <input type="file" id="imagen" class="form-control" accept="image/*">
-
-                            </div>
+                            <input type="file" id="imagen" class="form-control" accept="image/*">
 
                         </div>
 
                     </div>
+
 
                 </div>
 
@@ -230,7 +228,7 @@
 
     </thead>
 
-    <tbody class="table-light"></tbody>
+    <tbody></tbody>
 
 </table>
 

@@ -73,8 +73,7 @@ object-fit:cover;
 
           <button
           title="Estado"
-            
-class="btn btn-sm btn-outline-danger"
+            class="btn btn-sm btn-outline-danger"
             onclick="cambiarEstado(
               ${producto.id},
               '${producto.estado}'
@@ -98,9 +97,6 @@ class="btn btn-sm btn-outline-danger"
     `;
   });
   document.querySelector("#tablaProductos tbody").innerHTML = html;
-  if ($.fn.DataTable.isDataTable("#tablaProductos")) {
-    $("#tablaProductos").DataTable().destroy();
-  }
 
   $("#tablaProductos").DataTable({
     language: {
