@@ -437,7 +437,13 @@ textarea.form-control{
 .card{
     border-radius:20px;
 }
-
+.card-bg{
+    background: linear-gradient(
+        90deg,
+        var(--color-primary),
+        var(--color-secondary)
+    );
+}
 .card-header{
     border-bottom:1px solid #edf2f7;
     font-weight:600;

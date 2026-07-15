@@ -1,4 +1,3 @@
-1. gastos_categorias editar
 2. Diseño final
    2.1 Ajustar colores.
    2.2 Espaciados.

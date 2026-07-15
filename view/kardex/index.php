@@ -1,4 +1,4 @@
-<h2>Kardex de Inventario</h2>
+<h2 class="fw-bold mb-2">Kardex de Inventario</h2>
 
 <div class="row">
 

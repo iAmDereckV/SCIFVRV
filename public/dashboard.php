@@ -192,72 +192,6 @@ AuthMiddleware::verificar();
                     </div>
                 </div>
             </div>
-            <!--//? Resumen Financiero  -->
-            <div class="card shadow-sm border-0 mt-4">
-
-                <div class="card-header bg-white">
-                    <h5 class="mb-0">
-                        Resumen Financiero
-                    </h5>
-                </div>
-
-                <div class="card-body">
-
-                    <div class="row text-center">
-
-                        <div class="col-md-3">
-
-                            <small class="text-muted">
-                                Ventas
-                            </small>
-
-                            <h4 id="rfVentas" class="text-success">
-                                C$ 0.00
-                            </h4>
-
-                        </div>
-
-                        <div class="col-md-3">
-
-                            <small class="text-muted">
-                                Costos
-                            </small>
-
-                            <h4 id="rfCostos" class="text-warning">
-                                C$ 0.00
-                            </h4>
-
-                        </div>
-
-                        <div class="col-md-3">
-
-                            <small class="text-muted">
-                                Gastos
-                            </small>
-
-                            <h4 id="rfGastos" class="text-danger">
-                                C$ 0.00
-                            </h4>
-
-                        </div>
-
-                        <div class="col-md-3">
-
-                            <small class="text-muted">
-                                Utilidad
-                            </small>
-
-                            <h4 id="rfUtilidad" class="text-primary">
-                                C$ 0.00
-                            </h4>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
             <!-- //? Graficos -->
             <div class="row mt-4">
 
@@ -328,6 +262,72 @@ AuthMiddleware::verificar();
                     </div>
 
                 </div>
+            </div>
+            <!--//? Resumen Financiero  -->
+            <div class="card shadow-sm border-0 mt-4">
+
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">
+                        Resumen Financiero
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row text-center">
+
+                        <div class="col-md-3">
+
+                            <small class="text-muted">
+                                Ventas
+                            </small>
+
+                            <h4 id="rfVentas" class="text-success">
+                                C$ 0.00
+                            </h4>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <small class="text-muted">
+                                Costos
+                            </small>
+
+                            <h4 id="rfCostos" class="text-warning">
+                                C$ 0.00
+                            </h4>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <small class="text-muted">
+                                Gastos
+                            </small>
+
+                            <h4 id="rfGastos" class="text-danger">
+                                C$ 0.00
+                            </h4>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <small class="text-muted">
+                                Utilidad
+                            </small>
+
+                            <h4 id="rfUtilidad" class="text-primary">
+                                C$ 0.00
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
             <!-- //? tablas -->
             <div class="col-lg-6">

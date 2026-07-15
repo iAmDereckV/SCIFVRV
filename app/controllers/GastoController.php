@@ -73,4 +73,25 @@ class GastoController
                 $fecha
             );
     }
+    public function cgobtener($id)
+    {
+        return $this->gasto
+            ->cgobtener($id);
+    }
+    public function cgGuardar(
+        $nombre
+    ) {
+        return $this->gasto->cgGuardar(
+            $nombre
+        );
+    }
+    public function cgActualizar(
+        $id,
+        $nombre
+    ) {
+        return $this->gasto->cgActualizar(
+            $id,
+            $nombre
+        );
+    }
 }

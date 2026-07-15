@@ -12,17 +12,17 @@ $nombreArchivo = null;
 
 
 if (
-    isset($_FILES['archivo_factura']) &&
-    $_FILES['archivo_factura']['error'] == 0
+    isset($_FILES['imagen']) &&
+    $_FILES['imagen']['error'] == 0
 ) {
 
     $nombreArchivo =
         time() . '_' .
-        $_FILES['archivo_factura']['name'];
+        $_FILES['imagen']['name'];
 
     move_uploaded_file(
 
-        $_FILES['archivo_factura']['tmp_name'],
+        $_FILES['imagen']['tmp_name'],
 
         '../../public/uploads/gastos/' .
             $nombreArchivo

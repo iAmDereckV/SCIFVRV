@@ -1,120 +1,278 @@
-<h2>Compras</h2>
+<div class="container-fluid">
 
-<div class="row">
+    <h3 class="page-title mb-4">
+        <i class="bi bi-cart-plus-fill text-primary"></i>
+        Nueva Compra
+    </h3>
+    <div class="row">
 
-    <div class="col-md-4">
+        <div class="col-lg-8">
 
-        <label>Proveedor</label>
+            <!-- Datos compra -->
+            <div class="card shadow-sm border-0 mb-4">
 
-        <select id="proveedor_id" class="form-control mb-2">
-        </select>
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-bag-plus text-primary"></i>
+
+                        Datos de la Compra
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+                                Proveedor
+                            </label>
+
+                            <select
+                                id="proveedor_id"
+                                class="form-select">
+                            </select>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+                                Factura
+                            </label>
+
+                            <input
+                                id="factura"
+                                class="form-control">
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+                                Archivo
+                            </label>
+
+                            <input
+                                type="file"
+                                id="archivo_factura"
+                                class="form-control">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card shadow-sm border-0 mb-4">
+
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-cart-plus text-success"></i>
+
+                        Agregar Productos
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row g-3 align-items-end">
+
+                        <div class="col-md-5">
+
+                            <label>Producto</label>
+
+                            <select
+                                id="producto_id"
+                                class="form-select">
+                            </select>
+
+                        </div>
+
+                        <div class="col-md-2">
+
+                            <label>Cantidad</label>
+
+                            <input
+                                type="number"
+                                id="cantidad"
+                                class="form-control">
+
+                        </div>
+
+                        <div class="col-md-2">
+
+                            <label>Costo Unidad</label>
+
+                            <input
+                                type="number"
+                                step="0.01"
+                                id="costo"
+                                class="form-control">
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <button
+                                class="btn btn-success w-100"
+                                onclick="agregarProducto()">
+
+                                <i class="bi bi-plus-circle"></i>
+
+                                Agregar
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0 mt-4">
+
+                <div class="card-header card-bg text-white text-center">
+                    <h4 class="mb-0">
+                        Resumen
+                    </h4>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <span>
+
+                            Productos
+
+                        </span>
+
+                        <strong id="cantidadProductos">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+
+                        <span>
+
+                            Unidades
+
+                        </span>
+
+                        <strong id="cantidadUnidades">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+
+                        <h4>Total</h4>
+
+                        <h3
+                            class="fw-bold text-primary"
+                            id="total">
+
+                            C$ 0.00
+
+                        </h3>
+
+                    </div>
+
+                    <button
+                        class="btn btn-primary w-100 mt-3"
+                        onclick="guardarCompra()">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Guardar Compra
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
+    <div class="row mt-4">
 
-    <div class="col-md-4">
+        <div class="col-12">
 
-        <label>Número Factura</label>
+            <!-- Tabla detalle -->
+            <div class="card shadow-sm border-0">
 
-        <input type="text" id="factura" class="form-control mb-2">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="bi bi-list-check"></i>
 
-        <label class="mt-2">
-            Archivo Factura
-        </label>
+                        Detalle de la Compra
+                    </h5>
+                </div>
 
-        <input type="file" id="archivo_factura" class="form-control" accept=".jpg,.jpeg,.png,.pdf">
+                <div class="card-body">
+
+                    <table
+                        class="table table-hover align-middle"
+                        id="tablaDetalle">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Producto</th>
+
+                                <th>Cantidad</th>
+
+                                <th>Costo</th>
+
+                                <th>Subtotal</th>
+
+
+                                <th>Eliminar</th>
+
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
 
     </div>
 
 </div>
-<hr>
 
-<div class="row">
-
-    <div class="col-md-4">
-
-        <label>Producto</label>
-
-        <select id="producto_id" class="form-control">
-        </select>
-
-    </div>
-
-    <div class="col-md-2">
-
-        <label>Cantidad</label>
-
-        <input type="number" id="cantidad" class="form-control">
-
-    </div>
-
-    <div class="col-md-2">
-
-        <label>Costo</label>
-
-        <input type="number" step="0.01" id="costo" class="form-control">
-
-    </div>
-
-    <div class="col-md-2">
-
-        <label>&nbsp;</label>
-
-        <button class="btn btn-success form-control" onclick="agregarProducto()">
-
-            Agregar
-
-        </button>
-
-    </div>
-
-</div>
-<hr>
-
-<table class="table" id="tablaDetalle">
-
-    <thead>
-
-        <tr>
-
-            <th>Producto</th>
-
-            <th>Cantidad</th>
-
-            <th>Costo</th>
-
-            <th>Subtotal</th>
-
-            <th></th>
-
-        </tr>
-
-    </thead>
-
-    <tbody>
-
-    </tbody>
-
-</table>
-
-<h4>
-
-    Total:
-    C$
-    <span id="total">
-        0.00
-    </span>
-
-</h4>
-
-<button class="btn btn-primary" onclick="guardarCompra()">
-
-    Guardar Compra
-
-</button>
 
 <script>
-const PUEDE_CREAR_COMPRAS =
-    <?= tienePermiso(
+    const PUEDE_CREAR_COMPRAS =
+        <?= tienePermiso(
             'compras_crear'
         ) ? 'true' : 'false' ?>;
 </script>

@@ -51,11 +51,11 @@ object-fit:cover;
 
         <td>${producto.marca}</td>
 
+        <td>C$ ${Number(producto.precio_compra).toFixed(2)}</td>
         <td>C$ ${Number(producto.precio_venta).toFixed(2)}</td>
       
         <td>${stock}</td>
         <td>${producto.vehiculo_aplicable}</td>
-        <td>${producto.descripcion}</td>
         <td>${producto.ubicacion}</td>
 
         <td>${estado}</td>
@@ -90,7 +90,7 @@ object-fit:cover;
     <i class="bi bi-image"></i>
 
 </button>
-</div>
+
         </td>
 
       </tr>
@@ -304,8 +304,8 @@ async function cambiarEstado(id, estadoActual) {
   }
 }
 function cambiarImagen(id) {
-  if (!PUEDE_CAMBIAR_ESTADO_PRODUCTOS) {
-    alert("No tiene permiso para imagen");
+  if (!PUEDE_EDITAR_PRODUCTOS) {
+    alert("No tiene permiso para cambiar imagen");
     return;
   }
   document.getElementById("producto_imagen_id").value = id;
@@ -340,11 +340,12 @@ async function guardarImagen() {
 
   if (data.success) {
     alert("Imagen actualizada");
-
-    location.reload();
+    bootstrap.Modal.getInstance(document.getElementById("modalImagen")).hide();
+    cargarProductos();
   } else {
     alert("Error");
   }
+  document.getElementById("nueva_imagen").value = "";
 }
 function nuevoProducto() {
   if (!PUEDE_CREAR_PRODUCTOS) {

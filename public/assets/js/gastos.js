@@ -1,10 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   cargarCategorias();
   cargarGastos();
-
+  document
+    .getElementById("formCategoria")
+    .addEventListener("submit", guardarCategoria);
   document.getElementById("formGasto").addEventListener("submit", guardarGasto);
 });
 async function cargarGastos() {
+  if ($.fn.DataTable.isDataTable("#tablaGastos")) {
+    $("#tablaGastos").DataTable().destroy();
+  }
   let response = await fetch(IRL + "/api/gastos/listar.php");
 
   let data = await response.json();
@@ -40,30 +45,60 @@ async function cargarGastos() {
     }
 </td>
             <td>
-
+<div class="btn-group">
 <button
-    class="btn btn-warning btn-sm"
+    title="Editar"
+    class="btn btn-sm btn-outline-primary"
     onclick="editarGasto(${gasto.id})">
 
-    Editar
+    <i class="bi bi-pencil"></i>
 
 </button>
 
 <button
-    class="btn btn-secondary btn-sm"
+    title="Foto"
+            class="btn btn-sm btn-outline-warning"
     onclick="cambiarComprobante(${gasto.id})">
 
-    Comprobante
+    <i class="bi bi-image"></i>
 
 </button>
-
+</div>
 </td>
 
         </tr>
         `;
   });
 
-  document.getElementById("tbodyGastos").innerHTML = html;
+  document.querySelector("#tablaGastos tbody").innerHTML = html;
+  $("#tablaGastos").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+
+    responsive: true,
+
+    pageLength: 5,
+
+    lengthMenu: [
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "Todos"],
+    ],
+
+    order: [[2, "asc"]],
+  });
 }
 
 async function guardarGasto(e) {
@@ -82,17 +117,7 @@ async function guardarGasto(e) {
 
   formData.append("fecha", document.getElementById("fecha").value);
   let id = document.getElementById("formGasto").dataset.id;
-  if (!id && !PUEDE_CREAR_GASTOS) {
-    alert("No tiene permiso para crear gastos");
 
-    return;
-  }
-
-  if (id && !PUEDE_EDITAR_GASTOS) {
-    alert("No tiene permiso para editar gastos");
-
-    return;
-  }
   if (id) {
     formData.append("id", id);
   }
@@ -115,6 +140,7 @@ async function guardarGasto(e) {
   if (data.success) {
     document.getElementById("formGasto").reset();
     delete document.getElementById("formGasto").dataset.id;
+    bootstrap.Modal.getInstance(document.getElementById("modalGasto")).hide();
     cargarGastos();
   }
 }
@@ -137,6 +163,11 @@ async function cargarCategorias() {
   document.getElementById("categoria_id").innerHTML = html;
 }
 async function editarGasto(id) {
+  if (!PUEDE_EDITAR_GASTOS) {
+    alert("No tiene permiso para editar gastos");
+
+    return;
+  }
   let response = await fetch("/SCIFVRV/api/gastos/obtener.php?id=" + id);
 
   let gasto = await response.json();
@@ -150,43 +181,132 @@ async function editarGasto(id) {
   document.getElementById("fecha").value = gasto.fecha;
 
   document.getElementById("formGasto").dataset.id = gasto.id;
+  new bootstrap.Modal(document.getElementById("modalGasto")).show();
 }
-async function cambiarComprobante(id) {
+function cambiarComprobante(id) {
   if (!PUEDE_EDITAR_GASTOS) {
-    alert("No tiene permiso para cambiar comprobante");
+    alert("No tiene permiso para cambiar imagen");
+    return;
+  }
+  document.getElementById("gasto_imagen_id").value = id;
+
+  let modal = new bootstrap.Modal(document.getElementById("modalImagen"));
+
+  modal.show();
+}
+async function guardarImagen() {
+  let id = document.getElementById("gasto_imagen_id").value;
+
+  let archivo = document.getElementById("nueva_imagen").files[0];
+
+  if (!archivo) {
+    alert("Seleccione una imagen");
 
     return;
   }
-  let input = document.createElement("input");
 
-  input.type = "file";
+  let formData = new FormData();
 
-  input.onchange = async () => {
-    let archivo = input.files[0];
+  formData.append("id", id);
 
-    let formData = new FormData();
+  formData.append("imagen", archivo);
 
+  let response = await fetch(IRL + "/api/gastos/cambiar_comprobante.php", {
+    method: "POST",
+    body: formData,
+  });
+
+  let data = await response.json();
+
+  if (data.success) {
+    alert("Imagen actualizada");
+    bootstrap.Modal.getInstance(document.getElementById("modalImagen")).hide();
+    cargarGastos();
+  } else {
+    alert("Error");
+  }
+  document.getElementById("nueva_imagen").value = "";
+}
+function nuevoGasto() {
+  if (!PUEDE_CREAR_GASTOS) {
+    alert("No tiene permiso para crear gastos");
+
+    return;
+  }
+  document.getElementById("formGasto").reset();
+
+  delete document.getElementById("formGasto").dataset.id;
+
+  new bootstrap.Modal(document.getElementById("modalGasto")).show();
+}
+function nuevaCategoria() {
+  if (!PUEDE_CREAR_GASTOS) {
+    alert("No tiene permiso para crear categoría de gasto");
+
+    return;
+  }
+  document.getElementById("formCategoria").reset();
+
+  delete document.getElementById("formCategoria").dataset.id;
+
+  new bootstrap.Modal(document.getElementById("modalCategoriaGasto")).show();
+}
+async function editarCategoria() {
+  if (!PUEDE_EDITAR_GASTOS) {
+    alert("No tiene permiso para editar categoria gasto");
+
+    return;
+  }
+  let id = document.getElementById("categoria_id").value;
+  if (!id) {
+    alert("Seleccione una categoría");
+    return;
+  }
+
+  let response = await fetch(
+    IRL + "/api/gastos/categoria_obtener.php?id=" + id,
+  );
+
+  let categoria = await response.json();
+
+  document.getElementById("nombreCategoria").value = categoria.nombre;
+
+  document.getElementById("formCategoria").dataset.id = categoria.id;
+
+  new bootstrap.Modal(document.getElementById("modalCategoriaGasto")).show();
+}
+async function guardarCategoria(e) {
+  e.preventDefault();
+
+  let formData = new FormData();
+
+  formData.append("nombre", document.getElementById("nombreCategoria").value);
+
+  let id = document.getElementById("formCategoria").dataset.id;
+
+  if (id) {
     formData.append("id", id);
+  }
 
-    formData.append("archivo_factura", archivo);
+  let response = await fetch(
+    id
+      ? IRL + "/api/gastos/categoria_actualizar.php"
+      : IRL + "/api/gastos/categoria_guardar.php",
 
-    let response = await fetch(
-      IRL + "/api/gastos/cambiar_comprobante.php",
+    {
+      method: "POST",
 
-      {
-        method: "POST",
-        body: formData,
-      },
-    );
+      body: formData,
+    },
+  );
 
-    let data = await response.json();
+  let data = await response.json();
 
-    if (data.success) {
-      alert("Comprobante actualizado");
+  if (data.success) {
+    bootstrap.Modal.getInstance(
+      document.getElementById("modalCategoriaGasto"),
+    ).hide();
 
-      cargarGastos();
-    }
-  };
-
-  input.click();
+    await cargarCategorias();
+  }
 }

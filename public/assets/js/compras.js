@@ -3,7 +3,6 @@ let detalleCompra = [];
 document.addEventListener("DOMContentLoaded", () => {
   cargarProveedores();
   cargarProductos();
-  cargarCompras();
 });
 async function cargarProveedores() {
   let response = await fetch(IRL + "/api/compras/proveedores.php");
@@ -80,6 +79,7 @@ function agregarProducto() {
 
   renderDetalle();
 
+  document.getElementById("producto_id").value = "";
   document.getElementById("cantidad").value = "";
 
   document.getElementById("costo").value = "";
@@ -88,9 +88,12 @@ function renderDetalle() {
   let html = "";
 
   let total = 0;
+  let unidades = 0;
 
   detalleCompra.forEach((item, index) => {
     total += Number(item.subtotal);
+
+    unidades += Number(item.cantidad);
 
     html += `
       <tr>
@@ -118,10 +121,12 @@ function renderDetalle() {
       </tr>
       `;
   });
+  document.getElementById("cantidadProductos").innerText = detalleCompra.length;
 
+  document.getElementById("cantidadUnidades").innerText = unidades;
+
+  document.getElementById("total").innerText = "C$ " + total.toFixed(2);
   document.querySelector("#tablaDetalle tbody").innerHTML = html;
-
-  document.getElementById("total").innerText = total.toFixed(2);
 }
 function eliminarProducto(index) {
   detalleCompra.splice(index, 1);
@@ -184,50 +189,4 @@ async function guardarCompra() {
   } else {
     alert("Error al guardar compra");
   }
-}
-async function cargarCompras() {
-  let response = await fetch(IRL + "/api/compras/listar.php");
-  let data = await response.json();
-  console.log(data);
-
-  let html = "";
-
-  data.forEach((compra) => {
-    html += `
-    <tr>
-
-        <td>${compra.id}</td>
-
-        <td>${compra.fecha}</td>
-
-        <td>${compra.proveedor}</td>
-
-        <td>${compra.factura_proveedor ?? ""}</td>
-
-        <td>${compra.total}</td>
-
-        <td>
-
-${
-  compra.archivo_factura
-    ? `
-<a
-    href="${IRL}/public/${compra.archivo_factura}"
-    target="_blank"
-    class="btn btn-info btn-sm">
-
-    Ver
-
-</a>
-`
-    : "-"
-}
-
-</td>
-
-    </tr>
-    `;
-  });
-
-  document.querySelector("#tablaCompras tbody").innerHTML = html;
 }

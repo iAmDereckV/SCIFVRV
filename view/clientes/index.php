@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
 
-    <h2 class="mb-0">
-        Cliente
+    <h2 class="fw-bold mb-0">
+        Clientes
     </h2>
 
     <button class="btn btn-primary" onclick="nuevoCliente()">

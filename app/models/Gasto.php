@@ -180,4 +180,44 @@ class Gasto
             ':id' => $id
         ]);
     }
+    public function cgobtener($id)
+    {
+        $sql = "SELECT *
+                FROM categorias_gastos
+                WHERE id = :id";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function cgGuardar($nombre)
+    {
+        $sql = "INSERT INTO categorias_gastos(nombre)
+                VALUES(:nombre)";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->execute([
+            ':nombre' => $nombre
+        ]);
+
+        return $this->conexion->lastInsertId();
+    }
+    public function cgActualizar($id, $nombre)
+    {
+        $sql = "UPDATE categorias_gastos
+                SET nombre = :nombre
+                WHERE id = :id";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        return $stmt->execute([
+            ':nombre' => $nombre,
+            ':id' => $id
+        ]);
+    }
 }

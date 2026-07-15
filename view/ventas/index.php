@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <h3 class="page-title mb-4">
+    <h3 class="page-title mb-4 ">
         <i class="bi bi-cart-check-fill text-primary"></i>
         Nueva Venta
     </h3>
@@ -139,7 +139,7 @@
 
                                     <th>Subtotal</th>
 
-                                    <th width="80"></th>
+                                    <th>Eliminar</th>
 
                                 </tr>
 
@@ -165,7 +165,7 @@
 
             <div class="card shadow border-0 rounded-4 sticky-top">
 
-                <div class="card-header text-center bg-primary text-white">
+                <div class="card-header card-bg text-white text-center">
 
                     <h4 class="mb-0">
 

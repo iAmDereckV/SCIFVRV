@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
 
-    <h2 class="mb-0">
+    <h2 class="fw-bold mb-0">
         Productos
     </h2>
 
@@ -215,10 +215,10 @@
             <th>Nombre</th>
             <th>Categoría</th>
             <th>Marca</th>
+            <th>Precio Costo</th>
             <th>Precio Venta</th>
             <th>Stock</th>
             <th>Vehiculo Aplicable</th>
-            <th>Descripción</th>
             <th>Ubicación</th>
             <th>Estado</th>
             <th>Acciones</th>
