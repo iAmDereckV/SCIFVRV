@@ -223,17 +223,10 @@ async function guardarVenta() {
     detalleVenta = [];
     renderDetalle();
     document.getElementById("descuento_valor").value = 0;
-
-    document.getElementById("descuento").value = 0;
-
-    document.getElementById("subtotal").value = 0;
-
-    document.getElementById("impuesto").value = 0;
     document.getElementById("cantidad").value = 1;
-
-    document.getElementById("total").value = 0;
     document.getElementById("cliente_id").value = "";
     document.getElementById("producto_id").value = "";
+    actualizarResumen(0, 0, 0, 0);
   } else {
     console.log(data);
 
@@ -265,12 +258,15 @@ function calcularTotales() {
   let impuesto = (subtotal * porcentaje) / 100;
 
   let total = subtotal + impuesto - descuento;
+  actualizarResumen(subtotal, descuento, impuesto, total);
+}
+function actualizarResumen(subtotal, descuento, impuesto, total) {
+  document.getElementById("subtotal").textContent = `C$ ${subtotal.toFixed(2)}`;
 
-  document.getElementById("subtotal").value = subtotal.toFixed(2);
+  document.getElementById("descuento").textContent =
+    `C$ ${descuento.toFixed(2)}`;
 
-  document.getElementById("impuesto").value = impuesto.toFixed(2);
+  document.getElementById("impuesto").textContent = `C$ ${impuesto.toFixed(2)}`;
 
-  document.getElementById("descuento").value = descuento.toFixed(2);
-
-  document.getElementById("total").value = total.toFixed(2);
+  document.getElementById("total").textContent = `C$ ${total.toFixed(2)}`;
 }
