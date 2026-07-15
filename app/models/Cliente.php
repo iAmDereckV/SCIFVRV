@@ -131,4 +131,22 @@ class Cliente
             ':estado' => $estado
         ]);
     }
+    public function obtenerTiposCliente()
+    {
+        $sql = "
+SHOW COLUMNS
+FROM clientes
+LIKE 'tipo_cliente'
+";
+
+        $fila = $this->conexion
+            ->query($sql)
+            ->fetch();
+
+        preg_match("/^enum\((.*)\)$/", $fila['Type'], $matches);
+
+        $tipos = str_getcsv($matches[1], ',', "'");
+
+        return $tipos;
+    }
 }

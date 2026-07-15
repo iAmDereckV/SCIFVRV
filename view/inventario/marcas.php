@@ -14,7 +14,7 @@
 </div>
 <div class="modal fade" id="modalMarca" tabindex="-1">
 
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
 
         <div class="modal-content">
             <form id="formMarca">
@@ -38,7 +38,7 @@
 
 
 
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <label class="form-label">
                                 <i class="bi bi-box"></i>
                                 Nombre

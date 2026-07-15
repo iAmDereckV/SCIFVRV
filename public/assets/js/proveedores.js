@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function cargarProveedores() {
+  if ($.fn.DataTable.isDataTable("#tablaProveedores")) {
+    $("#tablaProveedores").DataTable().destroy();
+  }
   let response = await fetch(IRL + "/api/proveedores/listar.php");
 
   let data = await response.json();
@@ -14,6 +17,10 @@ async function cargarProveedores() {
   let html = "";
 
   data.forEach((proveedor) => {
+    let estado =
+      proveedor.estado == "ACTIVO"
+        ? `<span class="badge bg-success">Activo</span>`
+        : `<span class="badge bg-danger">Inactivo</span>`;
     html += `
       <tr>
 
@@ -25,30 +32,32 @@ async function cargarProveedores() {
 
         <td>${proveedor.telefono ?? ""}</td>
 
-        <td>${proveedor.estado}</td>
+        <td>${estado}</td>
 
         <td>
-
+<div class="btn-group">
           <button
-            class="btn btn-warning btn-sm"
+            title="Editar"
+            class="btn btn-sm btn-outline-primary"
             onclick="editarProveedor(${proveedor.id})">
 
-            Editar
+            <i class="bi bi-pencil"></i>
 
           </button>
 
           <button
-            class="btn btn-danger btn-sm"
+            title="Estado"
+            class="btn btn-sm btn-outline-danger"
             onclick="
               cambiarEstado(
                 ${proveedor.id},
                 '${proveedor.estado}'
               )">
 
-            Estado
+            <i class="bi bi-arrow-repeat"></i>
 
           </button>
-
+</div>
         </td>
 
       </tr>
@@ -56,6 +65,34 @@ async function cargarProveedores() {
   });
 
   document.querySelector("#tablaProveedores tbody").innerHTML = html;
+  $("#tablaProveedores").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+
+    responsive: true,
+
+    pageLength: 5,
+
+    lengthMenu: [
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "Todos"],
+    ],
+
+    order: [[2, "asc"]],
+  });
 }
 
 async function guardarProveedor(e) {
@@ -98,7 +135,9 @@ async function guardarProveedor(e) {
     document.getElementById("formProveedor").reset();
 
     delete document.getElementById("formProveedor").dataset.id;
-
+    bootstrap.Modal.getInstance(
+      document.getElementById("modalProveedor"),
+    ).hide();
     cargarProveedores();
   } else {
     alert("Error al guardar");
@@ -106,6 +145,11 @@ async function guardarProveedor(e) {
 }
 
 async function editarProveedor(id) {
+  if (!PUEDE_EDITAR_PROVEEDORES) {
+    alert("No tiene permiso para editar proveedore");
+
+    return;
+  }
   let response = await fetch(IRL + "/api/proveedores/obtener.php?id=" + id);
 
   let proveedor = await response.json();
@@ -121,9 +165,15 @@ async function editarProveedor(id) {
   document.getElementById("direccion").value = proveedor.direccion;
 
   document.getElementById("formProveedor").dataset.id = proveedor.id;
+  new bootstrap.Modal(document.getElementById("modalProveedor")).show();
 }
 
 async function cambiarEstado(id, estadoActual) {
+  if (!PUEDE_CAMBIAR_ESTADO_PROVEEDORES) {
+    alert(`No tiene permiso para poner proveedores ${nuevoEstado}`);
+
+    return;
+  }
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
 
   let formData = new FormData();
@@ -142,4 +192,15 @@ async function cambiarEstado(id, estadoActual) {
   if (data.success) {
     cargarProveedores();
   }
+}
+function nuevoProveedor() {
+  if (!PUEDE_CREAR_PROVEEDORES) {
+    alert("No tiene permiso para crear proveedores");
+    return;
+  }
+  document.getElementById("formProveedor").reset();
+
+  delete document.getElementById("formProveedor").dataset.id;
+
+  new bootstrap.Modal(document.getElementById("modalProveedor")).show();
 }

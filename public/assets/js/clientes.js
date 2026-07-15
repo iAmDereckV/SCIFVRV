@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   cargarClientes();
+  cargarTipoCliente();
 
   document
     .getElementById("formCliente")
@@ -7,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function cargarClientes() {
+  if ($.fn.DataTable.isDataTable("#tablaClientes")) {
+    $("#tablaClientes").DataTable().destroy();
+  }
   let response = await fetch(IRL + "/api/clientes/listar.php");
 
   let data = await response.json();
@@ -14,28 +18,10 @@ async function cargarClientes() {
   let html = "";
 
   data.forEach((cliente) => {
-    // let acciones = "";
-    //   if (PUEDE_EDITAR_CLIENTES) {
-    //     acciones += `
-    //   <button
-    //     class="btn btn-warning btn-sm"
-    //     onclick="editarCliente(${cliente.id})">
-    //     Editar
-    //   </button>
-    // `;
-    //   }
-    //   if (PUEDE_CAMBIAR_ESTADO_CLIENTES) {
-    //     acciones += `
-    //   <button
-    //     class="btn btn-danger btn-sm"
-    //     onclick="cambiarEstado(
-    //       ${cliente.id},
-    //       '${cliente.estado}'
-    //     )">
-    //     Estado
-    //   </button>
-    // `;
-    // }
+    let estado =
+      cliente.estado == "ACTIVO"
+        ? `<span class="badge bg-success">Activo</span>`
+        : `<span class="badge bg-danger">Inactivo</span>`;
     html += `
       <tr>
 
@@ -49,25 +35,30 @@ async function cargarClientes() {
 
         <td>${cliente.tipo_cliente}</td>
 
-        <td>${cliente.estado}</td>
+        <td>${estado}</td>
 
-        <td><button
-     class="btn btn-warning btn-sm"
+        <td>
+        <div class="btn-group">
+        <button
+      title="Editar"
+          class="btn btn-sm btn-outline-primary"
       onclick="editarCliente(${cliente.id})">
 
-      Editar
+       <i class="bi bi-pencil"></i>
 
     </button>
        <button
-      class="btn btn-danger btn-sm"
+      title="Estado"
+            class="btn btn-sm btn-outline-danger"
       onclick="cambiarEstado(
         ${cliente.id},
         '${cliente.estado}'
       )">
 
-      Estado
+       <i class="bi bi-arrow-repeat"></i>
 
     </button>
+    </div>
    </td>
 
       </tr>
@@ -75,8 +66,52 @@ async function cargarClientes() {
   });
 
   document.querySelector("#tablaClientes tbody").innerHTML = html;
-}
+  $("#tablaClientes").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
 
+    responsive: true,
+
+    pageLength: 5,
+
+    lengthMenu: [
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "Todos"],
+    ],
+
+    order: [[2, "asc"]],
+  });
+}
+async function cargarTipoCliente() {
+  let response = await fetch(IRL + "/api/clientes/tipos.php");
+
+  let data = await response.json();
+
+  let html = '<option value="">Seleccione tipo</option>';
+
+  data.forEach((tipo) => {
+    html += `
+            <option value="${tipo}">
+                ${tipo}
+            </option>
+        `;
+  });
+
+  document.getElementById("tipo_cliente").innerHTML = html;
+}
 async function guardarCliente(e) {
   e.preventDefault();
 
@@ -103,17 +138,7 @@ async function guardarCliente(e) {
   );
 
   let id = document.getElementById("formCliente").dataset.id;
-  if (!id && !PUEDE_CREAR_CLIENTES) {
-    alert("No tiene permiso para crear clientes");
 
-    return;
-  }
-
-  if (id && !PUEDE_EDITAR_CLIENTES) {
-    alert("No tiene permiso para editar clientes");
-
-    return;
-  }
   if (id) {
     formData.append("id", id);
   }
@@ -136,12 +161,17 @@ async function guardarCliente(e) {
     document.getElementById("formCliente").reset();
 
     delete document.getElementById("formCliente").dataset.id;
-
+    bootstrap.Modal.getInstance(document.getElementById("modalCliente")).hide();
     cargarClientes();
   }
 }
 
 async function editarCliente(id) {
+  if (!PUEDE_EDITAR_CLIENTES) {
+    alert("No tiene permiso para editar clientes");
+
+    return;
+  }
   let response = await fetch(IRL + "/api/clientes/obtener.php?id=" + id);
 
   let cliente = await response.json();
@@ -161,6 +191,7 @@ async function editarCliente(id) {
   document.getElementById("tipo_cliente").value = cliente.tipo_cliente;
 
   document.getElementById("formCliente").dataset.id = cliente.id;
+  new bootstrap.Modal(document.getElementById("modalCliente")).show();
 }
 
 async function cambiarEstado(id, estadoActual) {
@@ -187,4 +218,17 @@ async function cambiarEstado(id, estadoActual) {
   if (data.success) {
     cargarClientes();
   }
+}
+
+function nuevoCliente() {
+  if (!PUEDE_CREAR_CLIENTES) {
+    alert("No tiene permiso para crear clientes");
+
+    return;
+  }
+  document.getElementById("formCliente").reset();
+
+  delete document.getElementById("formCliente").dataset.id;
+
+  new bootstrap.Modal(document.getElementById("modalCliente")).show();
 }

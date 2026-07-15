@@ -15,7 +15,7 @@
 
 <div class="modal fade" id="modalProducto" tabindex="-1">
 
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
 
         <div class="modal-content">
 
@@ -208,7 +208,6 @@
 <table class="table table-hover align-middle" id="tablaProductos">
 
     <thead>
-
         <tr>
 
             <th>Código</th>

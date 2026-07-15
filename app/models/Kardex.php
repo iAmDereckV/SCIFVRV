@@ -76,7 +76,8 @@ class Kardex
                 nombre,
                 stock,
                 stock_minimo,
-                imagen
+                imagen,
+                estado
 
             FROM productos
 

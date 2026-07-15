@@ -129,7 +129,6 @@ VALUES (
         'proveedores_eliminar',
         'Anular proveedores'
     ),
-    ('ventas_ver', 'Ver ventas'),
     (
         'ventas_crear',
         'Crear ventas'
@@ -138,7 +137,6 @@ VALUES (
         'ventas_anular',
         'Anular ventas'
     ),
-    ('compras_ver', 'Ver compras'),
     (
         'compras_crear',
         'Crear compras'

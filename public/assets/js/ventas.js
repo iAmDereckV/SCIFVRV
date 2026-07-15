@@ -107,7 +107,8 @@ function agregarProducto() {
       subtotal: subtotal,
     });
   }
-
+  document.getElementById("producto_id").value = "";
+  document.getElementById("cantidad").value = 1;
   renderDetalle();
 }
 function renderDetalle() {
@@ -163,6 +164,10 @@ function eliminarProducto(index) {
   renderDetalle();
 }
 async function guardarVenta() {
+  if (!PUEDE_CREAR_VENTAS) {
+    alert("No tiene permiso para crear ventas");
+    return;
+  }
   let cliente_id = document.getElementById("cliente_id").value;
 
   if (!cliente_id) {
@@ -200,10 +205,7 @@ async function guardarVenta() {
   formData.append("total", total);
 
   formData.append("detalle", JSON.stringify(detalleVenta));
-  if (!PUEDE_CREAR_VENTAS) {
-    alert("No tiene permiso para crear ventas");
-    return;
-  }
+
   let response = await fetch(IRL + "/api/ventas/guardar.php", {
     method: "POST",
     body: formData,

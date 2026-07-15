@@ -69,13 +69,16 @@ async function consultarKardex() {
     ? IRL + "/public/uploads/productos/" + producto.imagen
     : IRL + "/public/assets/img/sin-imagen.png";
   const estado = document.getElementById("estadoProducto");
-
+  if (producto.estado === "ACTIVO") {
+    estado.innerHTML =
+      '<span class="badge bg-success px-3 py-2">Disponible</span>';
+  } else {
+    estado.innerHTML =
+      '<span class="badge bg-warning px-3 py-2">Inactivo</span>';
+  }
   if (parseInt(producto.stock) <= 0) {
     estado.innerHTML =
       '<span class="badge bg-danger px-3 py-2">Sin stock</span>';
-  } else {
-    estado.innerHTML =
-      '<span class="badge bg-success px-3 py-2">Disponible</span>';
   }
 
   data.forEach((movimiento) => {

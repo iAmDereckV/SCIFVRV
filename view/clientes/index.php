@@ -1,45 +1,159 @@
-<h2>Clientes</h2>
-<?php if (
-    tienePermiso('clientes_crear')
-    ||
-    tienePermiso('clientes_editar')
-): ?>
-    <form id="formCliente">
+<div class="d-flex justify-content-between align-items-center mb-3">
 
-        <input type="text" id="nombres" class="form-control mb-2" placeholder="Nombres">
+    <h2 class="mb-0">
+        Cliente
+    </h2>
 
-        <input type="text" id="apellidos" class="form-control mb-2" placeholder="Apellidos">
+    <button class="btn btn-primary" onclick="nuevoCliente()">
 
-        <input type="text" id="identificacion" class="form-control mb-2" placeholder="Identificación">
+        <i class="bi bi-plus-circle"></i>
+        Nuevo Cliente
 
-        <input type="text" id="telefono" class="form-control mb-2" placeholder="Teléfono">
+    </button>
 
-        <input type="email" id="correo" class="form-control mb-2" placeholder="Correo">
+</div>
+<div class="modal fade" id="modalCliente" tabindex="-1">
 
-        <textarea id="direccion" class="form-control mb-2" placeholder="Dirección"></textarea>
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
 
-        <select id="tipo_cliente" class="form-control mb-2">
+        <div class="modal-content">
 
-            <option value="NORMAL">NORMAL</option>
-            <option value="TALLER">TALLER</option>
-            <option value="EMPRESA">EMPRESA</option>
+            <form id="formCliente">
 
-        </select>
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+
+                        <i class="bi bi-box-seam text-white"></i>
+
+                        Cliente
+
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Nombre
+                            </label>
+
+                            <input type="text" id="nombres" class="form-control" placeholder="Nombre del cliente">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Apellido
+                            </label>
+
+                            <input type="text" id="apellidos" class="form-control" placeholder="Apellido del cliente">
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Identificacion
+                            </label>
+                            <input type="text" id="identificacion" class="form-control" placeholder="Identificacion">
+                        </div>
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+                                <i class="bi bi-bookmark-star"></i>
+                                Tipo Cliente
+                            </label>
+
+                            <select id="tipo_cliente" class="form-select">
+
+                            </select>
+
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Correo
+                            </label>
+                            <input type="email" id="correo" class="form-control" placeholder="Correo">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Telefono
+                            </label>
+                            <input type="text" id="telefono" class="form-control" placeholder="Telefono">
+                        </div>
 
 
-        <button type="submit" class="btn btn-primary">
 
-            Guardar
+                        <div class="col-md-12">
 
-        </button>
+                            <label class="form-label">
+                                Direccion
+                            </label>
+
+                            <textarea id="direccion" class="form-control" rows="3"></textarea>
+
+                        </div>
 
 
 
-    </form>
-<?php endif; ?>
+
+
+
+
+
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="reset" class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+
+                        Limpiar
+
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Cancelar
+
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Guardar Cliente
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
 <hr>
 
-<table class="table table-bordered" id="tablaClientes">
+<table class="table table-hover align-middle" id="tablaClientes">
 
     <thead>
 

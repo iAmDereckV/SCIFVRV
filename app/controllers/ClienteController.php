@@ -72,4 +72,8 @@ class ClienteController
             $estado
         );
     }
+    public function obtenerTiposCliente()
+    {
+        return $this->cliente->obtenerTiposCliente();
+    }
 }

@@ -5,10 +5,6 @@ AuthMiddleware::verificar();
 
 ?>
 
-<?php include __DIR__ . '/../view/layouts/header.php'; ?>
-
-
-
 <div class="d-flex">
 
     <div class="container-fluid p-4">
@@ -501,6 +497,3 @@ AuthMiddleware::verificar();
     </div>
 
     <script src="assets/js/dashboard.js"></script>
-
-
-    <!-- <?php include './../view/layouts/footer.php'; ?> -->

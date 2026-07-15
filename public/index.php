@@ -12,7 +12,7 @@ $inventarioActivo = in_array(
 );
 $reporteActivo = in_array(
     $modulo,
-    ['reportes_ventas', 'maestro_detalle', 'excel']
+    ['reportes_compras', 'reportes_gastos', 'reportes_ventas', 'maestro_detalle', 'excel']
 );
 $configActivo = in_array(
     $modulo,
@@ -20,7 +20,7 @@ $configActivo = in_array(
         'usuarios',
         'roles',
         'permisos',
-        'empresa',
+        'configuracion_empresa',
         'backup',
         'bitacora',
         'carta_recomendacion'

@@ -16,9 +16,7 @@ class ConfiguracionEmpresa
 
     public function obtener()
     {
-        $sql = "
-
-            SELECT *
+        $sql = "            SELECT *
 
             FROM configuracion_empresa
 
@@ -26,8 +24,7 @@ class ConfiguracionEmpresa
 
         ";
 
-        $stmt =
-            $this->conexion->prepare($sql);
+        $stmt = $this->conexion->prepare($sql);
 
         $stmt->execute();
 

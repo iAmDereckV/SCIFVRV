@@ -26,12 +26,9 @@ async function cargarProductos() {
         ? `<span class="badge bg-success">Activo</span>`
         : `<span class="badge bg-danger">Inactivo</span>`;
     let stock =
-      producto.stock < producto.stock_minimo
+      parseInt(producto.stock) <= parseInt(producto.stock_minimo)
         ? `<span class="badge bg-danger">${producto.stock}</span>`
         : `<span class="badge bg-success">${producto.stock}</span>`;
-    console.log(
-      `valor ${stock} Nstock ${producto.stock} Nstckm ${producto.stock_minimo}`,
-    );
     html += `
       <tr>
 
@@ -282,6 +279,11 @@ async function editarProducto(id) {
 }
 
 async function cambiarEstado(id, estadoActual) {
+  if (!PUEDE_CAMBIAR_ESTADO_PRODUCTOS) {
+    alert(`No tiene permiso para poner productos ${nuevoEstado}`);
+
+    return;
+  }
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
 
   let formData = new FormData();
@@ -289,11 +291,7 @@ async function cambiarEstado(id, estadoActual) {
   formData.append("id", id);
 
   formData.append("estado", nuevoEstado);
-  if (!PUEDE_CAMBIAR_ESTADO_PRODUCTOS) {
-    alert(`No tiene permiso para poner productos ${nuevoEstado}`);
 
-    return;
-  }
   let response = await fetch(IRL + "/api/productos/cambiar_estado.php", {
     method: "POST",
     body: formData,

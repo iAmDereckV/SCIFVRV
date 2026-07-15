@@ -14,7 +14,7 @@
 </div>
 <div class="modal fade" id="modalCategoria" tabindex="-1">
 
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
 
         <div class="modal-content">
 
@@ -36,7 +36,7 @@
                 <div class="modal-body">
 
                     <div class="row g-3">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <label class="form-label">
                                 <i class="bi bi-box"></i>
                                 Nombre
@@ -79,7 +79,7 @@
 
                         <i class="bi bi-check-circle"></i>
 
-                        Guardar Producto
+                        Guardar Categoria
 
                     </button>
 
