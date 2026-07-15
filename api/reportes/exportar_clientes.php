@@ -1,7 +1,9 @@
 <?php
-
+require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/ClienteController.php';
-
+requierePermiso(
+    'excel_exportar'
+);
 $controller = new ClienteController();
 
 $clientes = $controller->listar();
@@ -31,7 +33,6 @@ echo "
 
     <th>Fecha Registro</th>
 
-    <th>Último Acceso</th>
 
 </tr>
 
@@ -44,7 +45,7 @@ foreach ($clientes as $cliente) {
 
         <td>{$cliente['id']}</td>
 
-        <td>{$cliente['nombres']}</td>
+        <td>{$cliente['nombres']} {$cliente['apellidos']}</td>
 
         <td>{$cliente['telefono']}</td>
 
@@ -56,7 +57,6 @@ foreach ($clientes as $cliente) {
 
         <td>{$cliente['fecha_registro']}</td>
 
-        <td>{$cliente['ultimo_acceso']}</td>
 
     </tr>
 

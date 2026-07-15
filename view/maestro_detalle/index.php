@@ -1,58 +1,112 @@
-<h2>Maestro Detalle</h2>
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-<div class="table-responsive">
-    <div class="row mb-3">
+    <h2 class="fw-bold">
 
-        <div class="col-md-3">
+        Maestro Detalle
 
-            <select id="anio" class="form-control">
+    </h2>
 
-            </select>
+    <button
+        id="btnExcel"
+        class="btn btn-success">
 
-        </div>
+        <i class="bi bi-file-earmark-excel"></i>
 
-        <div class="col-md-3">
+        Exportar Excel
 
-            <button id="btnExcel" class="btn btn-success">
+    </button>
 
-                Exportar Excel
+</div>
 
-            </button>
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-body">
+
+        <div class="row align-items-end">
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+
+                    Año
+
+                </label>
+
+                <select
+                    id="anio"
+                    class="form-select">
+
+                </select>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <button
+                    class="btn btn-primary w-100"
+                    onclick="cargarResumen()">
+
+                    <i class="bi bi-search"></i>
+
+                    Consultar
+
+                </button>
+
+            </div>
 
         </div>
 
     </div>
-    <table class="table table-bordered table-striped" id="tablaMaestroDetalle">
-
-        <thead>
-
-            <tr>
-
-                <th>Concepto</th>
-
-                <th>Ene</th>
-                <th>Feb</th>
-                <th>Mar</th>
-                <th>Abr</th>
-                <th>May</th>
-                <th>Jun</th>
-                <th>Jul</th>
-                <th>Ago</th>
-                <th>Sep</th>
-                <th>Oct</th>
-                <th>Nov</th>
-                <th>Dic</th>
-
-                <th>Total</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody></tbody>
-
-    </table>
 
 </div>
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table
+                id="tablaMaestroDetalle"
+                class="table table-hover table-bordered align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Concepto</th>
+
+                        <th>Ene</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>Abr</th>
+                        <th>May</th>
+                        <th>Jun</th>
+                        <th>Jul</th>
+                        <th>Ago</th>
+                        <th>Sep</th>
+                        <th>Oct</th>
+                        <th>Nov</th>
+                        <th>Dic</th>
+
+                        <th>Total</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 
 <script src="assets/js/maestro_detalle.js"></script>

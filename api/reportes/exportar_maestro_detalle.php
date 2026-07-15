@@ -1,8 +1,10 @@
 <?php
-
+require_once '../../app/helpers/Permisos.php';
 
 require_once '../../app/controllers/MaestroDetalleController.php';
-
+requierePermiso(
+    'excel_exportar'
+);
 $controller =
     new MaestroDetalleController();
 $anio =

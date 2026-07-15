@@ -1,8 +1,10 @@
 <?php
 
-
+require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/BitacoraController.php';
-
+requierePermiso(
+    'excel_exportar'
+);
 $controller = new Bitacora();
 
 $datos =

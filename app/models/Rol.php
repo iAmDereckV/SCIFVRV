@@ -24,17 +24,46 @@ class Rol
 
     public function guardar($nombre, $descripcion)
     {
-        $sql = "INSERT INTO roles
-                (nombre,descripcion)
+        try {
+
+            $this->conexion->beginTransaction();
+
+            $sql = "INSERT INTO roles
+                (nombre, descripcion)
                 VALUES
-                (:nombre,:descripcion)";
+                (:nombre, :descripcion)";
 
-        $stmt = $this->conexion->prepare($sql);
+            $stmt = $this->conexion->prepare($sql);
 
-        return $stmt->execute([
-            ':nombre' => $nombre,
-            ':descripcion' => $descripcion
-        ]);
+            $stmt->execute([
+                ':nombre' => $nombre,
+                ':descripcion' => $descripcion
+            ]);
+
+            $rol_id = $this->conexion->lastInsertId();
+
+            // Dashboard (permiso_id = 1)
+            $sql = "INSERT INTO rol_permisos
+                (rol_id, permiso_id)
+                VALUES
+                (:rol_id, :permiso_id)";
+
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute([
+                ':rol_id' => $rol_id,
+                ':permiso_id' => 1
+            ]);
+
+            $this->conexion->commit();
+
+            return true;
+        } catch (Exception $e) {
+
+            $this->conexion->rollBack();
+
+            return false;
+        }
     }
 
     public function actualizar(

@@ -1,9 +1,11 @@
 <?php
 
-
+require_once '../../app/helpers/Permisos.php';
 
 require_once '../../app/controllers/CompraController.php';
-
+requierePermiso(
+    'excel_exportar'
+);
 $controller = new CompraController();
 
 

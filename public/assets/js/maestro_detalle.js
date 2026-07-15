@@ -35,6 +35,10 @@ async function cargarAnios() {
   document.getElementById("anio").innerHTML = html;
 }
 async function cargarResumen() {
+  if ($.fn.DataTable.isDataTable("#tablaMaestroDetalle")) {
+    $("#tablaMaestroDetalle").DataTable().destroy();
+  }
+
   let anio = document.getElementById("anio").value;
 
   let response = await fetch(
@@ -51,21 +55,19 @@ async function cargarResumen() {
     <tr>
 
       <td>${fila.concepto}</td>
-
-      <td>${fila.enero}</td>
-      <td>${fila.febrero}</td>
-      <td>${fila.marzo}</td>
-      <td>${fila.abril}</td>
-      <td>${fila.mayo}</td>
-      <td>${fila.junio}</td>
-      <td>${fila.julio}</td>
-      <td>${fila.agosto}</td>
-      <td>${fila.septiembre}</td>
-      <td>${fila.octubre}</td>
-      <td>${fila.noviembre}</td>
-      <td>${fila.diciembre}</td>
-
-      <td>${fila.total}</td>
+      <td>C$ ${Number(fila.enero).toFixed(2)}</td>
+      <td>C$ ${Number(fila.febrero).toFixed(2)}</td>
+      <td>C$ ${Number(fila.marzo).toFixed(2)}</td>
+      <td>C$ ${Number(fila.abril).toFixed(2)}</td>
+      <td>C$ ${Number(fila.mayo).toFixed(2)}</td>
+      <td>C$ ${Number(fila.junio).toFixed(2)}</td>
+      <td>C$ ${Number(fila.julio).toFixed(2)}</td>
+      <td>C$ ${Number(fila.agosto).toFixed(2)}</td>
+      <td>C$ ${Number(fila.septiembre).toFixed(2)}</td>
+      <td>C$ ${Number(fila.octubre).toFixed(2)}</td>
+      <td>C$ ${Number(fila.noviembre).toFixed(2)}</td>
+      <td>C$ ${Number(fila.diciembre).toFixed(2)}</td>
+      <td>C$ ${Number(fila.total).toFixed(2)}</td>
 
     </tr>
 
@@ -73,4 +75,29 @@ async function cargarResumen() {
   });
 
   document.querySelector("#tablaMaestroDetalle tbody").innerHTML = html;
+  $("#tablaMaestroDetalle").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+
+    responsive: true,
+
+    pageLength: -1,
+
+    lengthMenu: [[-1], ["Todos"]],
+
+    order: [[2, "asc"]],
+  });
 }

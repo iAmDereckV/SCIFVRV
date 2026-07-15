@@ -1,8 +1,10 @@
 <?php
 
-
+require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/VentaController.php';
-
+requierePermiso(
+    'excel_exportar'
+);
 $controller = new VentaController();
 
 $ventas = $controller->reporteVentas();

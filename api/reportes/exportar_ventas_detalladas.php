@@ -1,8 +1,10 @@
 <?php
 
-
+require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/VentaController.php';
-
+requierePermiso(
+    'excel_exportar'
+);
 $controller = new VentaController();
 
 $datos =
@@ -37,8 +39,8 @@ echo "
 
     <th>Cantidad</th>
 
-    <th>Precio</th>
     <th>Costo</th>
+    <th>Precio</th>
 
     <th>Subtotal</th>
 
@@ -47,6 +49,9 @@ echo "
 </tr>
 
 ";
+$totalCantidad = 0;
+$totalCosto = 0;
+$totalPrecio = 0;
 $totalGeneral = 0;
 
 foreach ($datos as $fila) {
@@ -56,8 +61,14 @@ foreach ($datos as $fila) {
         !== 'ANULADA'
     ) {
 
+        $totalCantidad +=
+            $fila['cantidad'];
+        $totalCosto +=
+            $fila['costo_unitario'];
+        $totalPrecio +=
+            $fila['precio_unitario'];
         $totalGeneral +=
-            $fila['subtotal'];
+            $fila['cantidad'];
     }
 
     echo "
@@ -76,6 +87,7 @@ foreach ($datos as $fila) {
 
         <td>{$fila['cantidad']}</td>
 
+        <td>{$fila['costo_unitario']}</td>
         <td>{$fila['precio_unitario']}</td>
 
         <td>{$fila['subtotal']}</td>
@@ -90,12 +102,27 @@ echo "
 
 <tr>
 
-    <td colspan='7'>
+    <td colspan='5'>
 
         TOTAL GENERAL
 
     </td>
 
+    <td>
+
+        {$totalCantidad}
+
+    </td>
+    <td>
+
+        {$totalCosto}
+
+    </td>
+    <td>
+
+        {$totalPrecio}
+
+    </td>
     <td>
 
         {$totalGeneral}

@@ -1,19 +1,21 @@
 <?php
 
 require_once '../../app/helpers/Permisos.php';
-require_once '../../app/controllers/CompraController.php';
+require_once '../../app/controllers/ReporteController.php';
 requierePermiso(
     'excel_exportar'
 );
-$controller = new CompraController();
+$controller = new ReporteController();
 
-$datos = $controller->reporteComprasDetalladas();
+$datos =
+    $controller->comprasPorFecha($_GET['inicio'], $_GET['fin']);
+
 header(
     "Content-Type: application/vnd.ms-excel"
 );
 
 header(
-    "Content-Disposition: attachment; filename=compras_detalladas.xls"
+    "Content-Disposition: attachment; filename=compras_fechas.xls"
 );
 
 header("Pragma: no-cache");
@@ -31,16 +33,13 @@ echo "
 
     <th>Proveedor</th>
 
-    <th>Código</th>
+    <th>Usuario</th>
 
-    <th>Producto</th>
+    
+    <th>Estado</th>
+    <th>Total</th>
 
-    <th>Cantidad</th>
-
-    <th>Costo</th>
-
-    <th>Subtotal</th>
-
+  
 </tr>
 
 ";
@@ -48,28 +47,29 @@ $totalGeneral = 0;
 
 foreach ($datos as $fila) {
 
-    $totalGeneral +=
-        $fila['subtotal'];
+    if (
+        $fila['estado']
+        !== 'ANULADA'
+    ) {
+        $totalGeneral +=
+            $fila['total'];
+    }
 
     echo "
 
     <tr>
 
-        <td>{$fila['compra']}</td>
+        <td>{$fila['id']}</td>
 
         <td>{$fila['fecha']}</td>
 
         <td>{$fila['proveedor']}</td>
 
-        <td>{$fila['codigo']}</td>
+        <td>{$fila['usuario']}</td>
 
-        <td>{$fila['producto']}</td>
-
-        <td>{$fila['cantidad']}</td>
-
-        <td>{$fila['costo']}</td>
-
-        <td>{$fila['subtotal']}</td>
+        
+        <td>{$fila['estado']}</td>
+        <td>{$fila['total']}</td>
 
     </tr>
 
@@ -79,20 +79,22 @@ echo "
 
 <tr>
 
-    <td colspan='7'>
+    <td colspan='5'>
 
         TOTAL GENERAL
 
     </td>
 
+    
     <td>
 
         {$totalGeneral}
 
     </td>
+    
+
 
 </tr>
 
 ";
-
 echo "</table>";

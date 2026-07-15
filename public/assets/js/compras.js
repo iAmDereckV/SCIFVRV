@@ -1,5 +1,5 @@
 let detalleCompra = [];
-
+let totalCompra = 0;
 document.addEventListener("DOMContentLoaded", () => {
   cargarProveedores();
   cargarProductos();
@@ -81,7 +81,6 @@ function agregarProducto() {
 
   document.getElementById("producto_id").value = "";
   document.getElementById("cantidad").value = "";
-
   document.getElementById("costo").value = "";
 }
 function renderDetalle() {
@@ -124,7 +123,7 @@ function renderDetalle() {
   document.getElementById("cantidadProductos").innerText = detalleCompra.length;
 
   document.getElementById("cantidadUnidades").innerText = unidades;
-
+  totalCompra = total;
   document.getElementById("total").innerText = "C$ " + total.toFixed(2);
   document.querySelector("#tablaDetalle tbody").innerHTML = html;
 }
@@ -148,8 +147,6 @@ async function guardarCompra() {
     return;
   }
 
-  let total = document.getElementById("total").innerText;
-
   let formData = new FormData();
 
   formData.append("proveedor_id", proveedor_id);
@@ -160,7 +157,7 @@ async function guardarCompra() {
     formData.append("archivo_factura", archivo);
   }
 
-  formData.append("total", total);
+  formData.append("total", totalCompra);
 
   formData.append("productos", JSON.stringify(detalleCompra));
   if (!PUEDE_CREAR_COMPRAS) {

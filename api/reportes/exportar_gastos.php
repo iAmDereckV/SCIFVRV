@@ -1,7 +1,9 @@
 <?php
-
+require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/GastoController.php';
-
+requierePermiso(
+    'excel_exportar'
+);
 $controller = new GastoController();
 
 $gastos = $controller->reporteGastos();

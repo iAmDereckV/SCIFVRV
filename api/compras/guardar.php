@@ -25,7 +25,7 @@ if (
         );
 
     $nombreArchivo =
-        'factura_'
+        'factura_' . $_POST['factura'] . '_'
         .
         time()
         .

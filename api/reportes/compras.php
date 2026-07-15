@@ -1,7 +1,9 @@
 <?php
-
+require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/ReporteController.php';
-
+requierePermiso(
+    'reportes_compras'
+);
 header(
     'Content-Type: application/json'
 );

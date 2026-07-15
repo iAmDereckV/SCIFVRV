@@ -1,7 +1,9 @@
 <?php
-
+require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/ProductoController.php';
-
+requierePermiso(
+    'excel_exportar'
+);
 $controller = new ProductoController();
 
 $productos = $controller->listar();

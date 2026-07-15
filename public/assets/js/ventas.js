@@ -1,7 +1,9 @@
 let productos = [];
-
 let detalleVenta = [];
-
+let totalVenta = 0;
+let subtotalVenta = 0;
+let descuentoVenta = 0;
+let impuestoVenta = 0;
 document.addEventListener("DOMContentLoaded", () => {
   cargarClientes();
 
@@ -185,9 +187,6 @@ async function guardarVenta() {
   let sesion = await fetch(IRL + "/api/auth/session.php");
 
   let usuario = await sesion.json();
-
-  let subtotal = parseFloat(document.getElementById("subtotal").value);
-
   let total = parseFloat(document.getElementById("total").value);
 
   let formData = new FormData();
@@ -196,13 +195,13 @@ async function guardarVenta() {
 
   formData.append("usuario_id", usuario.usuario_id);
 
-  formData.append("subtotal", subtotal);
+  formData.append("subtotal", subtotalVenta);
 
-  formData.append("impuesto", document.getElementById("impuesto").value);
+  formData.append("impuesto", impuestoVenta);
 
-  formData.append("descuento", document.getElementById("descuento").value);
+  formData.append("descuento", descuentoVenta);
 
-  formData.append("total", total);
+  formData.append("total", totalVenta);
 
   formData.append("detalle", JSON.stringify(detalleVenta));
 
@@ -256,9 +255,11 @@ function calcularTotales() {
     parseFloat(document.getElementById("porcentaje_impuesto").value) || 0;
 
   let impuesto = (subtotal * porcentaje) / 100;
-
-  let total = subtotal + impuesto - descuento;
-  actualizarResumen(subtotal, descuento, impuesto, total);
+  subtotalVenta = subtotal;
+  descuentoVenta = descuento;
+  impuestoVenta = impuesto;
+  totalVenta = subtotal + impuesto - descuento;
+  actualizarResumen(subtotal, descuento, impuesto, totalVenta);
 }
 function actualizarResumen(subtotal, descuento, impuesto, total) {
   document.getElementById("subtotal").textContent = `C$ ${subtotal.toFixed(2)}`;
