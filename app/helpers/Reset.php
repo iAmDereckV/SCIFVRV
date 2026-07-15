@@ -61,7 +61,8 @@ class Reset
             __DIR__ . '/../../public/uploads/gastos',
             __DIR__ . '/../../public/uploads/empresa',
             __DIR__ . '/../../public/uploads/productos',
-            __DIR__ . '/../../public/uploads/usuarios'
+            __DIR__ . '/../../public/uploads/usuarios',
+            __DIR__ . '/../../database/backup'
         ];
 
         foreach ($carpetas as $carpeta) {
