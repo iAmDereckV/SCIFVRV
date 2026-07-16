@@ -1,32 +1,139 @@
-<h2>Usuarios</h2>
+<div class="d-flex justify-content-between align-items-center mb-3">
 
-<form id="formUsuario">
+    <h2 class="fw-bold mb-0">
+        Usuario
+    </h2>
 
-    <input type="hidden" id="id" placeholder="Id" class="form-control mb-2">
-    <input type="text" id="nombre" placeholder="Nombre" class="form-control mb-2">
+    <button class="btn btn-primary" onclick="nuevoUsuario()">
 
-    <input type="text" id="usuario" placeholder="Usuario" class="form-control mb-2">
+        <i class="bi bi-plus-circle"></i>
+        Nuevo Usuario
 
-    <input type="email" id="correo" placeholder="Correo" class="form-control mb-2">
-
-    <input type="password" id="password" placeholder="Contraseña" class="form-control mb-2">
-    <label>Foto</label>
-
-    <input type="file" id="imagen" class="form-control">
-
-    <img id="previewFoto" width="120" class="mt-2">
-    <select id="rol_id" class="form-control mb-2">
-    </select>
-
-    <button type="submit" class="btn btn-primary">
-        Guardar
     </button>
 
-</form>
+</div>
+<div class="modal fade" id="modalUsuario" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+
+        <div class="modal-content">
+
+            <form id="formUsuario">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+
+                        <i class="bi bi-box-seam text-white"></i>
+
+                        Usuario
+
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Nombre
+                            </label>
+                            <input type="text" id="nombre" class="form-control" placeholder="Nombre del Usuario">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Usuario
+                            </label>
+                            <input type="text" id="usuario" class="form-control" placeholder="Usuario">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Contraseña
+                            </label>
+                            <input type="password" id="password" class="form-control" placeholder="Contraseña">
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label">
+                                <i class="bi bi-box"></i>
+                                Correo
+                            </label>
+                            <input type="email" id="correo" class="form-control" placeholder="Correo">
+                        </div>
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+                                <i class="bi bi-tags"></i>
+                                Rol
+                            </label>
+
+                            <select id="rol_id" class="form-select">
+                            </select>
+
+                        </div>
+
+                        <div class="col-md-12">
+
+                            <label class="form-label">
+                                Imagen
+                            </label>
+
+                            <input type="file" id="imagen" class="form-control" accept="image/*">
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="reset" class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+
+                        Limpiar
+
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Cancelar
+
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Guardar Usuario
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 <hr>
 
-<table class="table" id="tablaUsuarios">
+<table class="table table-hover align-middle" id="tablaUsuarios">
 
     <thead>
         <tr>
@@ -43,17 +150,54 @@
     <tbody></tbody>
 
 </table>
+<div class=" modal fade" id="modalImagen">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5>Cambiar Imagen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden" id="usuario_imagen_id">
+
+                <input type="file" id="nueva_imagen" class="form-control" accept="image/*">
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-primary" onclick="guardarImagen()">
+
+                    Guardar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 <script>
-const PUEDE_EDITAR_USUARIOS =
-    <?= tienePermiso('usuarios_editar')
+    const PUEDE_EDITAR_USUARIOS =
+        <?= tienePermiso('usuarios_editar')
             ? 'true'
             : 'false' ?>;
-const PUEDE_CREAR_USUARIOS =
-    <?= tienePermiso(
+    const PUEDE_CREAR_USUARIOS =
+        <?= tienePermiso(
             'usuarios_crear'
         ) ? 'true' : 'false' ?>;
-const PUEDE_CAMBIAR_ESTADO_USUARIOS =
-    <?= tienePermiso('usuarios_eliminar')
+    const PUEDE_CAMBIAR_ESTADO_USUARIOS =
+        <?= tienePermiso('usuarios_eliminar')
             ? 'true'
             : 'false' ?>;
 </script>

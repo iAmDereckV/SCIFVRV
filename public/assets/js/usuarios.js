@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function cargarUsuarios() {
+  if ($.fn.DataTable.isDataTable("#tablaUsuarios")) {
+    $("#tablaUsuarios").DataTable().destroy();
+  }
   let response = await fetch(IRL + "/api/usuarios/listar.php");
 
   let data = await response.json();
@@ -15,6 +18,10 @@ async function cargarUsuarios() {
   let html = "";
 
   data.forEach((usuario) => {
+    let estado =
+      usuario.estado == "ACTIVO"
+        ? `<span class="badge bg-success">Activo</span>`
+        : `<span class="badge bg-danger">Inactivo</span>`;
     let foto = usuario.foto
       ? `uploads/usuarios/${usuario.foto}`
       : `assets/img/sin-imagen.png`;
@@ -26,9 +33,11 @@ async function cargarUsuarios() {
     <td>
 <img
     src="${foto}"
-    width="60"
-    height="60"
-    style="object-fit:cover;">
+    class="rounded-circle shadow-sm border"
+    style="
+width:55px;
+height:55px;
+object-fit:cover;">
 
 </td>
     <td>${usuario.nombre}</td>
@@ -37,36 +46,37 @@ async function cargarUsuarios() {
 
     <td>${usuario.rol}</td>
 
-    <td>${usuario.estado}</td>
+    <td>${estado}</td>
    
     <td>
-
+<div class="btn-group">
 <button
-    class="btn btn-warning btn-sm"
+    class="btn btn-sm btn-outline-primary"
     onclick="editarUsuario(${usuario.id})">
 
-    Editar
+    <i class="bi bi-pencil"></i>
 
 </button>
 
         <button
-            class="btn btn-danger btn-sm"
+            class="btn btn-sm btn-outline-danger"
             onclick="
             cambiarEstado(
                 ${usuario.id},
                 '${usuario.estado}'
             )">
 
-            Estado
+            <i class="bi bi-arrow-repeat"></i>
 
         </button>
 <button
-    class="btn btn-info btn-sm"
+    class="btn btn-sm btn-outline-warning"
     onclick="cambiarFoto(${usuario.id})">
 
-    Foto
+    <i class="bi bi-image"></i>
 
 </button>
+</div>
     </td>
 
 </tr>
@@ -74,6 +84,34 @@ async function cargarUsuarios() {
   });
 
   document.querySelector("#tablaUsuarios tbody").innerHTML = html;
+  $("#tablaUsuarios").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+
+    responsive: true,
+
+    pageLength: 5,
+
+    lengthMenu: [
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "Todos"],
+    ],
+
+    order: [[2, "asc"]],
+  });
 }
 
 async function cargarRoles() {
@@ -93,7 +131,6 @@ async function cargarRoles() {
 async function guardarUsuario(e) {
   e.preventDefault();
   let formData = new FormData();
-  formData.append("id", document.getElementById("id").value);
   formData.append("rol_id", document.getElementById("rol_id").value);
   formData.append("nombre", document.getElementById("nombre").value);
 
@@ -109,17 +146,8 @@ async function guardarUsuario(e) {
     formData.append("imagen", imagen);
   }
   let id = document.getElementById("formUsuario").dataset.id;
-
-  if (!id && !PUEDE_CREAR_USUARIOS) {
-    alert("No tiene permiso para crear usuarios");
-
-    return;
-  }
-
-  if (id && !PUEDE_EDITAR_USUARIOS) {
-    alert("No tiene permiso para editar usuarios");
-
-    return;
+  if (id) {
+    formData.append("id", id);
   }
 
   let response = await fetch(
@@ -140,7 +168,7 @@ async function guardarUsuario(e) {
     document.getElementById("formUsuario").reset();
 
     delete document.getElementById("formUsuario").dataset.id;
-
+    bootstrap.Modal.getInstance(document.getElementById("modalUsuario")).hide();
     cargarUsuarios();
   } else {
     alert("Error al guardar");
@@ -171,11 +199,15 @@ async function cambiarEstado(id, estadoActual) {
   }
 }
 async function editarUsuario(id) {
+  if (!PUEDE_EDITAR_USUARIOS) {
+    alert("No tiene permiso para editar usuarios");
+
+    return;
+  }
   let response = await fetch(IRL + "/api/usuarios/obtener.php?id=" + id);
 
   let usuario = await response.json();
 
-  document.getElementById("id").value = usuario.id;
   document.getElementById("nombre").value = usuario.nombre;
 
   document.getElementById("usuario").value = usuario.usuario;
@@ -185,44 +217,61 @@ async function editarUsuario(id) {
   document.getElementById("rol_id").value = usuario.rol_id;
 
   document.getElementById("formUsuario").dataset.id = usuario.id;
+  new bootstrap.Modal(document.getElementById("modalUsuario")).show();
 }
-async function cambiarFoto(id) {
+function cambiarFoto(id) {
   if (!PUEDE_EDITAR_USUARIOS) {
-    alert("No tiene permiso para editar foto");
+    alert("No tiene permiso para cambiar imagen");
+    return;
+  }
+  document.getElementById("usuario_imagen_id").value = id;
+
+  let modal = new bootstrap.Modal(document.getElementById("modalImagen"));
+
+  modal.show();
+}
+async function guardarImagen() {
+  let id = document.getElementById("usuario_imagen_id").value;
+
+  let archivo = document.getElementById("nueva_imagen").files[0];
+  if (!archivo) {
+    alert("Seleccione una imagen");
 
     return;
   }
-  let input = document.createElement("input");
 
-  input.type = "file";
+  let formData = new FormData();
 
-  input.accept = "image/*";
-  input.onchange = async () => {
-    let archivo = input.files[0];
+  formData.append("id", id);
 
-    if (!archivo) return;
+  formData.append("imagen", archivo);
 
-    let formData = new FormData();
+  let response = await fetch(IRL + "/api/usuarios/cambiar_foto.php", {
+    method: "POST",
+    body: formData,
+  });
 
-    formData.append("id", id);
+  let data = await response.json();
 
-    formData.append("imagen", archivo);
+  if (data.success) {
+    alert("Foto actualizada");
+    bootstrap.Modal.getInstance(document.getElementById("modalImagen")).hide();
+    cargarUsuarios();
+  } else {
+    alert("Error al actualizar foto");
+  }
+  document.getElementById("nueva_imagen").value = "";
+}
 
-    let response = await fetch(IRL + "/api/usuarios/cambiar_foto.php", {
-      method: "POST",
-      body: formData,
-    });
+function nuevoUsuario() {
+  if (!PUEDE_CREAR_USUARIOS) {
+    alert("No tiene permiso para crear usuarios");
 
-    let data = await response.json();
+    return;
+  }
+  document.getElementById("formUsuario").reset();
 
-    if (data.success) {
-      alert("Foto actualizada");
+  delete document.getElementById("formUsuario").dataset.id;
 
-      cargarUsuarios();
-    } else {
-      alert("Error al actualizar foto");
-    }
-  };
-
-  input.click();
+  new bootstrap.Modal(document.getElementById("modalUsuario")).show();
 }

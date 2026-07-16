@@ -90,7 +90,7 @@ object-fit:cover;
     <i class="bi bi-image"></i>
 
 </button>
-
+</div>
         </td>
 
       </tr>
