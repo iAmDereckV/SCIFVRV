@@ -19,6 +19,5 @@
     let img = document.getElementById("navlogo");
 
     img.src = IRL + "/public/uploads/empresa/" + data.logo;
-    img.style.display = "block";
   }
 })();

@@ -5,18 +5,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 document.getElementById("btnExcel").addEventListener("click", () => {
+  if (!PUEDE_EXPORTAR_EXCEL) {
+    alert("No tiene permiso para exportar Excel");
+    return;
+  }
   let anio = document.getElementById("anio").value;
 
   window.location.href =
     IRL + "/api/reportes/exportar_maestro_detalle.php?anio=" + anio;
 });
 document.getElementById("anio").addEventListener("change", cargarResumen);
-document.getElementById("btnExcel").addEventListener("click", () => {
-  let anio = document.getElementById("anio").value;
-
-  window.location.href =
-    IRL + "/api/reportes/exportar_maestro_detalle.php?anio=" + anio;
-});
 
 async function cargarAnios() {
   let response = await fetch(IRL + "/api/maestro_detalle/anios.php");

@@ -67,13 +67,17 @@ object-fit:cover;
             class="btn btn-sm btn-outline-primary"
             onclick="editarProducto(${producto.id})" >
 
-            <i class="bi bi-pencil"></i>
+            <i class="bi bi-pencil-square"></i>
 
           </button>
 
           <button
           title="Estado"
-            class="btn btn-sm btn-outline-danger"
+           class="btn btn-sm ${
+             producto.estado === "ACTIVO"
+               ? "btn-outline-danger"
+               : "btn-outline-success"
+           }"
             onclick="cambiarEstado(
               ${producto.id},
               '${producto.estado}'
@@ -279,12 +283,12 @@ async function editarProducto(id) {
 }
 
 async function cambiarEstado(id, estadoActual) {
+  let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_PRODUCTOS) {
     alert(`No tiene permiso para poner productos ${nuevoEstado}`);
 
     return;
   }
-  let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
 
   let formData = new FormData();
 

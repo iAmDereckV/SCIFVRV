@@ -41,13 +41,17 @@ async function cargarProveedores() {
             class="btn btn-sm btn-outline-primary"
             onclick="editarProveedor(${proveedor.id})">
 
-            <i class="bi bi-pencil"></i>
+            <i class="bi bi-pencil-square"></i>
 
           </button>
 
           <button
             title="Estado"
-            class="btn btn-sm btn-outline-danger"
+            class="btn btn-sm ${
+              proveedor.estado === "ACTIVO"
+                ? "btn-outline-danger"
+                : "btn-outline-success"
+            }"
             onclick="
               cambiarEstado(
                 ${proveedor.id},
@@ -87,8 +91,8 @@ async function cargarProveedores() {
     pageLength: 5,
 
     lengthMenu: [
-      [5, 10, 25, 50, -1],
-      [5, 10, 25, 50, "Todos"],
+      [5, 10, 25, -1],
+      [5, 10, 25, "Todos"],
     ],
 
     order: [[2, "asc"]],
@@ -146,7 +150,7 @@ async function guardarProveedor(e) {
 
 async function editarProveedor(id) {
   if (!PUEDE_EDITAR_PROVEEDORES) {
-    alert("No tiene permiso para editar proveedore");
+    alert("No tiene permiso para editar proveedores");
 
     return;
   }
@@ -169,12 +173,12 @@ async function editarProveedor(id) {
 }
 
 async function cambiarEstado(id, estadoActual) {
+  let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_PROVEEDORES) {
     alert(`No tiene permiso para poner proveedores ${nuevoEstado}`);
 
     return;
   }
-  let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
 
   let formData = new FormData();
 

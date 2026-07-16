@@ -40,21 +40,33 @@ async function cargarRespaldos() {
         <td>${respaldo.archivo}</td>
 <td>
 
-<a
-    onclick="descargarBackup('${respaldo.archivo}')"
-    class="btn btn-success btn-sm"> 
-    Descargar
-</a>
+
+
+<div class="btn-group">
 
 <button
-    class="btn btn-danger btn-sm"
-    onclick="eliminarRespaldo(${respaldo.id})">
+class="btn btn-sm btn-outline-success"
+title="Descargar"
+onclick="descargarBackup('${respaldo.archivo}')">
 
-    Eliminar
+<i class="bi bi-download"></i>
 
 </button>
 
+<button
+class="btn btn-sm btn-outline-danger"
+title="Eliminar"
+onclick="eliminarRespaldo(${respaldo.id})">
+
+<i class="bi bi-trash3"></i>
+
+</button>
+
+</div>
+
 </td>
+
+
 
       </tr>
     `;

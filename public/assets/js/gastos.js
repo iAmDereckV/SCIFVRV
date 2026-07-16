@@ -51,7 +51,7 @@ async function cargarGastos() {
     class="btn btn-sm btn-outline-primary"
     onclick="editarGasto(${gasto.id})">
 
-    <i class="bi bi-pencil"></i>
+    <i class="bi bi-pencil-square"></i>
 
 </button>
 

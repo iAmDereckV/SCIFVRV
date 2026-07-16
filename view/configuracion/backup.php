@@ -1,130 +1,245 @@
-<h2>Backup y Restauración</h2>
+<div class="container-fluid">
 
-<div class="card mb-3">
-    <div class="card-header">
-        Respaldos
-    </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div class="card-body">
-
-
-        <button class="btn btn-success mb-2" onclick="backupCompleto()">
-
-            Exportar Completo (SQL + Imágenes)
-
-        </button>
-        <br>
-
-        <button class="btn btn-primary mb-2" onclick="generarBackup()">
-
-            Generar Backup
-
-        </button>
-
-
+        <h2 class="fw-bold">
+            <i class="bi bi-database-fill-lock text-primary"></i>
+            Backup y Restauración
+        </h2>
 
     </div>
+
+    <div class="row">
+
+        <!-- RESPALDOS -->
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+
+                <div class="card-header card-bg text-white">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-cloud-arrow-up-fill"></i>
+
+                        Respaldos
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body d-grid gap-3">
+
+                    <button
+                        class="btn btn-success btn-lg"
+                        onclick="generarBackup()">
+
+                        <i class="bi bi-database-fill-add"></i>
+
+                        Generar Backup SQL
+
+                    </button>
+
+                    <button
+                        class="btn btn-primary btn-lg"
+                        onclick="backupCompleto()">
+
+                        <i class="bi bi-file-earmark-zip-fill"></i>
+
+                        Backup Completo
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RESTAURAR -->
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+
+                <div class="card-header bg-warning text-dark">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+
+                        Restaurar
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <label class="form-label">
+
+                        Base de Datos (.sql)
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="archivo_sql"
+                        class="form-control mb-3"
+                        accept=".sql">
+
+                    <button
+                        class="btn btn-warning w-100 mb-4"
+                        onclick="restaurarSQL()">
+
+                        <i class="bi bi-database-fill-down"></i>
+
+                        Restaurar SQL
+
+                    </button>
+
+                    <label class="form-label">
+
+                        Archivos (.zip)
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="archivo_zip"
+                        class="form-control mb-3"
+                        accept=".zip">
+
+                    <button
+                        class="btn btn-secondary w-100"
+                        onclick="restaurarArchivos()">
+
+                        <i class="bi bi-file-earmark-zip-fill"></i>
+
+                        Restaurar Archivos
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ZONA DE RIESGO -->
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-danger rounded-4 h-100">
+
+                <div class="card-header bg-danger text-white">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+
+                        Zona de Riesgo
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body d-flex flex-column justify-content-center">
+
+                    <div class="alert alert-danger">
+
+                        Esta acción eliminará permanentemente toda la información registrada.
+
+                    </div>
+
+                    <button
+                        class="btn btn-danger btn-lg"
+                        onclick="reiniciarSistema()">
+
+                        <i class="bi bi-trash3-fill"></i>
+
+                        Reiniciar Sistema
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4 mt-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+
+                <i class="bi bi-clock-history text-primary"></i>
+
+                Historial de Respaldos
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table
+                    class="table table-hover align-middle"
+                    id="tablaRespaldos">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Fecha</th>
+
+                            <th>Usuario</th>
+
+                            <th>Archivo</th>
+
+                            <th width="170">
+
+                                Acciones
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
-
-<div class="card mb-3">
-
-    <div class="card-header">
-        Restaurar Base de Datos
-    </div>
-
-    <div class="card-body">
-
-        <input type="file" id="archivo_sql" class="form-control mb-2" accept=".sql">
-
-        <button class="btn btn-warning" onclick="restaurarSQL()">
-
-            Restaurar SQL
-
-        </button>
-
-    </div>
-
-</div>
-
-<div class="card mb-3">
-
-    <div class="card-header">
-        Restaurar Archivos
-    </div>
-
-    <div class="card-body">
-
-        <input type="file" id="archivo_zip" class="form-control mb-2" accept=".zip">
-
-        <button class="btn btn-secondary" onclick="restaurarArchivos()">
-
-            Restaurar Archivos
-
-        </button>
-
-    </div>
-
-</div>
-
-<div class="card border-danger">
-
-    <div class="card-header bg-danger text-white">
-
-        Zona de Riesgo
-
-    </div>
-
-    <div class="card-body">
-
-        <button class="btn btn-danger" onclick="reiniciarSistema()">
-
-            Reiniciar Sistema
-
-        </button>
-
-    </div>
-
-</div>
-<hr>
-
-<h3>Historial de Respaldos</h3>
-
-<table class="table" id="tablaRespaldos">
-
-    <thead>
-
-        <tr>
-
-            <th>ID</th>
-            <th>Fecha</th>
-            <th>Usuario</th>
-            <th>Archivo</th>
-            <th>Acciones</th>
-
-        </tr>
-
-    </thead>
-
-    <tbody>
-
-    </tbody>
-
-</table>
 <script>
-const PUEDE_GENRERAR_BACKUP =
-    <?= tienePermiso('backup_generar')
+    const PUEDE_GENRERAR_BACKUP =
+        <?= tienePermiso('backup_generar')
             ? 'true'
             : 'false' ?>;
-const PUEDE_RESTAURAR_BACKUP =
-    <?= tienePermiso(
+    const PUEDE_RESTAURAR_BACKUP =
+        <?= tienePermiso(
             'backup_restaurar'
         ) ? 'true' : 'false' ?>;
-const PUEDE_REINICIAR_EMPRESA =
-    <?= tienePermiso('backup_reiniciar')
+    const PUEDE_REINICIAR_EMPRESA =
+        <?= tienePermiso('backup_reiniciar')
             ? 'true'
             : 'false' ?>;
-const PUEDE_ELIMINAR_BACKUP =
-    <?= tienePermiso('backup_eliminar')
+    const PUEDE_ELIMINAR_BACKUP =
+        <?= tienePermiso('backup_eliminar')
             ? 'true'
             : 'false' ?>;
 </script>

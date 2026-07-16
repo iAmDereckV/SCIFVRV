@@ -187,4 +187,18 @@ class Rol
             return false;
         }
     }
+    public function obtenerPorId($id)
+    {
+        $sql = "SELECT *
+                FROM roles
+                WHERE id = :id";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        return $stmt->fetch();
+    }
 }

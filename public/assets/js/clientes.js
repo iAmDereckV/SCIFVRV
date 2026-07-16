@@ -44,20 +44,22 @@ async function cargarClientes() {
           class="btn btn-sm btn-outline-primary"
       onclick="editarCliente(${cliente.id})">
 
-       <i class="bi bi-pencil"></i>
+       <i class="bi bi-pencil-square"></i>
 
     </button>
        <button
-      title="Estado"
-            class="btn btn-sm btn-outline-danger"
-      onclick="cambiarEstado(
+    title="Estado"
+    class="btn btn-sm ${
+      cliente.estado === "ACTIVO" ? "btn-outline-danger" : "btn-outline-success"
+    }"
+    onclick="cambiarEstado(
         ${cliente.id},
         '${cliente.estado}'
-      )">
+    )">
 
-       <i class="bi bi-arrow-repeat"></i>
+    <i class="bi bi-arrow-repeat"></i>
 
-    </button>
+</button>
     </div>
    </td>
 

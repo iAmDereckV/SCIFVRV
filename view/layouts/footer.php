@@ -1,4 +1,8 @@
 </div>
+</div>
+</div>
+</main>
+</body>
 
 <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
 <script src="assets/js/app.js"></script>

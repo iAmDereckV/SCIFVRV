@@ -12,8 +12,6 @@
    3.4 Backup.
    3.5 Restauración.
    3.6 Exportaciones.
-   3.7 Facturación.
-   3.8 Kardex.
 4. Documentación
    4.1 README.md.
    4.2 Manual de usuario.

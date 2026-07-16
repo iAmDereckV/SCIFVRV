@@ -75,3 +75,18 @@ async function guardarConfiguracion(e) {
     alert("Error al guardar la configuración");
   }
 }
+document.getElementById("logo").addEventListener("change", function () {
+  if (this.files.length === 0) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    let img = document.getElementById("previewLogo");
+
+    img.src = e.target.result;
+
+    img.style.display = "block";
+  };
+
+  reader.readAsDataURL(this.files[0]);
+});

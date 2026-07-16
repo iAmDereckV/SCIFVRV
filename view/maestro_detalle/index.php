@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <h2 class="fw-bold">
+    <h2 class="page-title ">
 
         Maestro Detalle
 
@@ -106,7 +106,12 @@
     </div>
 
 </div>
-
+<script>
+    const PUEDE_EXPORTAR_EXCEL =
+        <?= tienePermiso(
+            'excel_exportar'
+        ) ? 'true' : 'false' ?>;
+</script>
 
 
 <script src="assets/js/maestro_detalle.js"></script>

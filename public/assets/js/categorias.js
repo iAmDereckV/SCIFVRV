@@ -39,13 +39,17 @@ async function cargarCategorias() {
             class="btn btn-sm btn-outline-primary"
             onclick="editarCategoria(${categoria.id})">
 
-              <i class="bi bi-pencil"></i>
+              <i class="bi bi-pencil-square"></i>
 
           </button>
 
           <button
           title="Estado"
-           class="btn btn-sm btn-outline-danger"
+           class="btn btn-sm ${
+             categoria.estado === "ACTIVO"
+               ? "btn-outline-danger"
+               : "btn-outline-success"
+           }"
             onclick="cambiarEstado(
                 ${categoria.id},
                 '${categoria.estado}'
@@ -84,8 +88,8 @@ async function cargarCategorias() {
     pageLength: 5,
 
     lengthMenu: [
-      [5, 10, 25, 50, -1],
-      [5, 10, 25, 50, "Todos"],
+      [5, 10, 25, -1],
+      [5, 10, 25, "Todos"],
     ],
 
     order: [[2, "asc"]],

@@ -97,7 +97,7 @@ function verFactura(id) {
 }
 async function anularVenta(id) {
   if (!PUEDE_CAMBIAR_ESTADO_VENTAS) {
-    alert(`No tiene permiso para poner ventas ${nuevoEstado}`);
+    alert(`No tiene permiso para anular ventas`);
     return;
   }
   if (!confirm("¿Desea anular esta venta?")) {
@@ -398,7 +398,7 @@ async function guardarImagen() {
 
 async function anularCompra(id) {
   if (!PUEDE_CAMBIAR_ESTADO_COMPRAS) {
-    alert(`No tiene permiso para poner compras ${nuevoEstado}`);
+    alert(`No tiene permiso para anular compras`);
     return;
   }
   if (!confirm("¿Desea anular esta compra?")) {

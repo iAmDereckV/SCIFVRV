@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
 
-    <h2 class="fw-bold mb-0">
+    <h2 class="page-title mb-0">
         Usuario
     </h2>
 

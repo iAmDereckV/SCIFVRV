@@ -64,4 +64,8 @@ class RolController
                 $permisos
             );
     }
+    public function obtenerPorId($id)
+    {
+        return $this->rol->obtenerPorId($id);
+    }
 }

@@ -1,42 +1,61 @@
 document.addEventListener("DOMContentLoaded", () => {
   cargarRoles();
+  document.getElementById("formRol").addEventListener("submit", guardarRol);
 });
 
 async function cargarRoles() {
+  if ($.fn.DataTable.isDataTable("#tablaRoles")) {
+    $("#tablaRoles").DataTable().destroy();
+  }
   let response = await fetch(IRL + "/api/roles/listar.php");
 
   let data = await response.json();
 
   let html = "";
   data.forEach((rol) => {
+    let estado =
+      rol.estado == "ACTIVO"
+        ? `<span class="badge bg-success">Activo</span>`
+        : `<span class="badge bg-danger">Inactivo</span>`;
     html += `
 <tr>
     <td>${rol.id}</td>
     <td>${rol.nombre}</td>
     <td>${rol.descripcion}</td>
-    <td>${rol.estado}</td>
-
+    <td>${estado}</td>
     <td>
-
+<div class="btn-group">
+        
         <button
-            class="btn btn-warning btn-sm"
+            class="btn btn-sm btn-outline-warning"
             onclick="editarPermisos(${rol.id})">
 
-            Permisos
+            <i class="bi bi-shield-lock"></i>
 
         </button>
         <button
-            class="btn btn-danger btn-sm"
+            class="btn btn-sm btn-outline-primary"
+            onclick="editarRol(${rol.id})">
+
+              <i class="bi bi-pencil-square"></i>
+
+        </button>
+        <button
+            class="btn btn-sm ${
+              rol.estado === "ACTIVO"
+                ? "btn-outline-danger"
+                : "btn-outline-success"
+            }"
             onclick="
             cambiarEstado(
                 ${rol.id},
                 '${rol.estado}'
             )">
 
-            Estado
+            <i class="bi bi-arrow-repeat"></i>
 
         </button>
-
+</div>
     </td>
 
 </tr>
@@ -44,13 +63,40 @@ async function cargarRoles() {
   });
 
   document.querySelector("#tablaRoles tbody").innerHTML = html;
+  $("#tablaRoles").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+
+    responsive: true,
+
+    pageLength: 5,
+
+    lengthMenu: [
+      [5, 10, -1],
+      [5, 10, "Todos"],
+    ],
+
+    order: [[2, "asc"]],
+  });
 }
 let rolSeleccionado = null;
 
 async function editarPermisos(id) {
-  if (id && !PUEDE_EDITAR_ROLES) {
+  if (!PUEDE_EDITAR_ROLES) {
     alert("No tiene permiso para editar permisos");
-
     return;
   }
   rolSeleccionado = id;
@@ -62,6 +108,7 @@ async function editarPermisos(id) {
   let html = "";
 
   permisos.forEach((permiso) => {
+    console.log(permiso);
     html += `
         <div class="form-check">
 
@@ -69,9 +116,8 @@ async function editarPermisos(id) {
                 class="form-check-input permiso"
                 type="checkbox"
                 value="${permiso.id}"
-
+                data-dashboard="${permiso.codigo === "dashboard_ver" ? 1 : 0}"
                 ${permiso.asignado == 1 ? "checked" : ""}
-
             <label class="form-check-label">
 
                 ${permiso.descripcion}
@@ -86,19 +132,83 @@ async function editarPermisos(id) {
 
   new bootstrap.Modal(document.getElementById("modalPermisos")).show();
 }
+function seleccionarTodos() {
+  document.querySelectorAll(".permiso").forEach((check) => {
+    check.checked = true;
+  });
+}
+function quitarTodos() {
+  document.querySelectorAll(".permiso").forEach((check) => {
+    if (check.dataset.dashboard == "1") {
+      check.checked = true;
+    } else {
+      check.checked = false;
+    }
+  });
+}
+async function guardarRol(e) {
+  e.preventDefault();
+
+  let formData = new FormData();
+
+  formData.append("nombre", document.getElementById("nombre").value);
+
+  formData.append("descripcion", document.getElementById("descripcion").value);
+
+  let id = document.getElementById("formRol").dataset.id;
+  if (id) {
+    formData.append("id", id);
+  }
+
+  let response = await fetch(
+    id ? IRL + "/api/roles/actualizar.php" : IRL + "/api/roles/guardar.php",
+    {
+      method: "POST",
+      body: formData,
+    },
+  );
+
+  let data = await response.json();
+
+  if (data.success) {
+    alert("Rol guardada");
+
+    document.getElementById("formRol").reset();
+
+    delete document.getElementById("formRol").dataset.id;
+    bootstrap.Modal.getInstance(document.getElementById("modalRol")).hide();
+    cargarRoles();
+  }
+}
+async function editarRol(id) {
+  if (!PUEDE_EDITAR_ROLES) {
+    alert("No tiene permiso para editar rol");
+    return;
+  }
+  let response = await fetch(IRL + "/api/roles/obtener.php?id=" + id);
+
+  let marca = await response.json();
+
+  document.getElementById("nombre").value = marca.nombre;
+
+  document.getElementById("descripcion").value = marca.descripcion;
+
+  document.getElementById("formRol").dataset.id = marca.id;
+  new bootstrap.Modal(document.getElementById("modalRol")).show();
+}
 async function cambiarEstado(id, estadoActual) {
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
+  if (!PUEDE_CAMBIAR_ESTADO_ROLES) {
+    alert(`No tiene permiso para poner roles ${nuevoEstado}`);
+
+    return;
+  }
 
   let formData = new FormData();
 
   formData.append("id", id);
 
   formData.append("estado", nuevoEstado);
-  if (!PUEDE_CAMBIAR_ESTADO_ROLES) {
-    alert(`No tiene permiso para poner roles ${nuevoEstado}`);
-
-    return;
-  }
   let response = await fetch(IRL + "/api/roles/cambiar_estados.php", {
     method: "POST",
     body: formData,
@@ -139,4 +249,15 @@ async function guardarPermisos() {
       document.getElementById("modalPermisos"),
     ).hide();
   }
+}
+function nuevoRol() {
+  if (!PUEDE_CREAR_ROLES) {
+    alert("No tiene permiso para crear roles");
+    return;
+  }
+  document.getElementById("formRol").reset();
+
+  delete document.getElementById("formRol").dataset.id;
+
+  new bootstrap.Modal(document.getElementById("modalRol")).show();
 }
