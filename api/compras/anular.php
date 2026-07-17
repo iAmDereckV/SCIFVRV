@@ -3,7 +3,7 @@
 require_once '../../app/controllers/CompraController.php';
 require_once '../../app/helpers/Permisos.php';
 
-requierePermiso('compras_editar');
+requierePermiso('compras_anular');
 
 $controller = new CompraController();
 

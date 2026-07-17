@@ -1,5 +1,9 @@
 <?php
+require_once '../../app/helpers/Permisos.php';
 
+requierePermiso(
+    'backup_restaurar'
+);
 $archivo =
     basename($_GET['archivo']);
 

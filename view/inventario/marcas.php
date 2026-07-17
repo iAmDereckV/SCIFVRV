@@ -94,22 +94,23 @@
 
 </div>
 <hr>
+<div class="table-responsive">
+    <table class="table table-hover table-sm align-middle" id="tablaMarcas">
 
-<table class="table table-hover align-middle" id="tablaMarcas">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+        <tbody></tbody>
 
-    <tbody></tbody>
-
-</table>
+    </table>
+</div>
 <script>
     const PUEDE_EDITAR_MARCAS =
         <?= tienePermiso('marcas_editar')

@@ -83,28 +83,29 @@
 
 </div>
 <hr>
+<div class="table-responsive">
+    <table class="table table-hover table-sm align-middle" id="tablaKardex">
 
-<table class="table table-hover align-middle" id="tablaKardex">
+        <thead>
 
-    <thead>
+            <tr>
 
-        <tr>
+                <th>Fecha</th>
 
-            <th>Fecha</th>
+                <th>Tipo</th>
 
-            <th>Tipo</th>
+                <th>Cantidad</th>
 
-            <th>Cantidad</th>
+                <th>Detalle</th>
+                <th>Saldo</th>
 
-            <th>Detalle</th>
-            <th>Saldo</th>
+            </tr>
 
-        </tr>
+        </thead>
 
-    </thead>
+        <tbody></tbody>
 
-    <tbody></tbody>
-
-</table>
+    </table>
+</div>
 
 <script src="assets/js/kardex.js"></script>

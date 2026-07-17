@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 require_once '../../app/controllers/GastoController.php';
 require_once '../../app/helpers/Permisos.php';
 

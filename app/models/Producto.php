@@ -129,6 +129,25 @@ class Producto
 
         return $stmt->fetch();
     }
+    public function obtenerDetalle($id)
+    {
+        $sql = "SELECT
+    p.*,
+    c.nombre AS categoria,
+    m.nombre AS marca
+FROM productos p
+INNER JOIN categorias c ON c.id = p.categoria_id
+INNER JOIN marcas m ON m.id = p.marca_id
+WHERE p.id = :id";
+
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        return $stmt->fetch();
+    }
     public function actualizar(
         $id,
         $codigo,

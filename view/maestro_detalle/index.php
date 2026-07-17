@@ -70,7 +70,7 @@
                 id="tablaMaestroDetalle"
                 class="table table-hover table-bordered align-middle">
 
-                <thead class="table-dark">
+                <thead class="">
 
                     <tr>
 

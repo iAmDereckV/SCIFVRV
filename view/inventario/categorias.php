@@ -92,26 +92,27 @@
 
 </div>
 <hr>
+<div class="table-responsive">
+    <table class="table table-hover table-sm align-middle" id="tablaCategorias">
 
-<table class="table table-hover align-middle" id="tablaCategorias">
+        <thead>
 
-    <thead>
+            <tr>
 
-        <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
 
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Estado</th>
-            <th>Acciones</th>
+            </tr>
 
-        </tr>
+        </thead>
 
-    </thead>
+        <tbody></tbody>
 
-    <tbody></tbody>
-
-</table>
+    </table>
+</div>
 <script>
     const PUEDE_EDITAR_CATEGORIAS =
         <?= tienePermiso('categorias_editar')

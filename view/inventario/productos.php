@@ -205,7 +205,7 @@
 </div>
 <hr>
 <div class="table-responsive">
-    <table class="table table-hover" id="tablaProductos">
+    <table class="table table-hover table-sm align-middle" id="tablaProductos">
 
         <thead>
             <tr>
@@ -213,13 +213,9 @@
                 <th>Código</th>
                 <th>Foto</th>
                 <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Marca</th>
                 <th>Precio Costo</th>
                 <th>Precio Venta</th>
                 <th>Stock</th>
-                <th>Descripción</th>
-                <th>Ubicación</th>
                 <th>Estado</th>
                 <th>Acciones</th>
 
@@ -258,6 +254,222 @@
                 <button class="btn btn-primary" onclick="guardarImagen()">
 
                     Guardar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Modal Detalle Producto -->
+<div class="modal fade" id="modalDetalleProducto" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    <i class="bi bi-box-seam me-2"></i>
+                    Información del Producto
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <!-- FOTO -->
+
+                    <div class="col-md-4 text-center">
+
+                        <img
+                            id="detalleImagen"
+                            src=""
+                            class="img-fluid rounded shadow border p-2 bg-white"
+                            style="max-height:220px; object-fit:contain;">
+
+                    </div>
+
+                    <!-- DATOS -->
+
+                    <div class="col-md-8">
+
+                        <table class="table table-borderless table-sm align-middle mb-0">
+
+                            <tbody>
+
+                                <tr>
+
+                                    <th width="35%">
+                                        <i class="bi bi-upc-scan"></i>
+                                        Código
+                                    </th>
+
+                                    <td id="detalleCodigo"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-box"></i>
+                                        Nombre
+                                    </th>
+
+                                    <td id="detalleNombre"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-tags"></i>
+                                        Categoría
+                                    </th>
+
+                                    <td id="detalleCategoria"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-bookmark-star"></i>
+                                        Marca
+                                    </th>
+
+                                    <td id="detalleMarca"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-cash-coin"></i>
+                                        Precio Compra
+                                    </th>
+
+                                    <td id="detalleCosto"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-currency-dollar"></i>
+                                        Precio Venta
+                                    </th>
+
+                                    <td id="detalleVenta"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-boxes"></i>
+                                        Stock
+                                    </th>
+
+                                    <td id="detalleStock"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-exclamation-triangle"></i>
+                                        Stock Mínimo
+                                    </th>
+
+                                    <td id="detalleStockMinimo"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-geo-alt"></i>
+                                        Ubicación
+                                    </th>
+
+                                    <td id="detalleUbicacion"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-car-front"></i>
+                                        Vehículo Aplicable
+                                    </th>
+
+                                    <td id="detalleVehiculo"></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+                                        <i class="bi bi-check-circle"></i>
+                                        Estado
+                                    </th>
+
+                                    <td id="detalleEstado"></td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <div>
+
+                    <h6 class="fw-bold">
+
+                        <i class="bi bi-card-text"></i>
+
+                        Descripción
+
+                    </h6>
+
+                    <div
+                        id="detalleDescripcion"
+                        class="border rounded p-3 bg-light">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    <i class="bi bi-x-circle"></i>
+
+                    Cerrar
 
                 </button>
 

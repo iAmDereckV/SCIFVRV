@@ -134,7 +134,7 @@
 
                 <table
                     id="tablaBitacora"
-                    class="table table-hover align-middle">
+                    class="table table-hover table-sm align-middle">
 
                     <thead class="table-light">
 

@@ -170,6 +170,7 @@
 .table tbody tr:hover {
   background: #f5f9ff;
 }
+
 .dataTables_wrapper .dataTables_filter input {
   border-radius: 10px;
 
@@ -365,7 +366,9 @@ textarea.form-control {
   border-bottom: 1px solid #edf2f7;
   font-weight: 600;
 }
-
+table.dataTable {
+  width: 100% !important;
+}
 .table tbody tr:hover {
   background: #f8fbff;
 }
@@ -381,6 +384,96 @@ textarea.form-control {
 .btn-success {
   font-size: 1.05rem;
   font-weight: 600;
+}
+/* ================= LOGIN ================= */
+
+.login-page {
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.login-header {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+
+  color: var(--color-white);
+
+  text-align: center;
+
+  padding: 30px;
+}
+
+.login-logo {
+  width: 110px;
+
+  height: 110px;
+
+  object-fit: contain;
+
+  background: var(--color-white);
+
+  border-radius: 50%;
+
+  padding: 10px;
+
+  margin-bottom: 15px;
+
+  box-shadow: var(--shadow-md);
+}
+
+.login-body {
+  padding: 30px;
+
+  background: var(--color-white);
+}
+
+.login-body .input-group-text {
+  background: #f8f9fa;
+}
+
+.btn-login {
+  border-radius: var(--radius-sm);
+
+  padding: 12px;
+
+  font-weight: 600;
+}
+
+.login-footer {
+  text-align: center;
+
+  color: #6c757d;
+
+  font-size: 0.85rem;
+
+  margin-top: 20px;
 }
 @media (max-width: 991px) {
   #sidebar {

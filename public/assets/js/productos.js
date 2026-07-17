@@ -46,22 +46,23 @@ object-fit:cover;
 
 </td>
         <td>${producto.nombre}</td>
-
-        <td>${producto.categoria}</td>
-
-        <td>${producto.marca}</td>
-
         <td>C$ ${Number(producto.precio_compra).toFixed(2)}</td>
         <td>C$ ${Number(producto.precio_venta).toFixed(2)}</td>
       
         <td>${stock}</td>
-        <td>${producto.descripcion}</td>
-        <td>${producto.ubicacion}</td>
 
         <td>${estado}</td>
 
         <td>
 <div class="btn-group">
+  <button
+    class="btn btn-sm btn-outline-info"
+    onclick="verProducto(${producto.id})"
+    title="Ver detalles">
+
+    <i class="bi bi-eye-fill"></i>
+
+</button>
           <button
           title="Editar"
             class="btn btn-sm btn-outline-primary"
@@ -86,6 +87,7 @@ object-fit:cover;
             <i class="bi bi-arrow-repeat"></i>
 
           </button>
+        
 <button
    title="Foto"
             class="btn btn-sm btn-outline-warning"
@@ -361,4 +363,45 @@ function nuevoProducto() {
   delete document.getElementById("formProducto").dataset.id;
 
   new bootstrap.Modal(document.getElementById("modalProducto")).show();
+}
+async function verProducto(id) {
+  let response = await fetch(IRL + "/api/productos/detalle.php?id=" + id);
+
+  let producto = await response.json();
+
+  document.getElementById("detalleCodigo").textContent = producto.codigo;
+  document.getElementById("detalleNombre").textContent = producto.nombre;
+  document.getElementById("detalleCategoria").textContent = producto.categoria;
+  document.getElementById("detalleMarca").textContent = producto.marca;
+
+  document.getElementById("detalleCosto").textContent =
+    "C$ " + Number(producto.precio_compra).toFixed(2);
+
+  document.getElementById("detalleVenta").textContent =
+    "C$ " + Number(producto.precio_venta).toFixed(2);
+
+  document.getElementById("detalleStock").textContent = producto.stock;
+
+  document.getElementById("detalleStockMinimo").textContent =
+    producto.stock_minimo;
+
+  document.getElementById("detalleUbicacion").textContent =
+    producto.ubicacion || "-";
+
+  document.getElementById("detalleVehiculo").textContent =
+    producto.vehiculo_aplicable || "-";
+
+  document.getElementById("detalleEstado").innerHTML =
+    producto.estado === "ACTIVO"
+      ? '<span class="badge bg-success">ACTIVO</span>'
+      : '<span class="badge bg-danger">INACTIVO</span>';
+
+  document.getElementById("detalleDescripcion").textContent =
+    producto.descripcion || "Sin descripción";
+
+  document.getElementById("detalleImagen").src = producto.imagen
+    ? "uploads/productos/" + producto.imagen
+    : "assets/img/sin-imagen.png";
+
+  new bootstrap.Modal(document.getElementById("modalDetalleProducto")).show();
 }

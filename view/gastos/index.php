@@ -150,30 +150,31 @@
 
 </div>
 <hr>
+<div class="table-responsive">
+    <table class="table table-hover table-sm align-middle" id="tablaGastos">
 
-<table class="table table-hover align-middle" id="tablaGastos">
+        <thead>
 
-    <thead>
+            <tr>
 
-        <tr>
+                <th>Fecha</th>
+                <th>Categoría</th>
+                <th>Descripción</th>
+                <th>Monto</th>
+                <th>Usuario</th>
+                <th>Comprobante</th>
+                <th>Acciones</th>
 
-            <th>Fecha</th>
-            <th>Categoría</th>
-            <th>Descripción</th>
-            <th>Monto</th>
-            <th>Usuario</th>
-            <th>Comprobante</th>
-            <th>Acciones</th>
+            </tr>
 
-        </tr>
+        </thead>
 
-    </thead>
+        <tbody>
 
-    <tbody>
+        </tbody>
 
-    </tbody>
-
-</table>
+    </table>
+</div>
 <div class="modal fade" id="modalImagen">
 
     <div class="modal-dialog">

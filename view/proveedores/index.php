@@ -120,28 +120,29 @@
 
 </div>
 <hr>
+<div class="table-responsive">
+    <table class="table table-hover table-sm align-middle" id="tablaProveedores">
 
-<table class="table table-hover align-middle" id="tablaProveedores">
+        <thead>
 
-    <thead>
+            <tr>
 
-        <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Contacto</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Estado</th>
+                <th>Acciones</th>
 
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Contacto</th>
-            <th>Teléfono</th>
-            <th>Correo</th>
-            <th>Estado</th>
-            <th>Acciones</th>
+            </tr>
 
-        </tr>
+        </thead>
 
-    </thead>
+        <tbody></tbody>
 
-    <tbody></tbody>
-
-</table>
+    </table>
+</div>
 <script>
     const PUEDE_EDITAR_PROVEEDORES =
         <?= tienePermiso('proveedores_editar')

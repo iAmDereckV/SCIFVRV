@@ -46,7 +46,6 @@ async function consultarKardex() {
   );
 
   producto = await producto.json();
-  console.log(producto);
   document.getElementById("infoProducto").style.display = "flex";
 
   document.getElementById("nombreProducto").innerText = producto.nombre;

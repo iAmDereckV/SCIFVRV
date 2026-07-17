@@ -132,24 +132,25 @@
 
 
 <hr>
+<div class="table-responsive">
+    <table class="table table-hover table-sm align-middle" id="tablaUsuarios">
 
-<table class="table table-hover align-middle" id="tablaUsuarios">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Foto</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Foto</th>
-            <th>Nombre</th>
-            <th>Usuario</th>
-            <th>Rol</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+        <tbody></tbody>
 
-    <tbody></tbody>
-
-</table>
+    </table>
+</div>
 <div class=" modal fade" id="modalImagen">
 
     <div class="modal-dialog">

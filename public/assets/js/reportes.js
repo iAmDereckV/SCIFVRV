@@ -1,5 +1,8 @@
 // ? VENTAS
 async function buscarVentas() {
+  if ($.fn.DataTable.isDataTable("#tablaVentas")) {
+    $("#tablaVentas").DataTable().destroy();
+  }
   let inicio = document.getElementById("fecha_inicio").value;
   let fin = document.getElementById("fecha_fin").value;
   let response = await fetch(
@@ -91,6 +94,34 @@ ${
     "C$ " + promedio.toFixed(2);
   document.getElementById("ventaMayor").innerText = "C$ " + mayor.toFixed(2);
   document.querySelector("#tablaVentas tbody").innerHTML = html;
+  $("#tablaVentas").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+
+    responsive: true,
+
+    pageLength: 5,
+
+    lengthMenu: [
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "Todos"],
+    ],
+
+    order: [[2, "asc"]],
+  });
 }
 function verFactura(id) {
   window.open(IRL + "/api/ventas/factura_pdf.php?id=" + id, "_blank");
@@ -136,6 +167,9 @@ function exportarExcelVentas() {
 }
 // ? GASTOS
 async function buscarGastos() {
+  if ($.fn.DataTable.isDataTable("#tablaGastos")) {
+    $("#tablaGastos").DataTable().destroy();
+  }
   let inicio = document.getElementById("fecha_inicio").value;
 
   let fin = document.getElementById("fecha_fin").value;
@@ -213,6 +247,34 @@ async function buscarGastos() {
     "C$ " + promedio.toFixed(2);
   document.getElementById("gastoMayor").innerText = "C$ " + mayor.toFixed(2);
   document.querySelector("#tablaGastos tbody").innerHTML = html;
+  $("#tablaGastos").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+
+    responsive: true,
+
+    pageLength: 5,
+
+    lengthMenu: [
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "Todos"],
+    ],
+
+    order: [[2, "asc"]],
+  });
 }
 async function exportarExcelGastos() {
   if (!PUEDE_EXPORTAR_EXCEL) {
@@ -234,6 +296,9 @@ async function exportarExcelGastos() {
 }
 // ? COMPRAS
 async function buscarCompras() {
+  if ($.fn.DataTable.isDataTable("#tablaCompras")) {
+    $("#tablaCompras").DataTable().destroy();
+  }
   let inicio = document.getElementById("fecha_inicio").value;
 
   let fin = document.getElementById("fecha_fin").value;
@@ -355,6 +420,34 @@ async function buscarCompras() {
     "C$ " + promedio.toFixed(2);
   document.getElementById("compraMayor").innerText = "C$ " + mayor.toFixed(2);
   document.querySelector("#tablaCompras tbody").innerHTML = html;
+  $("#tablaCompras").DataTable({
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "Mostrando _START_ a _END_ de _TOTAL_",
+      infoEmpty: "Mostrando 0 registros",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "Sin datos",
+      paginate: {
+        first: "Primero",
+        last: "Último",
+        next: "Siguiente",
+        previous: "Anterior",
+      },
+    },
+
+    responsive: true,
+
+    pageLength: 5,
+
+    lengthMenu: [
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "Todos"],
+    ],
+
+    order: [[2, "asc"]],
+  });
 }
 async function cambiarComprobante(id) {
   if (!PUEDE_EDITAR_COMPRAS) {

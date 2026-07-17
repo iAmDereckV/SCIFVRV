@@ -229,37 +229,38 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="table-responsive">
+                        <table
+                            class="table table-hover align-middle"
+                            id="tablaDetalle">
 
-                    <table
-                        class="table table-hover align-middle"
-                        id="tablaDetalle">
+                            <thead>
 
-                        <thead>
+                                <tr>
 
-                            <tr>
+                                    <th>Producto</th>
 
-                                <th>Producto</th>
+                                    <th>Cantidad</th>
 
-                                <th>Cantidad</th>
+                                    <th>Costo</th>
 
-                                <th>Costo</th>
-
-                                <th>Subtotal</th>
-
-
-                                <th>Eliminar</th>
+                                    <th>Subtotal</th>
 
 
-                            </tr>
+                                    <th>Eliminar</th>
 
-                        </thead>
 
-                        <tbody>
+                                </tr>
 
-                        </tbody>
+                            </thead>
 
-                    </table>
+                            <tbody>
 
+                            </tbody>
+
+                        </table>
+
+                    </div>
                 </div>
 
             </div>

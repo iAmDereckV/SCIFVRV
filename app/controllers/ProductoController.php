@@ -69,7 +69,10 @@ class ProductoController
     {
         return $this->producto->obtenerPorId($id);
     }
-
+    public function obtenerDetalle($id)
+    {
+        return $this->producto->obtenerDetalle($id);
+    }
     public function actualizar(
         $id,
         $codigo,

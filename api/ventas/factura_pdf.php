@@ -1,10 +1,13 @@
 <?php
 
 require_once '../../app/libraries/fpdf/fpdf.php';
-
 require_once '../../app/controllers/VentaController.php';
 require_once '../../app/controllers/ConfiguracionEmpresaController.php';
+require_once '../../app/helpers/Permisos.php';
 
+requierePermiso(
+    'ventas_ver'
+);
 $venta_id =
     $_GET['id'];
 

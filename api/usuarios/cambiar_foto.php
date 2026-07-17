@@ -1,7 +1,11 @@
 <?php
 
 require_once '../../app/controllers/UsuarioController.php';
+require_once '../../app/helpers/Permisos.php';
 
+requierePermiso(
+    'usuarios_editar'
+);
 header('Content-Type: application/json');
 
 $nombreImagen = null;

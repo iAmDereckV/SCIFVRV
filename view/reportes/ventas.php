@@ -177,31 +177,31 @@
 <div class="card shadow-sm border-0">
 
     <div class="card-body">
+        <div class="table-responsive">
+            <table
+                id="tablaVentas"
+                class="table table-hover align-middle">
 
-        <table
-            id="tablaVentas"
-            class="table table-hover align-middle">
+                <thead>
 
-            <thead>
+                    <tr>
+                        <th>Factura</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Vendedor</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
 
-                <tr>
-                    <th>Factura</th>
-                    <th>Fecha</th>
-                    <th>Cliente</th>
-                    <th>Vendedor</th>
-                    <th>Total</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
+                </thead>
 
-            </thead>
+                <tbody>
 
-            <tbody>
+                </tbody>
 
-            </tbody>
-
-        </table>
-
+            </table>
+        </div>
     </div>
 
 </div>
