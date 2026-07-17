@@ -9,9 +9,21 @@ Session::iniciar();
 
     <div class="row">
 
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white col-md-2 min-vh-100 sidebar"><img src=""
-                id="navlogo" class="rounded-circle mx-auto d-block shadow" width="85" height="85"
-                style="object-fit:cover;background:white;padding:5px;">
+        <div id="sidebar" class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white col-md-2 col-xl-2 col-lg-3 min-vh-100">
+
+            <div>
+
+                <button
+                    id="btnMenuClose"
+                    class="btn btn-outline-light me-3 d-lg-none">
+
+                    <i class="bi bi-list fs-4"></i>
+
+                </button>
+                <img src=""
+                    id="navlogo" class="rounded-circle mx-auto d-block shadow" width="85" height="85"
+                    style="object-fit:cover;background:white;padding:5px;">
+            </div>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <?php if (tienePermiso('dashboard_ver')): ?>
@@ -170,4 +182,4 @@ Session::iniciar();
         </div>
 
 
-        <div class="col-md-10 p-4">
+        <div class="col-12 col-lg-9 col-xl-10 p-2 p-md-4">

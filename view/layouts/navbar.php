@@ -1,22 +1,32 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
 
     <div class="container-fluid">
+        <div class="d-flex align-items-center">
 
-        <a class="navbar-brand d-flex align-items-center" href="#">
 
-            <i class="bi bi-speedometer2 fs-3 me-2 text-warning"></i>
+            <button
+                id="btnMenuOpen"
+                class="btn btn-outline-light me-3">
 
-            <div>
+                <i class="bi bi-list fs-4"></i>
 
-                <h5 class="mb-0 fw-bold" id="navtitle"></h5>
+            </button>
 
-                <small class="text-light opacity-75" id="navslogan">
-                </small>
+            <a class="navbar-brand d-flex align-items-center" href="#">
 
-            </div>
+                <i class="bi bi-speedometer2 fs-3 me-2 text-warning"></i>
 
-        </a>
+                <div>
 
+                    <h5 class="mb-0 fw-bold" id="navtitle"></h5>
+
+                    <small class="text-light opacity-75" id="navslogan">
+                    </small>
+
+                </div>
+
+            </a>
+        </div>
         <div class="d-flex align-items-center">
 
             <div class="text-end me-3">
@@ -34,7 +44,6 @@
                 </small>
 
             </div>
-
             <img src="<?= $_SESSION['ufoto'] ? 'uploads/usuarios/' . $_SESSION['ufoto'] : 'assets/img/sin-imagen.png' ?>"
                 class="rounded-circle border border-2 border-warning shadow-sm me-3" width="55" height="55"
                 style="object-fit:cover;">

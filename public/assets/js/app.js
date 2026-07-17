@@ -21,3 +21,20 @@
     img.src = IRL + "/public/uploads/empresa/" + data.logo;
   }
 })();
+document.addEventListener("DOMContentLoaded", () => {
+  const botonOpen = document.getElementById("btnMenuOpen");
+  const botonClose = document.getElementById("btnMenuClose");
+
+  const sidebar = document.getElementById("sidebar");
+
+  if (botonOpen) {
+    botonOpen.addEventListener("click", () => {
+      sidebar.classList.add("show");
+    });
+  }
+  if (botonClose) {
+    botonClose.addEventListener("click", () => {
+      sidebar.classList.remove("show");
+    });
+  }
+});

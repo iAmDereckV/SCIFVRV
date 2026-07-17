@@ -464,4 +464,30 @@ textarea.form-control{
 .btn-success{
     font-size:1.05rem;
     font-weight:600;
+}@media (max-width:991px){
+
+#sidebar{
+
+    position:fixed;
+
+    top:0;
+
+    left:-290px;
+
+    width:280px;
+
+    height:100vh;
+
+    z-index:1050;
+
+    transition:.35s;
+
+}
+
+#sidebar.show{
+
+    left:0;
+
+}
+
 }
