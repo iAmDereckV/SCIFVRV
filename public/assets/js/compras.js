@@ -50,13 +50,23 @@ function agregarProducto() {
     alert("Seleccione producto");
     return;
   }
+  let existente = detalleCompra.find((item) => item.producto_id == producto_id);
 
   let nombre = producto.options[producto.selectedIndex].dataset.nombre;
 
   let cantidad = parseInt(document.getElementById("cantidad").value);
 
   let costo = parseFloat(document.getElementById("costo").value);
+  if (existente) {
+    if (confirm("Este producto ya está agregado.\n¿Desea sumar la cantidad?")) {
+      existente.cantidad += cantidad;
+      existente.costo = costo;
+      existente.subtotal = existente.cantidad * existente.costo;
+      renderDetalle();
+    }
 
+    return;
+  }
   if (!cantidad || cantidad <= 0) {
     alert("Cantidad inválida");
     return;
