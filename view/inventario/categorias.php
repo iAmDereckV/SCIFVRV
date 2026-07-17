@@ -25,7 +25,7 @@
 
                         <i class="bi bi-tags text-white"></i>
 
-                        Categoria
+                        Categoría
 
                     </h5>
 
@@ -38,15 +38,15 @@
                     <div class="row g-3">
                         <div class="col-md-12">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-tags-fill"></i>
                                 Nombre
                             </label>
 
-                            <input type="text" id="nombre" class="form-control" placeholder="Nombre de la categoria">
+                            <input type="text" id="nombre" required class="form-control" placeholder="Nombre de la categoría">
                         </div>
                         <div class="col-md-12">
 
-                            <label class="form-label">
+                            <label class="form-label"> <i class="bi bi-card-text"></i>
                                 Descripción
                             </label>
 

@@ -55,7 +55,7 @@ object-fit:cover;
         <td>C$ ${Number(producto.precio_venta).toFixed(2)}</td>
       
         <td>${stock}</td>
-        <td>${producto.vehiculo_aplicable}</td>
+        <td>${producto.descripcion}</td>
         <td>${producto.ubicacion}</td>
 
         <td>${estado}</td>

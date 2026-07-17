@@ -47,26 +47,26 @@
                                 Código
                             </label>
 
-                            <input type="text" id="codigo" class="form-control" placeholder="Código del producto">
+                            <input type="text" id="codigo" required class="form-control" placeholder="Código del producto">
                         </div>
 
                         <div class="col-md-8">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-box-seam-fill"></i>
                                 Nombre
                             </label>
 
-                            <input type="text" id="nombre" class="form-control" placeholder="Nombre del producto">
+                            <input type="text" id="nombre" required class="form-control" placeholder="Nombre del producto">
                         </div>
 
                         <div class="col-md-6">
 
                             <label class="form-label">
-                                <i class="bi bi-tags"></i>
+                                <i class="bi bi-tags-fill"></i>
                                 Categoría
                             </label>
 
-                            <select id="categoria_id" class="form-select">
+                            <select id="categoria_id" required class="form-select">
                             </select>
 
                         </div>
@@ -74,11 +74,11 @@
                         <div class="col-md-6">
 
                             <label class="form-label">
-                                <i class="bi bi-bookmark-star"></i>
+                                <i class="bi bi-bookmark-star-fill"></i>
                                 Marca
                             </label>
 
-                            <select id="marca_id" class="form-select">
+                            <select id="marca_id" required class="form-select">
                             </select>
 
                         </div>
@@ -86,26 +86,26 @@
                         <div class="col-md-4">
 
                             <label class="form-label">
-                                Precio Compra
+                                <i class="bi bi-cash-coin"></i>Precio Compra
                             </label>
 
-                            <input type="number" step="0.01" id="precio_compra" class="form-control">
+                            <input type="number" required step="0.01" id="precio_compra" class="form-control">
 
                         </div>
 
                         <div class="col-md-4">
 
-                            <label class="form-label">
+                            <label class="form-label"> <i class="bi bi-currency-dollar"></i>
                                 Precio Venta
                             </label>
 
-                            <input type="number" step="0.01" id="precio_venta" class="form-control">
+                            <input type="number" required step="0.01" id="precio_venta" class="form-control">
 
                         </div>
 
                         <div class="col-md-4">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-geo-alt-fill"></i>
                                 Ubicación
                             </label>
 
@@ -115,7 +115,7 @@
 
                         <div class="col-md-6">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-boxes"></i>
                                 Stock
                             </label>
 
@@ -125,17 +125,17 @@
 
                         <div class="col-md-6">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-exclamation-triangle-fill"></i>
                                 Stock mínimo
                             </label>
 
-                            <input type="number" id="stock_minimo" class="form-control">
+                            <input type="number" id="stock_minimo" required class="form-control">
 
                         </div>
 
                         <div class="col-md-12">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-car-front-fill"></i>
                                 Vehículo aplicable
                             </label>
 
@@ -145,7 +145,7 @@
 
                         <div class="col-md-12">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-card-text"></i>
                                 Descripción
                             </label>
 
@@ -155,7 +155,7 @@
 
                         <div class="col-md-12">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-image-fill"></i>
                                 Imagen
                             </label>
 
@@ -204,33 +204,33 @@
 
 </div>
 <hr>
+<div class="table-responsive">
+    <table class="table table-hover" id="tablaProductos">
 
-<table class="table table-hover align-middle" id="tablaProductos">
+        <thead>
+            <tr>
 
-    <thead>
-        <tr>
+                <th>Código</th>
+                <th>Foto</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Marca</th>
+                <th>Precio Costo</th>
+                <th>Precio Venta</th>
+                <th>Stock</th>
+                <th>Descripción</th>
+                <th>Ubicación</th>
+                <th>Estado</th>
+                <th>Acciones</th>
 
-            <th>Código</th>
-            <th>Foto</th>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Marca</th>
-            <th>Precio Costo</th>
-            <th>Precio Venta</th>
-            <th>Stock</th>
-            <th>Vehiculo Aplicable</th>
-            <th>Ubicación</th>
-            <th>Estado</th>
-            <th>Acciones</th>
+            </tr>
 
-        </tr>
+        </thead>
 
-    </thead>
+        <tbody></tbody>
 
-    <tbody></tbody>
-
-</table>
-
+    </table>
+</div>
 <div class=" modal fade" id="modalImagen">
 
     <div class="modal-dialog">

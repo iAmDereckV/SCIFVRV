@@ -29,8 +29,9 @@ async function cargarProveedores() {
         <td>${proveedor.nombre}</td>
 
         <td>${proveedor.contacto ?? ""}</td>
-
+        
         <td>${proveedor.telefono ?? ""}</td>
+        <td>${proveedor.correo ?? ""}</td>
 
         <td>${estado}</td>
 
@@ -44,7 +45,15 @@ async function cargarProveedores() {
             <i class="bi bi-pencil-square"></i>
 
           </button>
+<a
+    href="https://wa.me/505${proveedor.telefono.replace(/\D/g, "")}"
+    target="_blank"
+    class="btn btn-sm btn-outline-success"
+    title="Enviar WhatsApp">
 
+    <i class="bi bi-whatsapp"></i>
+
+</a>
           <button
             title="Estado"
             class="btn btn-sm ${
@@ -61,6 +70,7 @@ async function cargarProveedores() {
             <i class="bi bi-arrow-repeat"></i>
 
           </button>
+          
 </div>
         </td>
 

@@ -7,7 +7,7 @@
     <button class="btn btn-primary" onclick="nuevoRol()">
 
         <i class="bi bi-plus-circle"></i>
-        Nueva Marca
+        Nuevo Rol
 
     </button>
 
@@ -22,7 +22,7 @@
 
                     <h5 class="modal-title">
 
-                        <i class="bi bi-bookmark-star text-white"></i>
+                        <i class="bi bi-shield-check"></i>
 
                         Rol
 
@@ -40,15 +40,15 @@
 
                         <div class="col-md-12">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-shield-check"></i>
                                 Nombre
                             </label>
 
-                            <input type="text" id="nombre" class="form-control" placeholder="Nombre del rol">
+                            <input type="text" id="nombre" required class="form-control" placeholder="Nombre del rol">
                         </div>
                         <div class="col-md-12">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-card-text"></i>
                                 Descripción
                             </label>
 

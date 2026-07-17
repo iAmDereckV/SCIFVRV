@@ -24,7 +24,7 @@
 
                     <h5 class="modal-title">
 
-                        <i class="bi bi-box-seam text-white"></i>
+                        <i class="bi bi-box2-heart text-white"></i>
 
                         Proveedores
 
@@ -41,30 +41,30 @@
 
                         <div class="col-md-6">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-building-fill"></i>
                                 Nombre
                             </label>
 
-                            <input type="text" id="nombre" class="form-control" placeholder="Nombre Del Proveedor">
+                            <input type="text" id="nombre" required class="form-control" placeholder="Nombre del proveedor">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-person-lines-fill"></i>
                                 Contacto
                             </label>
 
-                            <input type="text" id="contacto" class="form-control" placeholder="Nombre del Encargado">
+                            <input type="text" id="contacto" required class="form-control" placeholder="Nombre del encargado">
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
-                                Telefono
+                                <i class="bi bi-telephone-fill"></i>
+                                Teléfono
                             </label>
-                            <input type="text" id="telefono" class="form-control" placeholder="Telefono">
+                            <input type="text" id="telefono" required class="form-control" placeholder="Teléfono">
                         </div>
                         <div class="col-md-8">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-envelope-fill"></i>
                                 Correo
                             </label>
                             <input type="email" id="correo" class="form-control" placeholder="Correo">
@@ -72,8 +72,8 @@
 
                         <div class="col-md-12">
 
-                            <label class="form-label">
-                                Direccion
+                            <label class="form-label"><i class="bi bi-geo-alt-fill"></i>
+                                Dirección
                             </label>
 
                             <textarea id="direccion" class="form-control" rows="3"></textarea>
@@ -131,6 +131,7 @@
             <th>Nombre</th>
             <th>Contacto</th>
             <th>Teléfono</th>
+            <th>Correo</th>
             <th>Estado</th>
             <th>Acciones</th>
 

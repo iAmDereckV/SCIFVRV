@@ -211,7 +211,9 @@ async function editarUsuario(id) {
   let response = await fetch(IRL + "/api/usuarios/obtener.php?id=" + id);
 
   let usuario = await response.json();
-
+  document.getElementById("password").placeholder =
+    "Dejar vacío, contraseña no editable";
+  document.getElementById("password").required = false;
   document.getElementById("nombre").value = usuario.nombre;
 
   document.getElementById("usuario").value = usuario.usuario;
@@ -278,4 +280,6 @@ function nuevoUsuario() {
   delete document.getElementById("formUsuario").dataset.id;
 
   new bootstrap.Modal(document.getElementById("modalUsuario")).show();
+  document.getElementById("password").placeholder = "Ingrese la contraseña";
+  document.getElementById("password").required = true;
 }

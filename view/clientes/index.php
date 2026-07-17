@@ -24,7 +24,7 @@
 
                     <h5 class="modal-title">
 
-                        <i class="bi bi-box-seam text-white"></i>
+                        <i class="bi bi-people text-white"></i>
 
                         Cliente
 
@@ -41,15 +41,15 @@
 
                         <div class="col-md-6">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-person-fill "></i>
                                 Nombre
                             </label>
 
-                            <input type="text" id="nombres" class="form-control" placeholder="Nombre del cliente">
+                            <input type="text" id="nombres" required class="form-control" placeholder="Nombre del cliente">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-person-vcard-fill"></i>
                                 Apellido
                             </label>
 
@@ -57,44 +57,44 @@
                         </div>
                         <div class="col-md-8">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
-                                Identificacion
+                                <i class="bi bi-person-badge-fill"></i>
+                                Identificación
                             </label>
-                            <input type="text" id="identificacion" class="form-control" placeholder="Identificacion">
+                            <input type="text" id="identificacion" class="form-control" placeholder="Identificación del cliente">
                         </div>
                         <div class="col-md-4">
 
                             <label class="form-label">
-                                <i class="bi bi-bookmark-star"></i>
+                                <i class="bi bi-people-fill"></i>
                                 Tipo Cliente
                             </label>
 
-                            <select id="tipo_cliente" class="form-select">
+                            <select id="tipo_cliente" required class="form-select">
 
                             </select>
 
                         </div>
                         <div class="col-md-8">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-envelope-fill"></i>
                                 Correo
                             </label>
                             <input type="email" id="correo" class="form-control" placeholder="Correo">
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
-                                Telefono
+                                <i class="bi bi-telephone-fill"></i>
+                                Teléfono
                             </label>
-                            <input type="text" id="telefono" class="form-control" placeholder="Telefono">
+                            <input type="text" id="telefono" required class="form-control" placeholder="Teléfono">
                         </div>
 
 
 
                         <div class="col-md-12">
 
-                            <label class="form-label">
-                                Direccion
+                            <label class="form-label"><i class="bi bi-geo-alt-fill "></i>
+                                Dirección
                             </label>
 
                             <textarea id="direccion" class="form-control" rows="3"></textarea>
@@ -163,6 +163,7 @@
             <th>Cliente</th>
             <th>Identificación</th>
             <th>Teléfono</th>
+            <th>Correo</th>
             <th>Tipo</th>
             <th>Estado</th>
             <th>Acciones</th>

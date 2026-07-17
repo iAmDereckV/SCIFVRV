@@ -83,7 +83,7 @@
 
                         <div class="col-md-5">
 
-                            <label>Producto</label>
+                            <label class="form-label">Producto</label>
 
                             <select
                                 id="producto_id"
@@ -94,7 +94,7 @@
 
                         <div class="col-md-2">
 
-                            <label>Cantidad</label>
+                            <label class="form-label">Cantidad</label>
 
                             <input
                                 type="number"
@@ -105,7 +105,7 @@
 
                         <div class="col-md-2">
 
-                            <label>Costo Unidad</label>
+                            <label class="form-label">Costo Unidad</label>
 
                             <input
                                 type="number"

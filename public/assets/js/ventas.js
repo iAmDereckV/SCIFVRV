@@ -221,6 +221,7 @@ async function guardarVenta() {
     }
     detalleVenta = [];
     renderDetalle();
+    cargarProductos();
     document.getElementById("descuento_valor").value = 0;
     document.getElementById("cantidad").value = 1;
     document.getElementById("cliente_id").value = "";

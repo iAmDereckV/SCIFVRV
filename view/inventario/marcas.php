@@ -40,15 +40,16 @@
 
                         <div class="col-md-12">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-bookmark-star-fill"></i>
                                 Nombre
                             </label>
 
-                            <input type="text" id="nombre" class="form-control" placeholder="Nombre de la marca">
+                            <input type="text" id="nombre" required class="form-control" placeholder="Nombre de la marca">
                         </div>
                         <div class="col-md-12">
 
                             <label class="form-label">
+                                <i class="bi  bi-card-text"></i>
                                 Descripción
                             </label>
 

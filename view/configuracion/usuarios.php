@@ -24,7 +24,7 @@
 
                     <h5 class="modal-title">
 
-                        <i class="bi bi-box-seam text-white"></i>
+                        <i class="bi bi-person-badge"></i>
 
                         Usuario
 
@@ -39,30 +39,29 @@
 
                     <div class="row g-3">
                         <div class="col-md-12">
-                            <label class="form-label">
-                                <i class="bi bi-box"></i>
+                            <label class="form-label"><i class="bi bi-person"></i>
                                 Nombre
                             </label>
-                            <input type="text" id="nombre" class="form-control" placeholder="Nombre del Usuario">
+                            <input type="text" id="nombre" required class="form-control" placeholder="Nombre del usuario">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-person-badge"></i>
                                 Usuario
                             </label>
-                            <input type="text" id="usuario" class="form-control" placeholder="Usuario">
+                            <input type="text" id="usuario" required class="form-control" placeholder="Usuario">
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-key"></i>
                                 Contraseña
                             </label>
                             <input type="password" id="password" class="form-control" placeholder="Contraseña">
                         </div>
                         <div class="col-md-8">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-envelope-at"></i>
                                 Correo
                             </label>
                             <input type="email" id="correo" class="form-control" placeholder="Correo">
@@ -70,11 +69,11 @@
                         <div class="col-md-4">
 
                             <label class="form-label">
-                                <i class="bi bi-tags"></i>
+                                <i class="bi bi-person-gear"></i>
                                 Rol
                             </label>
 
-                            <select id="rol_id" class="form-select">
+                            <select id="rol_id" required class="form-select">
                             </select>
 
                         </div>
@@ -82,6 +81,7 @@
                         <div class="col-md-12">
 
                             <label class="form-label">
+                                <i class="bi bi-camera"></i>
                                 Imagen
                             </label>
 

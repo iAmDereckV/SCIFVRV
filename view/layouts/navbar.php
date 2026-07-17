@@ -2,15 +2,14 @@
 
     <div class="container-fluid">
         <div class="d-flex align-items-center">
-
-
             <button
                 id="btnMenuOpen"
-                class="btn btn-outline-light me-3">
-
+                class="btn btn-outline-light me-3 d-lg-none">
                 <i class="bi bi-list fs-4"></i>
 
             </button>
+
+
 
             <a class="navbar-brand d-flex align-items-center" href="#">
 
@@ -27,6 +26,7 @@
 
             </a>
         </div>
+
         <div class="d-flex align-items-center">
 
             <div class="text-end me-3">

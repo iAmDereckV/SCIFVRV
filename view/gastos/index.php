@@ -24,7 +24,7 @@
 
                     <h5 class="modal-title">
 
-                        <i class="bi bi-box-seam text-white"></i>
+                        <i class="bi bi-cash-stack"></i>
 
                         Gasto
 
@@ -48,7 +48,7 @@
 
                             <div class="input-group">
 
-                                <select id="categoria_id" class="form-select">
+                                <select id="categoria_id" required class="form-select">
                                 </select>
 
                                 <button
@@ -76,25 +76,25 @@
                         </div>
                         <div class="col-md-3">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-cash-stack"></i>
                                 Monto
                             </label>
 
-                            <input type="number" id="monto" step="0.01" class="form-control">
+                            <input type="number" required id="monto" step="0.01" class="form-control">
 
                         </div>
 
                         <div class="col-md-3">
                             <label class="form-label">
-                                <i class="bi bi-box"></i>
+                                <i class="bi bi-calendar-event"></i>
                                 Fecha
                             </label>
 
-                            <input type="date" id="fecha" class="form-control">
+                            <input type="date" required id="fecha" class="form-control">
                         </div>
                         <div class="col-md-12">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-card-text"></i>
                                 Descripción
                             </label>
 
@@ -104,7 +104,7 @@
 
                         <div class="col-md-12">
 
-                            <label class="form-label">
+                            <label class="form-label"><i class="bi bi-image"></i>
                                 Imagen
                             </label>
 
@@ -236,13 +236,13 @@
                 <div class="modal-body">
 
                     <label class="form-label">
-
+                        <i class="bi bi-tags"></i>
                         Nombre
 
                     </label>
 
                     <input
-                        id="nombreCategoria"
+                        id="nombreCategoria" required
                         class="form-control">
 
                 </div>

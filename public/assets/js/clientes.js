@@ -32,6 +32,7 @@ async function cargarClientes() {
         <td>${cliente.identificacion ?? ""}</td>
 
         <td>${cliente.telefono ?? ""}</td>
+        <td>${cliente.correo ?? ""}</td>
 
         <td>${cliente.tipo_cliente}</td>
 
@@ -47,6 +48,15 @@ async function cargarClientes() {
        <i class="bi bi-pencil-square"></i>
 
     </button>
+    <a
+    href="https://wa.me/505${cliente.telefono.replace(/\D/g, "")}"
+    target="_blank"
+    class="btn btn-sm btn-outline-success"
+    title="Enviar WhatsApp">
+
+    <i class="bi bi-whatsapp"></i>
+
+</a>
        <button
     title="Estado"
     class="btn btn-sm ${
@@ -60,6 +70,7 @@ async function cargarClientes() {
     <i class="bi bi-arrow-repeat"></i>
 
 </button>
+
     </div>
    </td>
 
