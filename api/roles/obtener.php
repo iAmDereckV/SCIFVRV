@@ -1,15 +1,9 @@
 <?php
-
 require_once '../../app/controllers/RolController.php';
 require_once '../../app/helpers/Permisos.php';
-
-requierePermiso(
-    'roles_ver'
-);
+requierePermiso('roles_ver');
 header('Content-Type: application/json');
-
 $controller = new RolController();
-
 echo json_encode(
     $controller->obtenerPorId(
         $_GET['id']

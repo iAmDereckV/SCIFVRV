@@ -1,23 +1,11 @@
 <?php
-
 require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/BitacoraController.php';
-requierePermiso(
-    'excel_exportar'
-);
+requierePermiso('excel_exportar');
 $controller = new Bitacora();
-
-$datos =
-    $controller->listar();
-
-header(
-    "Content-Type: application/vnd.ms-excel"
-);
-
-header(
-    "Content-Disposition: attachment; filename=bitacora.xls"
-);
-
+$datos = $controller->listar();
+header("Content-Type: application/vnd.ms-excel");
+header("Content-Disposition: attachment; filename=bitacora.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
 echo "\xEF\xBB\xBF";

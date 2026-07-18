@@ -11,17 +11,11 @@ async function buscarVentas() {
   let data = await response.json();
   let html = "";
   let total = 0;
-  // let cantidadActivas = 0;
   let mayor = 0;
-
   data.forEach((venta) => {
     if (venta.estado === "COMPLETADA") {
       let monto = parseFloat(venta.total);
-
       total += monto;
-
-      // cantidadActivas++;
-
       if (monto > mayor) {
         mayor = monto;
       }
@@ -32,28 +26,20 @@ async function buscarVentas() {
         : `<span class="badge bg-danger">ANULADA</span>`;
     html += `
     <tr>
-
 <td>${venta.id}</td>
-
 <td>${venta.fecha}</td>
-
 <td>${venta.cliente}</td>
-
 <td>${venta.usuario}</td>
-
 <td>C$ ${venta.total}</td>
 <td>${estado}
-
 </td>
 <td>
 <div class="btn-group">
-
 ${
   venta.estado === "COMPLETADA"
     ? `<button
         class="btn btn-outline-danger btn-sm"
         onclick="anularVenta(${venta.id})">
-
         <i class="bi bi-x-circle"></i>
         Anular
     </button>`
@@ -61,35 +47,23 @@ ${
     class="btn btn-secondary btn-sm"
     disabled
     title="Venta anulada">
-
     <i class="bi bi-check2-circle"></i>
-
       Anulada
-
 </button>`
 }
-
  <button
         class="btn btn-outline-primary btn-sm"
         onclick="verFactura(${venta.id})">
-
         <i class="bi bi-file-earmark-pdf"></i>
-
     </button>
-
 </div>
-
 </td>
-
 </tr>
 `;
   });
   document.getElementById("cantidadVentas").innerText = data.length;
-
   document.getElementById("totalGeneral").innerText = "C$ " + total.toFixed(2);
-
   let promedio = data.length > 0 ? total / data.length : 0;
-
   document.getElementById("promedioVenta").innerText =
     "C$ " + promedio.toFixed(2);
   document.getElementById("ventaMayor").innerText = "C$ " + mayor.toFixed(2);
@@ -110,16 +84,12 @@ ${
         previous: "Anterior",
       },
     },
-
     responsive: true,
-
     pageLength: 5,
-
     lengthMenu: [
       [5, 10, 25, 50, -1],
       [5, 10, 25, 50, "Todos"],
     ],
-
     order: [[2, "asc"]],
   });
 }
@@ -135,12 +105,9 @@ async function anularVenta(id) {
     return;
   }
   let response = await fetch(IRL + "/api/ventas/anular.php?id=" + id);
-
   let data = await response.json();
-
   if (data.success) {
     alert("Venta anulada");
-
     buscarVentas();
   } else {
     alert("No se pudo anular");
@@ -152,9 +119,7 @@ function exportarExcelVentas() {
     return;
   }
   let inicio = document.getElementById("fecha_inicio").value;
-
   let fin = document.getElementById("fecha_fin").value;
-
   window.open(
     IRL +
       "/api/reportes/exportar_ventas_fecha.php?inicio=" +
@@ -171,40 +136,28 @@ async function buscarGastos() {
     $("#tablaGastos").DataTable().destroy();
   }
   let inicio = document.getElementById("fecha_inicio").value;
-
   let fin = document.getElementById("fecha_fin").value;
-
   let response = await fetch(
     IRL + "/api/reportes/gastos.php?inicio=" + inicio + "&fin=" + fin,
   );
-
   let data = await response.json();
-
   let html = "";
   let total = 0;
   let mayor = 0;
   data.forEach((gasto) => {
     let monto = parseFloat(gasto.monto);
-
     total += monto;
     if (monto > mayor) {
       mayor = monto;
     }
     total += parseFloat(gasto.monto);
     html += `
-
     <tr>
-
       <td>${gasto.id}</td>
-
       <td>${gasto.fecha}</td>
-
       <td>${gasto.categoria}</td>
-
       <td>${gasto.descripcion}</td>
-
       <td>${gasto.usuario}</td>
-
       <td>C$ ${gasto.monto}</td>
       <td>
       <div class="btn-group">
@@ -215,34 +168,25 @@ async function buscarGastos() {
                   target="_blank"
                   title="Ver comprobante"
                    class="btn btn-outline-primary btn-sm">
-
                  <i class="bi bi-file-earmark-image"></i>
-
               </a>`
               : `
                 <button
                     class="btn btn-secondary btn-sm"
                     disabled
                     title="Sin comprobante">
-
                     <i class="bi bi-file-earmark-x"></i>
-
                 </button>
                 `
           }
        </div>   
       </td>
     </tr>
-
     `;
   });
-
   document.getElementById("cantidadGastos").innerText = data.length;
-
   document.getElementById("totalGeneral").innerText = "C$ " + total.toFixed(2);
-
   let promedio = data.length > 0 ? total / data.length : 0;
-
   document.getElementById("promedioGasto").innerText =
     "C$ " + promedio.toFixed(2);
   document.getElementById("gastoMayor").innerText = "C$ " + mayor.toFixed(2);
@@ -263,16 +207,12 @@ async function buscarGastos() {
         previous: "Anterior",
       },
     },
-
     responsive: true,
-
     pageLength: 5,
-
     lengthMenu: [
       [5, 10, 25, 50, -1],
       [5, 10, 25, 50, "Todos"],
     ],
-
     order: [[2, "asc"]],
   });
 }
@@ -282,7 +222,6 @@ async function exportarExcelGastos() {
     return;
   }
   let inicio = document.getElementById("fecha_inicio").value;
-
   let fin = document.getElementById("fecha_fin").value;
   window.open(
     IRL +
@@ -300,23 +239,17 @@ async function buscarCompras() {
     $("#tablaCompras").DataTable().destroy();
   }
   let inicio = document.getElementById("fecha_inicio").value;
-
   let fin = document.getElementById("fecha_fin").value;
-
   let response = await fetch(
     IRL + "/api/reportes/compras.php?inicio=" + inicio + "&fin=" + fin,
   );
-
   let data = await response.json();
-
   let html = "";
-
   let total = 0;
   let mayor = 0;
   data.forEach((compra) => {
     if (compra.estado === "COMPLETADA") {
       let monto = parseFloat(compra.total);
-
       total += monto;
       if (monto > mayor) {
         mayor = monto;
@@ -327,22 +260,15 @@ async function buscarCompras() {
         ? `<span class="badge bg-success">COMPLETADA</span>`
         : `<span class="badge bg-danger">ANULADA</span>`;
     html += `
-
     <tr>
-
       <td>${compra.id}</td>
-
       <td>${compra.fecha}</td>
-
       <td>${compra.proveedor}</td>
-
       <td>${compra.usuario}</td>
-
       <td>${compra.total}</td>
       <td>${estado}</td>
       <td>
     <div class="btn-group">
-
         ${
           compra.estado === "COMPLETADA"
             ? `
@@ -350,9 +276,7 @@ async function buscarCompras() {
             class="btn btn-outline-danger btn-sm"
             onclick="anularCompra(${compra.id})"
             title="Anular compra">
-
             <i class="bi bi-x-circle"></i>
-
         </button>
         `
             : `
@@ -360,13 +284,10 @@ async function buscarCompras() {
             class="btn btn-secondary btn-sm"
             disabled
             title="Compra anulada">
-
             <i class="bi bi-check2-circle"></i>
-
         </button>
         `
         }
-
         ${
           compra.archivo_factura
             ? `
@@ -375,9 +296,7 @@ async function buscarCompras() {
             target="_blank"
             class="btn btn-outline-primary btn-sm"
             title="Ver factura">
-
             <i class="bi bi-file-earmark-pdf"></i>
-
         </a>
         `
             : `
@@ -385,37 +304,24 @@ async function buscarCompras() {
             class="btn btn-secondary btn-sm"
             disabled
             title="Sin factura">
-
             <i class="bi bi-file-earmark-x"></i>
-
         </button>
         `
         }
-
         <button
             class="btn btn-outline-warning btn-sm"
             onclick="cambiarComprobante(${compra.id})"
             title="Cambiar comprobante">
-
             <i class="bi bi-image"></i>
-
         </button>
-
     </div>
-
 </td>
-
-
     </tr>
-
     `;
   });
   document.getElementById("cantidadCompras").innerText = data.length;
-
   document.getElementById("totalGeneral").innerText = "C$ " + total.toFixed(2);
-
   let promedio = data.length > 0 ? total / data.length : 0;
-
   document.getElementById("promedioCompra").innerText =
     "C$ " + promedio.toFixed(2);
   document.getElementById("compraMayor").innerText = "C$ " + mayor.toFixed(2);
@@ -436,16 +342,12 @@ async function buscarCompras() {
         previous: "Anterior",
       },
     },
-
     responsive: true,
-
     pageLength: 5,
-
     lengthMenu: [
       [5, 10, 25, 50, -1],
       [5, 10, 25, 50, "Todos"],
     ],
-
     order: [[2, "asc"]],
   });
 }
@@ -455,30 +357,24 @@ async function cambiarComprobante(id) {
     return;
   }
   document.getElementById("compra_imagen_id").value = id;
-
   let modal = new bootstrap.Modal(document.getElementById("modalImagen"));
-
   modal.show();
 }
 async function guardarImagen() {
   let id = document.getElementById("compra_imagen_id").value;
-
   let archivo = document.getElementById("nueva_imagen").files[0];
-
   if (!archivo) {
     alert("Seleccione una imagen");
     return;
   }
   let formData = new FormData();
   formData.append("id", id);
-
   formData.append("archivo_factura", archivo);
   let response = await fetch(IRL + "/api/compras/cambiar_comprobante.php", {
     method: "POST",
     body: formData,
   });
   let data = await response.json();
-
   if (data.success) {
     alert("Comprobante actualizado");
     bootstrap.Modal.getInstance(document.getElementById("modalImagen")).hide();
@@ -498,12 +394,9 @@ async function anularCompra(id) {
     return;
   }
   let response = await fetch(IRL + "/api/compras/anular.php?id=" + id);
-
   let data = await response.json();
-
   if (data.success) {
     alert("Compra anulada");
-
     buscarCompras();
   } else {
     alert("No se pudo anular");
@@ -515,9 +408,7 @@ function exportarExcelCompras() {
     return;
   }
   let inicio = document.getElementById("fecha_inicio").value;
-
   let fin = document.getElementById("fecha_fin").value;
-
   window.open(
     IRL +
       "/api/reportes/exportar_compras_fecha.php?inicio=" +
@@ -535,7 +426,6 @@ function exportar(ruta) {
     alert("No tiene permiso para exportar Excel");
     return;
   }
-
   window.open(IRL + ruta, "_blank");
 }
 function exportarInventario() {

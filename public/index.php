@@ -1,9 +1,7 @@
 <?php
-
 require_once '../app/helpers/Session.php';
 require_once '../app/middleware/AuthMiddleware.php';
 require_once '../app/helpers/permisos.php';
-
 AuthMiddleware::verificar();
 $modulo = $_GET['modulo'] ?? 'dashboard';
 $inventarioActivo = in_array(
@@ -26,7 +24,6 @@ $configActivo = in_array(
         'carta_recomendacion'
     ]
 );
-
 $mapaPermisos = [
     'dashboard' => 'dashboard_ver',
     'categorias' => 'categorias_ver',
@@ -49,17 +46,13 @@ $mapaPermisos = [
     'reportes_gastos' => 'reportes_gastos',
     'reportes_compras' => 'reportes_compras',
 ];
-
 if (isset($mapaPermisos[$modulo])) {
     requierePermisoVista($mapaPermisos[$modulo]);
 }
-
 include '../view/layouts/header.php';
 include '../view/layouts/navbar.php';
 include '../view/layouts/sidebar.php';
-
 switch ($modulo) {
-
     case 'usuarios':
         include '../view/configuracion/usuarios.php';
         break;
@@ -122,5 +115,4 @@ switch ($modulo) {
         include './dashboard.php';
         break;
 }
-
 include '../view/layouts/footer.php';

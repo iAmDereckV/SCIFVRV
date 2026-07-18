@@ -2,15 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarRoles();
   document.getElementById("formRol").addEventListener("submit", guardarRol);
 });
-
+let rolSeleccionado = null;
 async function cargarRoles() {
   if ($.fn.DataTable.isDataTable("#tablaRoles")) {
     $("#tablaRoles").DataTable().destroy();
   }
   let response = await fetch(IRL + "/api/roles/listar.php");
-
   let data = await response.json();
-
   let html = "";
   data.forEach((rol) => {
     let estado =
@@ -25,20 +23,15 @@ async function cargarRoles() {
     <td>${estado}</td>
     <td>
 <div class="btn-group">
-        
-        <button
+                <button
             class="btn btn-sm btn-outline-warning"
             onclick="editarPermisos(${rol.id})">
-
             <i class="bi bi-shield-lock"></i>
-
         </button>
         <button
             class="btn btn-sm btn-outline-primary"
             onclick="editarRol(${rol.id})">
-
               <i class="bi bi-pencil-square"></i>
-
         </button>
         <button
             class="btn btn-sm ${
@@ -51,17 +44,13 @@ async function cargarRoles() {
                 ${rol.id},
                 '${rol.estado}'
             )">
-
             <i class="bi bi-arrow-repeat"></i>
-
         </button>
 </div>
     </td>
-
 </tr>
 `;
   });
-
   document.querySelector("#tablaRoles tbody").innerHTML = html;
   $("#tablaRoles").DataTable({
     language: {
@@ -79,58 +68,14 @@ async function cargarRoles() {
         previous: "Anterior",
       },
     },
-
     responsive: true,
-
     pageLength: 5,
-
     lengthMenu: [
       [5, 10, -1],
       [5, 10, "Todos"],
     ],
-
     order: [[2, "asc"]],
   });
-}
-let rolSeleccionado = null;
-
-async function editarPermisos(id) {
-  if (!PUEDE_EDITAR_ROLES) {
-    alert("No tiene permiso para editar permisos");
-    return;
-  }
-  rolSeleccionado = id;
-
-  let response = await fetch(IRL + "/api/roles/permisos.php?id=" + id);
-
-  let permisos = await response.json();
-
-  let html = "";
-
-  permisos.forEach((permiso) => {
-    console.log(permiso);
-    html += `
-        <div class="form-check">
-
-            <input
-                class="form-check-input permiso"
-                type="checkbox"
-                value="${permiso.id}"
-                data-dashboard="${permiso.codigo === "dashboard_ver" ? 1 : 0}"
-                ${permiso.asignado == 1 ? "checked" : ""}
-            <label class="form-check-label">
-
-                ${permiso.descripcion}
-
-            </label>
-
-        </div>
-        `;
-  });
-
-  document.getElementById("listaPermisos").innerHTML = html;
-
-  new bootstrap.Modal(document.getElementById("modalPermisos")).show();
 }
 function seleccionarTodos() {
   document.querySelectorAll(".permiso").forEach((check) => {
@@ -146,20 +91,24 @@ function quitarTodos() {
     }
   });
 }
+function nuevoRol() {
+  if (!PUEDE_CREAR_ROLES) {
+    alert("No tiene permiso para crear roles");
+    return;
+  }
+  document.getElementById("formRol").reset();
+  delete document.getElementById("formRol").dataset.id;
+  new bootstrap.Modal(document.getElementById("modalRol")).show();
+}
 async function guardarRol(e) {
   e.preventDefault();
-
   let formData = new FormData();
-
   formData.append("nombre", document.getElementById("nombre").value);
-
   formData.append("descripcion", document.getElementById("descripcion").value);
-
   let id = document.getElementById("formRol").dataset.id;
   if (id) {
     formData.append("id", id);
   }
-
   let response = await fetch(
     id ? IRL + "/api/roles/actualizar.php" : IRL + "/api/roles/guardar.php",
     {
@@ -167,9 +116,7 @@ async function guardarRol(e) {
       body: formData,
     },
   );
-
   let data = await response.json();
-
   if (data.success) {
     alert("Rol guardada");
 
@@ -178,6 +125,33 @@ async function guardarRol(e) {
     delete document.getElementById("formRol").dataset.id;
     bootstrap.Modal.getInstance(document.getElementById("modalRol")).hide();
     cargarRoles();
+  } else {
+    alert("Error al guardar rol");
+  }
+}
+async function guardarPermisos() {
+  let permisos = [];
+  document.querySelectorAll(".permiso:checked").forEach((checkbox) => {
+    permisos.push(checkbox.value);
+  });
+  let formData = new FormData();
+  formData.append("rol_id", rolSeleccionado);
+  permisos.forEach((permiso) => {
+    formData.append("permisos[]", permiso);
+  });
+  let response = await fetch(IRL + "/api/roles/guardar_permisos.php", {
+    method: "POST",
+    body: formData,
+  });
+  let data = await response.json();
+  if (data.success) {
+    alert("Permisos guardados");
+
+    bootstrap.Modal.getInstance(
+      document.getElementById("modalPermisos"),
+    ).hide();
+  } else {
+    alert("Error al guardar permisos");
   }
 }
 async function editarRol(id) {
@@ -186,78 +160,58 @@ async function editarRol(id) {
     return;
   }
   let response = await fetch(IRL + "/api/roles/obtener.php?id=" + id);
-
   let marca = await response.json();
-
   document.getElementById("nombre").value = marca.nombre;
-
   document.getElementById("descripcion").value = marca.descripcion;
-
   document.getElementById("formRol").dataset.id = marca.id;
   new bootstrap.Modal(document.getElementById("modalRol")).show();
 }
+async function editarPermisos(id) {
+  if (!PUEDE_EDITAR_ROLES) {
+    alert("No tiene permiso para editar permisos");
+    return;
+  }
+  rolSeleccionado = id;
+  let response = await fetch(IRL + "/api/roles/permisos.php?id=" + id);
+  let permisos = await response.json();
+  let html = "";
+  permisos.forEach((permiso) => {
+    console.log(permiso);
+    html += `
+        <div class="form-check">
+            <input
+                class="form-check-input permiso"
+                type="checkbox"
+                value="${permiso.id}"
+                data-dashboard="${permiso.codigo === "dashboard_ver" ? 1 : 0}"
+                ${permiso.asignado == 1 ? "checked" : ""}
+            <label class="form-check-label">
+                ${permiso.descripcion}
+            </label>
+        </div>
+        `;
+  });
+  document.getElementById("listaPermisos").innerHTML = html;
+  new bootstrap.Modal(document.getElementById("modalPermisos")).show();
+}
+
 async function cambiarEstado(id, estadoActual) {
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_ROLES) {
     alert(`No tiene permiso para poner roles ${nuevoEstado}`);
-
     return;
   }
-
   let formData = new FormData();
-
   formData.append("id", id);
-
   formData.append("estado", nuevoEstado);
   let response = await fetch(IRL + "/api/roles/cambiar_estados.php", {
     method: "POST",
     body: formData,
   });
-
   let data = await response.json();
-
   if (data.success) {
     cargarRoles();
+  } else {
+    alert(`Error al poner rol ${nuevoEstado}`);
   }
-}
-async function guardarPermisos() {
-  let permisos = [];
-
-  document.querySelectorAll(".permiso:checked").forEach((checkbox) => {
-    permisos.push(checkbox.value);
-  });
-
-  let formData = new FormData();
-
-  formData.append("rol_id", rolSeleccionado);
-
-  permisos.forEach((permiso) => {
-    formData.append("permisos[]", permiso);
-  });
-
-  let response = await fetch(IRL + "/api/roles/guardar_permisos.php", {
-    method: "POST",
-    body: formData,
-  });
-
-  let data = await response.json();
-
-  if (data.success) {
-    alert("Permisos guardados");
-
-    bootstrap.Modal.getInstance(
-      document.getElementById("modalPermisos"),
-    ).hide();
-  }
-}
-function nuevoRol() {
-  if (!PUEDE_CREAR_ROLES) {
-    alert("No tiene permiso para crear roles");
-    return;
-  }
-  document.getElementById("formRol").reset();
-
-  delete document.getElementById("formRol").dataset.id;
-
-  new bootstrap.Modal(document.getElementById("modalRol")).show();
 }

@@ -1,15 +1,9 @@
 <?php
-
 require_once '../../app/controllers/ProductoController.php';
 require_once '../../app/helpers/Permisos.php';
-
-requierePermiso(
-    'productos_editar'
-);
+requierePermiso('productos_editar');
 header('Content-Type: application/json');
-
 $controller = new ProductoController();
-
 $resultado = $controller->actualizar(
     $_POST['id'],
     $_POST['codigo'],
@@ -24,7 +18,6 @@ $resultado = $controller->actualizar(
     $_POST['stock_minimo'],
     $_POST['ubicacion']
 );
-
 echo json_encode([
     'success' => $resultado
 ]);

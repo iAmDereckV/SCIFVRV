@@ -1,38 +1,24 @@
 <?php
-
 require_once '../../app/controllers/UsuarioController.php';
 require_once '../../app/helpers/Permisos.php';
-
-requierePermiso(
-    'usuarios_editar'
-);
+requierePermiso('usuarios_editar');
 header('Content-Type: application/json');
-
 $nombreImagen = null;
-
 if (
     isset($_FILES['imagen']) &&
     $_FILES['imagen']['error'] == 0
 ) {
-
-    $nombreImagen =
-        time() . '_' .
-        $_FILES['imagen']['name'];
-
+    $nombreImagen = time() . '_' . $_FILES['imagen']['name'];
     move_uploaded_file(
         $_FILES['imagen']['tmp_name'],
-        '../../public/uploads/usuarios/' .
-            $nombreImagen
+        '../../public/uploads/usuarios/' . $nombreImagen
     );
 }
-
 $controller = new UsuarioController();
-
 $resultado = $controller->actualizarFoto(
     $_POST['id'],
     $nombreImagen
 );
-
 echo json_encode([
     'success' => $resultado
 ]);

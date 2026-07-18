@@ -1,27 +1,21 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarAnios();
-
   cargarResumen();
 });
-
 document.getElementById("btnExcel").addEventListener("click", () => {
   if (!PUEDE_EXPORTAR_EXCEL) {
     alert("No tiene permiso para exportar Excel");
     return;
   }
   let anio = document.getElementById("anio").value;
-
   window.location.href =
     IRL + "/api/reportes/exportar_maestro_detalle.php?anio=" + anio;
 });
 document.getElementById("anio").addEventListener("change", cargarResumen);
-
 async function cargarAnios() {
   let response = await fetch(IRL + "/api/maestro_detalle/anios.php");
   let anios = await response.json();
-
   let html = "";
-
   anios.forEach((anio) => {
     html += `
       <option value="${anio}">
@@ -29,29 +23,21 @@ async function cargarAnios() {
       </option>
     `;
   });
-
   document.getElementById("anio").innerHTML = html;
 }
 async function cargarResumen() {
   if ($.fn.DataTable.isDataTable("#tablaMaestroDetalle")) {
     $("#tablaMaestroDetalle").DataTable().destroy();
   }
-
   let anio = document.getElementById("anio").value;
-
   let response = await fetch(
     IRL + "/api/maestro_detalle/listar.php?anio=" + anio,
   );
-
   let data = await response.json();
-
   let html = "";
-
   data.forEach((fila) => {
     html += `
-
     <tr>
-
       <td>${fila.concepto}</td>
       <td>C$ ${Number(fila.enero).toFixed(2)}</td>
       <td>C$ ${Number(fila.febrero).toFixed(2)}</td>
@@ -66,12 +52,9 @@ async function cargarResumen() {
       <td>C$ ${Number(fila.noviembre).toFixed(2)}</td>
       <td>C$ ${Number(fila.diciembre).toFixed(2)}</td>
       <td>C$ ${Number(fila.total).toFixed(2)}</td>
-
     </tr>
-
     `;
   });
-
   document.querySelector("#tablaMaestroDetalle tbody").innerHTML = html;
   $("#tablaMaestroDetalle").DataTable({
     language: {
@@ -89,13 +72,9 @@ async function cargarResumen() {
         previous: "Anterior",
       },
     },
-
     responsive: true,
-
     pageLength: -1,
-
     lengthMenu: [[-1], ["Todos"]],
-
     order: [[2, "asc"]],
   });
 }

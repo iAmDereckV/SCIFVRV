@@ -2,17 +2,11 @@
 <html>
 
 <head>
-
     <meta charset="utf-8">
-
-    <title>
-        <?php echo constant('APP_NAME') ?>
-    </title>
-
+    <title><?php echo constant('APP_NAME') ?></title>
     <script>
-        const IRL = "/SCIFVRV";
+    const IRL = "/SCIFVRV";
     </script>
-
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">

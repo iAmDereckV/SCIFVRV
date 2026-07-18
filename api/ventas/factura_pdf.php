@@ -1,416 +1,115 @@
 <?php
-
 require_once '../../app/libraries/fpdf/fpdf.php';
 require_once '../../app/controllers/VentaController.php';
 require_once '../../app/controllers/ConfiguracionEmpresaController.php';
 require_once '../../app/helpers/Permisos.php';
-
-requierePermiso(
-    'ventas_ver'
-);
-$venta_id =
-    $_GET['id'];
-
-$controllerVenta =
-    new VentaController();
-
-$controllerEmpresa =
-    new ConfiguracionEmpresaController();
-
-$venta =
-    $controllerVenta->obtenerFactura(
-        $venta_id
-    );
-
-$detalle =
-    $controllerVenta->obtenerDetalleFactura(
-        $venta_id
-    );
-
-$empresa =
-    $controllerEmpresa->obtener();
-
-$pdf =
-    new FPDF();
-
+requierePermiso('ventas_crear');
+$venta_id = $_GET['id'];
+$controllerVenta = new VentaController();
+$controllerEmpresa = new ConfiguracionEmpresaController();
+$venta = $controllerVenta->obtenerFactura($venta_id);
+$detalle = $controllerVenta->obtenerDetalleFactura($venta_id);
+$empresa = $controllerEmpresa->obtener();
+// ? ANULADA 
+$pdf = new FPDF();
 $pdf->AddPage();
 if ($venta['estado'] === 'ANULADA') {
-
     $x = $pdf->GetX();
     $y = $pdf->GetY();
-
     $pdf->SetFont('Arial', 'B', 50);
     $pdf->SetTextColor(230, 230, 230);
-
     $pdf->SetXY(20, 120);
-
-    $pdf->Cell(
-        0,
-        15,
-        'ANULADA',
-        0,
-        0,
-        'C'
-    );
-
+    $pdf->Cell(0, 15, 'ANULADA', 0, 0, 'C');
     $pdf->SetTextColor(0, 0, 0);
-
     $pdf->SetXY($x, $y);
 }
-$pdf->SetFont(
-    'Arial',
-    'B',
-    25
-);
-if (
-    !empty($empresa['logo'])
-) {
-
-    $pdf->Image(
-
-        '../../public/uploads/empresa/'
-            .
-            $empresa['logo'],
-
-        10,
-
-        10,
-
-        25
-
-    );
+//? LOGO Y BANNER
+if (!empty($empresa['logo'])) {
+    $pdf->Image('../../public/uploads/empresa/' . $empresa['logo'], 10, 10, 25);
 }
-$pdf->Cell(
-    0,
-    15,
-
-    utf8_decode(
-        $empresa['nombre_empresa']
-    ),
-
-    0,
-    1,
-    'C'
-);
-$pdf->Ln(15);
-
-$pdf->SetFont(
-    'Arial',
-    'I',
-    10
-);
+if (!empty($empresa['nombre_empresa'])) {
+    $pdf->SetXY(40, 10);
+    $pdf->SetFont('Arial', 'B', 18);
+    $pdf->Cell(110, 8, utf8_decode($empresa['nombre_empresa']), 0, 1);
+}
+$pdf->SetFont('Arial', '', 9);
 if (!empty($empresa['ruc'])) {
-    $pdf->Cell(
-        0,
-        6,
-        utf8_decode(
-            'RUC: '
-                .
-                $empresa['ruc']
-        ),
-
-        0,
-        1
-    );
+    $pdf->SetX(40);
+    $pdf->Cell(110, 5, 'RUC: ' . $empresa['ruc'], 0, 1);
 }
-
-$pdf->Cell(
-    0,
-    6,
-    utf8_decode(
-        'Teléfono: '
-            .
-            $empresa['telefono']
-    ),
-
-    0,
-    1
-);
-
+if (!empty($empresa['telefono'])) {
+    $pdf->SetX(40);
+    $pdf->Cell(110, 5, 'Tel: ' . $empresa['telefono'], 0, 1);
+}
 if (!empty($empresa['correo'])) {
-    $pdf->Cell(
-        0,
-        6,
-        utf8_decode(
-            'Correo: '
-                .
-                $empresa['correo']
-        ),
-
-        0,
-        1
-    );
+    $pdf->SetX(40);
+    $pdf->Cell(110, 5, utf8_decode($empresa['correo']), 0, 1);
 }
-
-$pdf->Cell(
-    0,
-    6,
-    utf8_decode(
-        'Dirección: '
-            .
-            $empresa['direccion']
-    ),
-
-    0,
-    1
-);
-
+if (!empty($empresa['direccion'])) {
+    $pdf->SetX(40);
+    $pdf->Cell(110, 5, utf8_decode($empresa['direccion']), 0, 1);
+}
+// ? DATOS FACTURA
+$pdf->SetXY(150, 10);
+$pdf->SetFont('Arial', 'B', 20);
+$pdf->SetTextColor(30, 58, 95);
+$pdf->Cell(50, 10, 'FACTURA', 0, 1, 'R');
+$pdf->SetTextColor(0, 0, 0);
+$pdf->Ln(15);
 $pdf->SetFillColor(230, 230, 230);
 $pdf->Ln(5);
-
-$pdf->SetFont(
-    'Arial',
-    'B',
-    12
-);
-$pdf->Cell(
-    190,
-    8,
-    'DATOS DE FACTURA',
-    1,
-    1,
-    'C',
-    true
-);
-
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->Cell(190, 8, 'DATOS DE FACTURA', 1, 1, 'C', true);
 $pdf->Ln(5);
-$pdf->SetFont(
-    'Arial',
-    'I',
-    10
-);
-$pdf->Cell(
-    0,
-    6,
-    utf8_decode(
-        'Factura #: ' . $venta['id'],
-    ),
-
-    0,
-    1
-);
-$pdf->Cell(
-    0,
-    6,
-    utf8_decode(
-        'Fecha: ' . $venta['fecha'],
-    ),
-
-    0,
-    1
-);
-
+$pdf->SetFont('Arial', 'I', 10);
+$pdf->Cell(0, 6, utf8_decode('Factura #: ' . $venta['id'],), 0, 1);
+$pdf->Cell(0, 6, utf8_decode('Fecha: ' . $venta['fecha'],), 0, 1);
 $pdf->Ln();
-$pdf->Cell(
-    0,
-    6,
-    utf8_decode(
-        'Cliente: ' . $venta['cliente'],
-    ),
-
-    0,
-    1
-);
-$pdf->Cell(
-    0,
-    6,
-    utf8_decode(
-        'Teléfono: ' . $venta['telefono'],
-    ),
-
-    0,
-    1
-);
+$pdf->Cell(0, 6, utf8_decode('Cliente: ' . $venta['cliente'],), 0, 1);
+$pdf->Cell(0, 6, utf8_decode('Teléfono: ' . $venta['telefono'],), 0, 1);
 $pdf->Ln();
-$pdf->Cell(
-    0,
-    6,
-    utf8_decode(
-        'Vendedor: ' . $venta['usuario'],
-    ),
-
-    0,
-    1
-);
-$pdf->Cell(
-    0,
-    6,
-    utf8_decode(
-        'Correo: ' . $venta['correo'],
-    ),
-
-    0,
-    1
-);
+$pdf->Cell(0, 6, utf8_decode('Vendedor: ' . $venta['usuario'],), 0, 1);
+$pdf->Cell(0, 6, utf8_decode('Correo: ' . $venta['correo'],), 0, 1);
 $pdf->Ln(5);
-
-
-
-
-
-$pdf->SetFillColor(
-    220,
-    220,
-    220
-);
-
-$pdf->SetFont(
-    'Arial',
-    'B',
-    10
-);
-
+// ? DATOS VENTAS
+$pdf->SetFillColor(220, 220, 220);
+$pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(25, 8, 'Codigo', 1, 0, 'C', true);
 $pdf->Cell(70, 8, 'Producto', 1, 0, 'C', true);
 $pdf->Cell(20, 8, 'Cant.', 1, 0, 'C', true);
 $pdf->Cell(35, 8, 'Precio', 1, 0, 'C', true);
 $pdf->Cell(40, 8, 'Subtotal', 1, 1, 'C', true);
-$pdf->SetFont(
-    'Arial',
-    'I',
-    10
-);
-foreach (
-    $detalle
-    as
-    $item
-) {
-
-    $pdf->Cell(
-        25,
-        8,
-
-        $item['codigo'],
-
-        1
-    );
-
-    $pdf->Cell(
-        70,
-        8,
-
-        utf8_decode(
-            $item['producto']
-        ),
-
-        1
-    );
-
-    $pdf->Cell(
-        20,
-        8,
-
-        $item['cantidad'],
-
-        1
-    );
-
-    $pdf->Cell(
-        35,
-        8,
-
-        number_format(
-            $item['precio_unitario'],
-            2
-        ),
-
-        1
-    );
-
-    $pdf->Cell(
-        40,
-        8,
-
-        number_format(
-            $item['subtotal'],
-            2
-        ),
-
-        1
-    );
-    $pdf->Ln();
+$pdf->SetFont('Arial', 'I', 10);
+$fill = false;
+foreach ($detalle as $item) {
+    $pdf->SetFillColor(245, 248, 252);
+    $pdf->Cell(25, 8, $item['codigo'], 1, 0, 'L', $fill);
+    $pdf->Cell(70, 8, utf8_decode($item['producto']), 1, 0, 'L', $fill);
+    $pdf->Cell(20, 8, $item['cantidad'], 1, 0, 'C', $fill);
+    $pdf->Cell(35, 8, 'C$ ' . number_format($item['precio_unitario'], 2), 1, 0, 'R', $fill);
+    $pdf->Cell(40, 8, 'C$ ' . number_format($item['subtotal'], 2), 1, 1, 'R', $fill);
+    $fill = !$fill;
 }
+// ? DATOS RESUMEN
 $pdf->Ln(5);
-
+$pdf->SetFont('Arial', 'B', 11);
 $pdf->Cell(120, 8, '', 0);
-
 $pdf->Cell(35, 8, 'Subtotal:', 1);
-
-$pdf->Cell(
-    35,
-    8,
-    'C$ ' . number_format($venta['subtotal'], 2),
-    1,
-    1
-);
-
+$pdf->Cell(35, 8, 'C$ ' . number_format($venta['subtotal'], 2), 1, 1, 'R');
 $pdf->Cell(120, 8, '', 0);
-$pdf->SetFont(
-    'Arial',
-    'B',
-    11
-);
 $pdf->Cell(35, 8, 'Impuesto:', 1);
-
-$pdf->Cell(
-    35,
-    8,
-    'C$ ' . number_format($venta['impuesto'], 2),
-    1,
-    1
-);
-
+$pdf->Cell(35, 8, 'C$ ' . number_format($venta['impuesto'], 2), 1, 1, 'R');
 $pdf->Cell(120, 8, '', 0);
-
 $pdf->Cell(35, 8, 'Descuento:', 1);
-
-$pdf->Cell(
-    35,
-    8,
-    'C$ ' . number_format($venta['descuento'], 2),
-    1,
-    1
-);
-
+$pdf->Cell(35, 8, 'C$ ' . number_format($venta['descuento'], 2), 1, 1, 'R');
 $pdf->Cell(120, 8, '', 0);
-
-$pdf->Cell(35, 8, 'TOTAL:', 1);
-
-$pdf->Cell(
-    35,
-    8,
-    'C$ ' . number_format($venta['total'], 2),
-    1,
-    1
-);
+$pdf->SetFillColor(220, 220, 220);
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->Cell(35, 10, 'TOTAL', 1, 0, 'C', true);
+$pdf->Cell(35, 10, 'C$ ' . number_format($venta['total'], 2), 1, 1, 'R', true);
 $pdf->Ln(15);
-
-$pdf->SetFont(
-    'Arial',
-    'I',
-    9
-);
-
-$pdf->Cell(
-    0,
-    5,
-    utf8_decode(
-        $empresa['slogan']
-    ),
-    0,
-    1,
-    'C'
-);
-
-$pdf->Cell(
-    0,
-    5,
-    utf8_decode(
-        'Gracias por su compra'
-    ),
-    0,
-    1,
-    'C'
-);
-
+// ? FOOTER
+$pdf->SetFont('Arial', 'I', 9);
+$pdf->Cell(0, 5, utf8_decode($empresa['slogan']), 0, 1, 'C');
+$pdf->Cell(0, 5, utf8_decode('Gracias por su compra'), 0, 1, 'C');
 $pdf->Output();

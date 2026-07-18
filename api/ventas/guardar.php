@@ -1,21 +1,13 @@
 <?php
-
 require_once '../../app/controllers/VentaController.php';
 require_once '../../app/helpers/Permisos.php';
-
-requierePermiso(
-    'ventas_crear'
-);
+requierePermiso('ventas_crear');
 header('Content-Type: application/json');
-
 $controller = new VentaController();
-
-$detalle =
-    json_decode(
-        $_POST['detalle'],
-        true
-    );
-
+$detalle = json_decode(
+    $_POST['detalle'],
+    true
+);
 $resultado = $controller->guardar(
     $_POST['cliente_id'],
     $_POST['usuario_id'],
@@ -25,7 +17,6 @@ $resultado = $controller->guardar(
     $_POST['total'],
     $detalle
 );
-
 echo json_encode([
     'success' => $resultado ? true : false,
     'venta_id' => $resultado
