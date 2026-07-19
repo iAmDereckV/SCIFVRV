@@ -8,16 +8,18 @@ if (
     isset($_FILES['logo']) &&
     $_FILES['logo']['error'] == 0
 ) {
-    $extension = pathinfo(
-        $_FILES['logo']['name'],
-        PATHINFO_EXTENSION
+    foreach (glob('../../public/uploads/empresa/logo_empresa.*') as $archivo) {
+        unlink($archivo);
+    }
+    $extension = strtolower(
+        pathinfo(
+            $_FILES['logo']['name'],
+            PATHINFO_EXTENSION
+        )
     );
     $nombreArchivo = 'logo_empresa.' . $extension;
-
     move_uploaded_file(
-
         $_FILES['logo']['tmp_name'],
-
         '../../public/uploads/empresa/' . $nombreArchivo
     );
     $logo = $nombreArchivo;

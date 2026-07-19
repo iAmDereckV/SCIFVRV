@@ -1,14 +1,43 @@
+# ==========================
 # Archivos temporales
+# ==========================
 *.tmp
 *.temp
 *.cache
+test.sql
+
+# ==========================
+# Sistema Operativo
+# ==========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================
 # SUBIDAS DE USUARIOS
-
+# ==========================
 public/uploads/*
-
-# BACKUPS DE BASE DE DATOS
-
 database/backup/*
 
+# ==========================
 # Configuración personal de VS Code
+# ==========================
 .vscode/
+*.code-workspace
+
+# ==========================
+# Composer
+# ==========================
+/vendor/bin/
+/vendor/composer/installed.php.bak
+
+# ==========================
+# Configuración local
+# ==========================
+.env
+.env.*
+
+# ==========================
+# Xdebug
+# ==========================
+xdebug.log

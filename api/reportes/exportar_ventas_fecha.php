@@ -2,99 +2,65 @@
 
 require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/ReporteController.php';
-requierePermiso(
-    'excel_exportar'
-);
+require '../../vendor/autoload.php';
+require_once '../../app/helpers/ExcelHelper.php';
+requierePermiso('excel_exportar');
 $controller = new ReporteController();
-
-$datos =
-    $controller->ventasPorFecha($_GET['inicio'], $_GET['fin']);
-
-header(
-    "Content-Type: application/vnd.ms-excel"
-);
-
-header(
-    "Content-Disposition: attachment; filename=ventas_fechas.xls"
-);
-
-header("Pragma: no-cache");
-header("Expires: 0");
-echo "\xEF\xBB\xBF";
-echo "
-
-<table border='1'>
-
-<tr>
-
-    <th>Factura</th>
-
-    <th>Fecha</th>
-
-    <th>Cliente</th>
-
-    <th>Vendedor</th>
-
-    
-    <th>Estado</th>
-    <th>Total</th>
-
-  
-</tr>
-
-";
-$totalGeneral = 0;
-
-foreach ($datos as $fila) {
-
-    if (
-        $fila['estado']
-        !== 'ANULADA'
-    ) {
-        $totalGeneral +=
-            $fila['total'];
+$datos = $controller->ventasPorFecha($_GET['inicio'], $_GET['fin']);
+$sheetColumn = 'F';
+$excel = ExcelHelper::crearLibro("Ventas Por Fecha", $sheetColumn);
+$sheet = $excel->getActiveSheet();
+$fila = ExcelHelper::filaInicioTabla();
+$sheet->fromArray([
+    [
+        'Factura',
+        'Fecha',
+        'Cliente',
+        'Usuario',
+        'Estado',
+        'Total'
+    ]
+], null, 'A' . $fila);
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$fila++;
+$totalVenta = 0;
+$totalVentaAnulado = 0;
+foreach ($datos as $item) {
+    if ($item['estado'] !== 'ANULADA') {
+        $totalVenta += $item['total'];
+    } else {
+        $totalVentaAnulado += $item['total'];
     }
-
-    echo "
-
-    <tr>
-
-        <td>{$fila['id']}</td>
-
-        <td>{$fila['fecha']}</td>
-
-        <td>{$fila['cliente']}</td>
-
-        <td>{$fila['usuario']}</td>
-
-        
-        <td>{$fila['estado']}</td>
-        <td>{$fila['total']}</td>
-
-    </tr>
-
-    ";
+    $sheet->setCellValue("A{$fila}", $item['id']);
+    $sheet->setCellValue("B{$fila}", $item['fecha']);
+    $sheet->setCellValue("C{$fila}", $item['cliente']);
+    $sheet->setCellValue("D{$fila}", $item['usuario']);
+    $sheet->setCellValue("E{$fila}", $item['estado']);
+    $sheet->setCellValue("F{$fila}", $item['total']);
+    ExcelHelper::estiloMoneda($sheet, "F{$fila}");
+    $fila++;
 }
-echo "
-
-<tr>
-
-    <td colspan='5'>
-
-        TOTAL GENERAL
-
-    </td>
-
-    
-    <td>
-
-        {$totalGeneral}
-
-    </td>
-    
-
-
-</tr>
-
-";
-echo "</table>";
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$sheet->setCellValue("A{$fila}", "VENTAS ANULADAS");
+$sheet->mergeCells("A{$fila}:E{$fila}");
+$sheet->setCellValue("F{$fila}", $totalVentaAnulado);
+ExcelHelper::estiloMoneda($sheet, "F{$fila}");
+$fila++;
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$sheet->setCellValue("A{$fila}", "TOTAL VENDIDO");
+$sheet->mergeCells("A{$fila}:E{$fila}");
+$sheet->setCellValue("F{$fila}", $totalVenta);
+ExcelHelper::estiloMoneda($sheet, "F{$fila}");
+$fila++;
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$sheet->setCellValue("A{$fila}", "TOTAL GENERAL");
+$sheet->mergeCells("A{$fila}:E{$fila}");
+$sheet->setCellValue("F{$fila}", $totalVentaAnulado + $totalVenta);
+ExcelHelper::estiloMoneda($sheet, "F{$fila}");
+$fila++;
+foreach (range('A', $sheetColumn) as $col) {
+    $sheet
+        ->getColumnDimension($col)
+        ->setAutoSize(true);
+}
+ExcelHelper::descargar($excel, "Ventas_Por_Fecha");

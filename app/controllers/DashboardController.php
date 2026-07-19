@@ -8,8 +8,7 @@ class DashboardController
 
     public function __construct()
     {
-        $this->dashboard =
-            new Dashboard();
+        $this->dashboard = new Dashboard();
     }
 
     public function resumen()
@@ -33,13 +32,11 @@ class DashboardController
     }
     public function ventasPorVendedor()
     {
-        return $this->dashboard
-            ->ventasPorVendedor();
+        return $this->dashboard->ventasPorVendedor();
     }
     public function resumenFinanciero()
     {
-        return $this->dashboard
-            ->resumenFinanciero();
+        return $this->dashboard->resumenFinanciero();
     }
     public function stockBajoTabla()
     {

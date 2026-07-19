@@ -1,0 +1,17 @@
+{
+    "name": "dviva/scifvrv",
+    "autoload": {
+        "psr-4": {
+            "Dviva\\Scifvrv\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dereck",
+            "email": "dereck.vivas121@est.unanleon.edu.ni"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "1.30"
+    }
+}

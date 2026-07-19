@@ -1,87 +1,49 @@
 <?php
 require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/GastoController.php';
-requierePermiso(
-    'excel_exportar'
-);
+require '../../vendor/autoload.php';
+require_once '../../app/helpers/ExcelHelper.php';
+requierePermiso('excel_exportar');
 $controller = new GastoController();
-
-$gastos = $controller->reporteGastos();
-
-header("Content-Type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; filename=gastos.xls");
-header("Pragma: no-cache");
-header("Expires: 0");
-echo "\xEF\xBB\xBF";
-echo "
-
-<table border='1'>
-
-<tr>
-
-    <th>ID</th>
-
-    <th>Fecha</th>
-
-    <th>Categoría</th>
-
-    <th>Descripción</th>
-
-    <th>Monto</th>
-
-    <th>Usuario</th>
-
-</tr>
-
-";
-foreach ($gastos as $gasto) {
-
-    echo "
-
-    <tr>
-
-        <td>{$gasto['id']}</td>
-
-        <td>{$gasto['fecha']}</td>
-
-        <td>{$gasto['categoria']}</td>
-
-        <td>{$gasto['descripcion']}</td>
-
-        <td>{$gasto['monto']}</td>
-
-        <td>{$gasto['usuario']}</td>
-
-    </tr>
-
-    ";
+$datos = $controller->reporteGastos();
+$sheetColumn = 'G';
+$excel = ExcelHelper::crearLibro("Gastos", $sheetColumn);
+$sheet = $excel->getActiveSheet();
+$fila = ExcelHelper::filaInicioTabla();
+$sheet->fromArray([
+    [
+        'ID',
+        'Fecha',
+        'Categoría',
+        'Descripción',
+        'Usuario',
+        'Nombre Factura',
+        'Monto'
+    ]
+], null, 'A' . $fila);
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$fila++;
+$totalGeneral = 0;
+foreach ($datos as $item) {
+    $totalGeneral += $item['monto'];
+    $sheet->setCellValue("A{$fila}", $item['id']);
+    $sheet->setCellValue("B{$fila}", $item['fecha']);
+    $sheet->setCellValue("C{$fila}", $item['categoria']);
+    $sheet->setCellValue("D{$fila}", $item['descripcion']);
+    $sheet->setCellValue("E{$fila}", $item['usuario']);
+    $sheet->setCellValue("F{$fila}", $item['archivo_factura']);
+    $sheet->setCellValue("G{$fila}", $item['monto']);
+    ExcelHelper::estiloMoneda($sheet, "G{$fila}");
+    $fila++;
 }
-$total = 0;
-
-foreach ($gastos as $gasto) {
-
-    $total += $gasto['monto'];
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$sheet->setCellValue("A{$fila}", "TOTAL GENERAL");
+$sheet->mergeCells("A{$fila}:F{$fila}");
+$sheet->setCellValue("G{$fila}", $totalGeneral);
+ExcelHelper::estiloMoneda($sheet, "G{$fila}");
+foreach (range('A', $sheetColumn) as $col) {
+    $sheet
+        ->getColumnDimension($col)
+        ->setAutoSize(true);
 }
-echo "
-    
-    <tr>
-    
-        <td colspan='4'>
-    
-            TOTAL GASTOS
-    
-        </td>
-    
-        <td>
-    
-            {$total}
-    
-        </td>
-    
-        <td></td>
-    
-    </tr>
-    
-    ";
-
-echo "</table>";
+ExcelHelper::descargar($excel, "Gastos");

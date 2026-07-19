@@ -9,27 +9,17 @@ class AuthMiddleware
     public static function verificar()
     {
         Session::iniciar();
-
         if (!Session::existe('usuario_id')) {
-
             header('Location:' . constant("APP_URL") . '/public/login.php');
             exit;
         }
-
         $usuarioModel = new Usuario();
-
-        $usuario = $usuarioModel->verificarSesion(
-            Session::get('usuario_id')
-        );
-
+        $usuario = $usuarioModel->verificarSesion(Session::get('usuario_id'));
         if (
-            !$usuario ||
-            $usuario['estado'] !== 'ACTIVO' ||
+            !$usuario || $usuario['estado'] !== 'ACTIVO' ||
             $usuario['rol_estado'] !== 'ACTIVO'
         ) {
-
             Session::destruir();
-
             header('Location:' . constant("APP_URL") . '/public/login.php');
             exit;
         }

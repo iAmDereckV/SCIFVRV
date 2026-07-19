@@ -2,97 +2,64 @@
 
 require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/CompraController.php';
-requierePermiso(
-    'excel_exportar'
-);
+require '../../vendor/autoload.php';
+require_once '../../app/helpers/ExcelHelper.php';
+requierePermiso('excel_exportar');
 $controller = new CompraController();
-
 $datos = $controller->reporteComprasDetalladas();
-header(
-    "Content-Type: application/vnd.ms-excel"
-);
-
-header(
-    "Content-Disposition: attachment; filename=compras_detalladas.xls"
-);
-
-header("Pragma: no-cache");
-header("Expires: 0");
-echo "\xEF\xBB\xBF";
-echo "
-
-<table border='1'>
-
-<tr>
-
-    <th>Compra</th>
-
-    <th>Fecha</th>
-
-    <th>Proveedor</th>
-
-    <th>Código</th>
-
-    <th>Producto</th>
-
-    <th>Cantidad</th>
-
-    <th>Costo</th>
-
-    <th>Subtotal</th>
-
-</tr>
-
-";
+$sheetColumn = 'K';
+$excel = ExcelHelper::crearLibro("Compras Detalladas", $sheetColumn);
+$sheet = $excel->getActiveSheet();
+$fila = ExcelHelper::filaInicioTabla();
+$sheet->fromArray([
+    [
+        'Compra',
+        'Fecha',
+        'Estado',
+        'Proveedor',
+        'Usuario',
+        'Código',
+        'Producto',
+        'Cantidad',
+        'Costo',
+        'Subtotal',
+        'Estado'
+    ]
+], null, 'A' . $fila);
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$fila++;
+$totalCantidad = 0;
+$totalCosto = 0;
+$totalCompletada = 0;
 $totalGeneral = 0;
-
-foreach ($datos as $fila) {
-
-    $totalGeneral +=
-        $fila['subtotal'];
-
-    echo "
-
-    <tr>
-
-        <td>{$fila['compra']}</td>
-
-        <td>{$fila['fecha']}</td>
-
-        <td>{$fila['proveedor']}</td>
-
-        <td>{$fila['codigo']}</td>
-
-        <td>{$fila['producto']}</td>
-
-        <td>{$fila['cantidad']}</td>
-
-        <td>{$fila['costo']}</td>
-
-        <td>{$fila['subtotal']}</td>
-
-    </tr>
-
-    ";
+foreach ($datos as $item) {
+    $totalCantidad += $item['cantidad'];
+    $totalCosto += $item['costo'];
+    $totalGeneral += $item['subtotal'];
+    $sheet->setCellValue("A{$fila}", $item['compra']);
+    $sheet->setCellValue("B{$fila}", $item['fecha']);
+    $sheet->setCellValue("C{$fila}", $item['estado']);
+    $sheet->setCellValue("D{$fila}", $item['proveedor']);
+    $sheet->setCellValue("E{$fila}", $item['usuario']);
+    $sheet->setCellValue("F{$fila}", $item['codigo']);
+    $sheet->setCellValue("G{$fila}", $item['producto']);
+    $sheet->setCellValue("H{$fila}", $item['cantidad']);
+    $sheet->setCellValue("I{$fila}", $item['costo']);
+    $sheet->setCellValue("J{$fila}", $item['subtotal']);
+    $sheet->setCellValue("K{$fila}", $item['estado']);
+    ExcelHelper::estiloMoneda($sheet, "I{$fila}:J{$fila}");
+    $fila++;
 }
-echo "
-
-<tr>
-
-    <td colspan='7'>
-
-        TOTAL GENERAL
-
-    </td>
-
-    <td>
-
-        {$totalGeneral}
-
-    </td>
-
-</tr>
-
-";
-
-echo "</table>";
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$sheet->setCellValue("A{$fila}", "TOTAL GENERAL");
+$sheet->mergeCells("A{$fila}:G{$fila}");
+$sheet->setCellValue("H{$fila}", $totalCantidad);
+$sheet->setCellValue("I{$fila}", $totalCosto);
+$sheet->setCellValue("J{$fila}", $totalGeneral);
+ExcelHelper::estiloMoneda($sheet, "I{$fila}:J{$fila}");
+foreach (range('A', $sheetColumn) as $col) {
+    $sheet
+        ->getColumnDimension($col)
+        ->setAutoSize(true);
+}
+ExcelHelper::descargar($excel, "Compras_Detalladas");

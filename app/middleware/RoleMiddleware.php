@@ -7,11 +7,8 @@ class RoleMiddleware
     public static function verificar($rolPermitido)
     {
         Session::iniciar();
-
         $rol = Session::get('rol');
-
         if ($rol !== $rolPermitido) {
-
             die('Acceso denegado');
         }
     }

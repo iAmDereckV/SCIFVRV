@@ -8,36 +8,30 @@ class CompraController
 
     public function __construct()
     {
-        $this->compra =
-            new Compra();
+        $this->compra = new Compra();
     }
 
     public function listar()
     {
-        return $this->compra
-            ->listar();
+        return $this->compra->listar();
     }
 
     public function obtenerProveedores()
     {
-        return $this->compra
-            ->obtenerProveedores();
+        return $this->compra->obtenerProveedores();
     }
     public function reporteComprasDetalladas()
     {
-        return $this->compra
-            ->reporteComprasDetalladas();
+        return $this->compra->reporteComprasDetalladas();
     }
     public function reporteCompras()
     {
-        return $this->compra
-            ->reporteCompras();
+        return $this->compra->reporteCompras();
     }
 
     public function obtenerProductos()
     {
-        return $this->compra
-            ->obtenerProductos();
+        return $this->compra->obtenerProductos();
     }
 
     public function guardar(
@@ -59,8 +53,7 @@ class CompraController
     }
     public function anular($id)
     {
-        return $this->compra
-            ->anular($id);
+        return $this->compra->anular($id);
     }
     public function actualizarComprobante(
         $id,

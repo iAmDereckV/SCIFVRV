@@ -76,17 +76,13 @@ class UsuarioController
         $id,
         $foto
     ) {
-        return $this->usuario
-            ->actualizarFoto(
-                $id,
-                $foto
-            );
+        return $this->usuario->actualizarFoto(
+            $id,
+            $foto
+        );
     }
     public function obtenerPermisos($rol_id)
     {
-        return $this->usuario
-            ->obtenerPermisos(
-                $rol_id
-            );
+        return $this->usuario->obtenerPermisos($rol_id);
     }
 }

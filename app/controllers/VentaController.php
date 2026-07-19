@@ -63,9 +63,7 @@ class VentaController
 
     public function obtenerDetalleVenta($venta_id)
     {
-        return $this->detalleventa->obtenerDetalleVenta(
-            $venta_id
-        );
+        return $this->detalleventa->obtenerDetalleVenta($venta_id);
     }
     public function obtenerFactura($id)
     {
@@ -77,7 +75,6 @@ class VentaController
     }
     public function anular($id)
     {
-        return $this->venta
-            ->anular($id);
+        return $this->venta->anular($id);
     }
 }

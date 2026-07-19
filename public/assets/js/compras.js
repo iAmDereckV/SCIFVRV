@@ -93,8 +93,8 @@ function renderDetalle() {
       <tr>
         <td>${item.nombre}</td>
         <td>${item.cantidad}</td>
-        <td>${item.costo}</td>
-        <td>${item.subtotal.toFixed(2)}</td>
+        <td>C$ ${item.costo}</td>
+        <td>C$ ${item.subtotal.toFixed(2)}</td>
         <td>
           <button
             class="btn btn-danger btn-sm"

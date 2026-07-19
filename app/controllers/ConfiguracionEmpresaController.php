@@ -9,8 +9,7 @@ class ConfiguracionEmpresaController
 
     public function __construct()
     {
-        $this->model =
-            new ConfiguracionEmpresa();
+        $this->model = new ConfiguracionEmpresa();
     }
 
     public function obtener()
@@ -27,21 +26,14 @@ class ConfiguracionEmpresaController
         $slogan,
         $logo,
     ) {
-
         return $this->model->actualizar(
-
             $nombre,
-
             $ruc,
-
             $telefono,
-
             $correo,
-
             $direccion,
             $slogan,
             $logo,
-
         );
     }
 }

@@ -137,8 +137,9 @@ Session::iniciar();
                         <?php if (tienePermiso('backup_ver')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=backup"><i class="bi bi-database"></i>
                                 Backup y Restauración</a></li><?php endif; ?>
+                        <?php if (tienePermiso('bitacora_ver')): ?>
                         <li><a class="dropdown-item" href="index.php?modulo=bitacora">
-                                <i class="bi bi-journal-text"></i> Bitácora</a></li>
+                                <i class="bi bi-journal-text"></i> Bitácora</a></li><?php endif; ?>
                     </ul>
                 </li>
             </ul>

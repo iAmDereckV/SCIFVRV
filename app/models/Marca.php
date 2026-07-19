@@ -5,7 +5,6 @@ require_once __DIR__ . '/../config/database.php';
 class Marca
 {
     private $conexion;
-
     public function __construct()
     {
         $db = new Database();
@@ -17,27 +16,16 @@ class Marca
         $sql = "SELECT *
                 FROM marcas
                 ORDER BY id DESC";
-
-        return $this->conexion
-            ->query($sql)
-            ->fetchAll();
+        return $this->conexion->query($sql)->fetchAll();
     }
 
     public function guardar($nombre, $descripcion)
     {
         $sql = "INSERT INTO marcas
-                (
-                    nombre,
-                    descripcion
-                )
+                (nombre,descripcion)
                 VALUES
-                (
-                    :nombre,
-                    :descripcion
-                )";
-
+                (:nombre,:descripcion)";
         $stmt = $this->conexion->prepare($sql);
-
         return $stmt->execute([
             ':nombre' => $nombre,
             ':descripcion' => $descripcion
@@ -49,46 +37,31 @@ class Marca
         $sql = "SELECT *
                 FROM marcas
                 WHERE id = :id";
-
         $stmt = $this->conexion->prepare($sql);
-
-        $stmt->execute([
-            ':id' => $id
-        ]);
-
+        $stmt->execute([':id' => $id]);
         return $stmt->fetch();
     }
 
-    public function actualizar(
-        $id,
-        $nombre,
-        $descripcion
-    ) {
+    public function actualizar($id, $nombre, $descripcion)
+    {
         $sql = "UPDATE marcas
                 SET
                     nombre = :nombre,
                     descripcion = :descripcion
                 WHERE id = :id";
-
         $stmt = $this->conexion->prepare($sql);
-
         return $stmt->execute([
             ':id' => $id,
             ':nombre' => $nombre,
             ':descripcion' => $descripcion
         ]);
     }
-
-    public function cambiarEstado(
-        $id,
-        $estado
-    ) {
+    public function cambiarEstado($id, $estado)
+    {
         $sql = "UPDATE marcas
                 SET estado = :estado
                 WHERE id = :id";
-
         $stmt = $this->conexion->prepare($sql);
-
         return $stmt->execute([
             ':id' => $id,
             ':estado' => $estado

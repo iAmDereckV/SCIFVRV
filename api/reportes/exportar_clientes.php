@@ -1,66 +1,44 @@
 <?php
 require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/ClienteController.php';
-requierePermiso(
-    'excel_exportar'
-);
+require '../../vendor/autoload.php';
+require_once '../../app/helpers/ExcelHelper.php';
+requierePermiso('excel_exportar');
 $controller = new ClienteController();
-
-$clientes = $controller->listar();
-
-header("Content-Type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; filename=clientes.xls");
-header("Pragma: no-cache");
-header("Expires: 0");
-echo "\xEF\xBB\xBF";
-echo "
-
-<table border='1'>
-
-<tr>
-
-    <th>ID</th>
-
-    <th>Nombre</th>
-
-    <th>Teléfono</th>
-
-    <th>Correo</th>
-
-    <th>Dirección</th>
-
-    <th>Identificación</th>
-
-    <th>Fecha Registro</th>
-
-
-</tr>
-
-";
-foreach ($clientes as $cliente) {
-
-    echo "
-
-    <tr>
-
-        <td>{$cliente['id']}</td>
-
-        <td>{$cliente['nombres']} {$cliente['apellidos']}</td>
-
-        <td>{$cliente['telefono']}</td>
-
-        <td>{$cliente['correo']}</td>
-
-        <td>{$cliente['direccion']}</td>
-
-        <td>{$cliente['identificacion']}</td>
-
-        <td>{$cliente['fecha_registro']}</td>
-
-
-    </tr>
-
-    ";
+$datos = $controller->listar();
+$sheetColumn = 'H';
+$excel = ExcelHelper::crearLibro("Clientes", $sheetColumn);
+$sheet = $excel->getActiveSheet();
+$fila = ExcelHelper::filaInicioTabla();
+$sheet->fromArray([
+    [
+        'ID',
+        'Nombre',
+        'Teléfono',
+        'Correo',
+        'Dirección',
+        'Identificación',
+        'Estado',
+        'Fecha Registro',
+    ]
+], null, 'A' . $fila);
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$fila++;
+foreach ($datos as $item) {
+    $nombreCompleto = $item['nombres'] . " " . $item['apellidos'];
+    $sheet->setCellValue("A{$fila}", $item['id']);
+    $sheet->setCellValue("B{$fila}", $nombreCompleto);
+    $sheet->setCellValue("C{$fila}", $item['telefono']);
+    $sheet->setCellValue("D{$fila}", $item['correo']);
+    $sheet->setCellValue("E{$fila}", $item['direccion']);
+    $sheet->setCellValue("F{$fila}", $item['identificacion']);
+    $sheet->setCellValue("G{$fila}", $item['estado']);
+    $sheet->setCellValue("H{$fila}", $item['fecha_registro']);
+    $fila++;
 }
-
-echo "</table>";
+foreach (range('A', $sheetColumn) as $col) {
+    $sheet
+        ->getColumnDimension($col)
+        ->setAutoSize(true);
+}
+ExcelHelper::descargar($excel, "Clientes");

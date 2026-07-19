@@ -27,6 +27,17 @@
     <div class="col-md-3">
         <div class="card shadow-sm border-0 h-100">
             <div class="card-body text-center">
+                <i class="bi bi-truck fs-1 text-warning"></i>
+                <h5 class="mt-3">Proveedores</h5>
+                <button class="btn btn-warning w-100 mt-3" onclick="exportarProveedores()">
+                    <i class="bi bi-file-earmark-excel"></i>Exportar
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body text-center">
                 <i class="bi bi-cash-stack fs-1 text-warning"></i>
                 <h5 class="mt-3">Gastos</h5>
                 <button class="btn btn-warning w-100 mt-3" onclick="exportarGastos()">
@@ -74,17 +85,6 @@
                 <i class="bi bi-card-checklist fs-1 text-dark"></i>
                 <h5 class="mt-3">Compras Detalladas</h5>
                 <button class="btn btn-dark w-100 mt-3" onclick="exportarComprasDetalladas()">
-                    <i class="bi bi-file-earmark-excel"></i>Exportar
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-body text-center">
-                <i class="bi bi-clock-history fs-1 text-primary"></i>
-                <h5 class="mt-3">Bitácora</h5>
-                <button class="btn btn-primary w-100 mt-3" onclick="exportarBitacora()">
                     <i class="bi bi-file-earmark-excel"></i>Exportar
                 </button>
             </div>

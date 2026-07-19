@@ -16,10 +16,8 @@ class CategoriaController
         return $this->categoria->listar();
     }
 
-    public function guardar(
-        $nombre,
-        $descripcion
-    ) {
+    public function guardar($nombre, $descripcion)
+    {
         return $this->categoria->guardar(
             $nombre,
             $descripcion
@@ -31,11 +29,8 @@ class CategoriaController
         return $this->categoria->obtenerPorId($id);
     }
 
-    public function actualizar(
-        $id,
-        $nombre,
-        $descripcion
-    ) {
+    public function actualizar($id, $nombre, $descripcion)
+    {
         return $this->categoria->actualizar(
             $id,
             $nombre,
@@ -43,10 +38,8 @@ class CategoriaController
         );
     }
 
-    public function cambiarEstado(
-        $id,
-        $estado
-    ) {
+    public function cambiarEstado($id, $estado)
+    {
         return $this->categoria->cambiarEstado(
             $id,
             $estado

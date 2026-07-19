@@ -14,92 +14,40 @@ class Producto
 
     public function listar()
     {
-        $sql = "SELECT
-                p.*,
-                c.nombre AS categoria,
-                m.nombre AS marca
+        $sql = "SELECT p.*,c.nombre AS categoria,m.nombre AS marca
             FROM productos p
-            INNER JOIN categorias c
-                ON c.id = p.categoria_id
-            INNER JOIN marcas m
-                ON m.id = p.marca_id
+            INNER JOIN categorias c ON c.id = p.categoria_id
+            INNER JOIN marcas m ON m.id = p.marca_id
             ORDER BY p.id DESC";
-
-        return $this->conexion
-            ->query($sql)
-            ->fetchAll();
+        return $this->conexion->query($sql)->fetchAll();
     }
 
     public function obtenerCategorias()
     {
         return $this->conexion
-            ->query("
-                SELECT *
+            ->query("SELECT *
                 FROM categorias
                 WHERE estado='ACTIVO'
                 ORDER BY nombre
-            ")
-            ->fetchAll();
+            ")->fetchAll();
     }
 
     public function obtenerMarcas()
     {
         return $this->conexion
-            ->query("
-                SELECT *
+            ->query("SELECT *
                 FROM marcas
                 WHERE estado='ACTIVO'
                 ORDER BY nombre
-            ")
-            ->fetchAll();
+            ")->fetchAll();
     }
-    public function guardar(
-        $codigo,
-        $categoria_id,
-        $marca_id,
-        $nombre,
-        $descripcion,
-        $vehiculo_aplicable,
-        $precio_compra,
-        $precio_venta,
-        $stock,
-        $stock_minimo,
-        $ubicacion,
-        $nombreImagen
-    ) {
+    public function guardar($codigo, $categoria_id, $marca_id, $nombre, $descripcion, $vehiculo_aplicable, $precio_compra, $precio_venta, $stock, $stock_minimo, $ubicacion, $nombreImagen)
+    {
         $sql = "INSERT INTO productos
-            (
-                codigo,
-                categoria_id,
-                marca_id,
-                nombre,
-                descripcion,
-                vehiculo_aplicable,
-                precio_compra,
-                precio_venta,
-                stock,
-                stock_minimo,
-                ubicacion,
-                imagen
-            )
+            (codigo,categoria_id,marca_id,nombre,descripcion,vehiculo_aplicable,precio_compra,precio_venta,stock,stock_minimo,ubicacion,imagen)
             VALUES
-            (
-                :codigo,
-                :categoria_id,
-                :marca_id,
-                :nombre,
-                :descripcion,
-                :vehiculo_aplicable,
-                :precio_compra,
-                :precio_venta,
-                :stock,
-                :stock_minimo,
-                :ubicacion,
-                :nombreImagen
-            )";
-
+            (:codigo,:categoria_id,:marca_id,:nombre,:descripcion,:vehiculo_aplicable,:precio_compra,:precio_venta,:stock,:stock_minimo,:ubicacion,:nombreImagen)";
         $stmt = $this->conexion->prepare($sql);
-
         return $stmt->execute([
             ':codigo' => $codigo,
             ':categoria_id' => $categoria_id,
@@ -120,48 +68,23 @@ class Producto
         $sql = "SELECT *
             FROM productos
             WHERE id = :id";
-
         $stmt = $this->conexion->prepare($sql);
-
-        $stmt->execute([
-            ':id' => $id
-        ]);
-
+        $stmt->execute([':id' => $id]);
         return $stmt->fetch();
     }
     public function obtenerDetalle($id)
     {
-        $sql = "SELECT
-    p.*,
-    c.nombre AS categoria,
-    m.nombre AS marca
-FROM productos p
-INNER JOIN categorias c ON c.id = p.categoria_id
-INNER JOIN marcas m ON m.id = p.marca_id
-WHERE p.id = :id";
-
+        $sql = "SELECT p.*,c.nombre AS categoria,m.nombre AS marca
+        FROM productos p
+        INNER JOIN categorias c ON c.id = p.categoria_id
+        INNER JOIN marcas m ON m.id = p.marca_id
+        WHERE p.id = :id";
         $stmt = $this->conexion->prepare($sql);
-
-        $stmt->execute([
-            ':id' => $id
-        ]);
-
+        $stmt->execute([':id' => $id]);
         return $stmt->fetch();
     }
-    public function actualizar(
-        $id,
-        $codigo,
-        $categoria_id,
-        $marca_id,
-        $nombre,
-        $descripcion,
-        $vehiculo_aplicable,
-        $precio_compra,
-        $precio_venta,
-        $stock,
-        $stock_minimo,
-        $ubicacion
-    ) {
+    public function actualizar($id, $codigo, $categoria_id, $marca_id, $nombre, $descripcion, $vehiculo_aplicable, $precio_compra, $precio_venta, $stock, $stock_minimo, $ubicacion)
+    {
         $sql = "UPDATE productos
             SET
                 codigo = :codigo,
@@ -176,9 +99,7 @@ WHERE p.id = :id";
                 stock_minimo = :stock_minimo,
                 ubicacion = :ubicacion
             WHERE id = :id";
-
         $stmt = $this->conexion->prepare($sql);
-
         return $stmt->execute([
             ':id' => $id,
             ':codigo' => $codigo,
@@ -194,39 +115,23 @@ WHERE p.id = :id";
             ':ubicacion' => $ubicacion
         ]);
     }
-    public function cambiarEstado(
-        $id,
-        $estado
-    ) {
+    public function cambiarEstado($id, $estado)
+    {
         $sql = "UPDATE productos
             SET estado = :estado
             WHERE id = :id";
-
         $stmt = $this->conexion->prepare($sql);
-
-        return $stmt->execute([
-            ':id' => $id,
-            ':estado' => $estado
-        ]);
+        return $stmt->execute([':id' => $id, ':estado' => $estado]);
     }
-    public function actualizarImagen(
-        $id,
-        $imagen
-    ) {
-
+    public function actualizarImagen($id, $imagen)
+    {
         $sql = "UPDATE productos
             SET imagen = :imagen
             WHERE id = :id";
-
-        $stmt =
-            $this->conexion->prepare($sql);
-
+        $stmt = $this->conexion->prepare($sql);
         return $stmt->execute([
-
             ':imagen' => $imagen,
-
             ':id' => $id
-
         ]);
     }
 }

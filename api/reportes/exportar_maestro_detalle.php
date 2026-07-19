@@ -1,87 +1,83 @@
 <?php
 require_once '../../app/helpers/Permisos.php';
-
 require_once '../../app/controllers/MaestroDetalleController.php';
-requierePermiso(
-    'excel_exportar'
-);
-$controller =
-    new MaestroDetalleController();
-$anio =
-    $_GET['anio']
-    ??
-    date('Y');
+require '../../vendor/autoload.php';
+require_once '../../app/helpers/ExcelHelper.php';
+requierePermiso('excel_exportar');
+$controller = new MaestroDetalleController();
+$anio = $_GET['anio'] ?? date('Y');
+$datos = $controller->obtenerResumen($anio);
+$sheetColumn = 'N';
+// |--------------------------------------------------------------------------
+// | //? Crear libro
+// |--------------------------------------------------------------------------
+$excel = ExcelHelper::crearLibro("Maestro Detalle Año {$anio}", $sheetColumn);
+$sheet = $excel->getActiveSheet();
 
+// |--------------------------------------------------------------------------
+// | //? Encabezado de tabla
+// |--------------------------------------------------------------------------
+$fila = ExcelHelper::filaInicioTabla();
+$sheet->fromArray([
+    [
+        'Concepto',
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre',
+        'Total'
+    ]
+], null, 'A' . $fila);
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$fila++;
 
-$datos =
-    $controller->obtenerResumen($anio);
-
-header(
-    "Content-Type: application/vnd.ms-excel"
-);
-
-header(
-    "Content-Disposition: attachment; filename=maestro_detalle.xls"
-);
-
-header("Pragma: no-cache");
-header("Expires: 0");
-echo "\xEF\xBB\xBF";
-echo "
-<h2>
-
- Maestro Detalle Año {$anio}
-
-</h2>
-<table border='1'>
-
-<tr>
-
-    <th>Concepto</th>
-
-    <th>Ene</th>
-    <th>Feb</th>
-    <th>Mar</th>
-    <th>Abr</th>
-    <th>May</th>
-    <th>Jun</th>
-    <th>Jul</th>
-    <th>Ago</th>
-    <th>Sep</th>
-    <th>Oct</th>
-    <th>Nov</th>
-    <th>Dic</th>
-
-    <th>Total</th>
-
-</tr>
-
-";
-foreach ($datos as $fila) {
-
-    echo "
-
-    <tr>
-
-        <td>{$fila['concepto']}</td>
-
-        <td>{$fila['enero']}</td>
-        <td>{$fila['febrero']}</td>
-        <td>{$fila['marzo']}</td>
-        <td>{$fila['abril']}</td>
-        <td>{$fila['mayo']}</td>
-        <td>{$fila['junio']}</td>
-        <td>{$fila['julio']}</td>
-        <td>{$fila['agosto']}</td>
-        <td>{$fila['septiembre']}</td>
-        <td>{$fila['octubre']}</td>
-        <td>{$fila['noviembre']}</td>
-        <td>{$fila['diciembre']}</td>
-
-        <td>{$fila['total']}</td>
-
-    </tr>
-
-    ";
+// |--------------------------------------------------------------------------
+// | //? Datos
+// |--------------------------------------------------------------------------
+foreach ($datos as $item) {
+    $sheet->setCellValue("A{$fila}", $item['concepto']);
+    $sheet->setCellValue("B{$fila}", $item['enero']);
+    $sheet->setCellValue("C{$fila}", $item['febrero']);
+    $sheet->setCellValue("D{$fila}", $item['marzo']);
+    $sheet->setCellValue("E{$fila}", $item['abril']);
+    $sheet->setCellValue("F{$fila}", $item['mayo']);
+    $sheet->setCellValue("G{$fila}", $item['junio']);
+    $sheet->setCellValue("H{$fila}", $item['julio']);
+    $sheet->setCellValue("I{$fila}", $item['agosto']);
+    $sheet->setCellValue("J{$fila}", $item['septiembre']);
+    $sheet->setCellValue("K{$fila}", $item['octubre']);
+    $sheet->setCellValue("L{$fila}", $item['noviembre']);
+    $sheet->setCellValue("M{$fila}", $item['diciembre']);
+    $sheet->setCellValue("N{$fila}", $item['total']);
+    ExcelHelper::estiloMoneda($sheet, "B{$fila}:N{$fila}");
+    $fila++;
 }
-echo "</table>";
+// |--------------------------------------------------------------------------
+// | //? Datos total
+// |--------------------------------------------------------------------------
+// ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+// $sheet->setCellValue("A{$fila}", "TOTAL GENERAL");
+// $sheet->mergeCells("A{$fila}:G{$fila}");
+// $sheet->setCellValue("H{$fila}", $totalGeneral);
+// ExcelHelper::estiloMoneda($sheet, "H{$fila}:H{$fila}");
+
+// |--------------------------------------------------------------------------
+// | //? Ajustar ancho automático
+// |--------------------------------------------------------------------------
+foreach (range('A', $sheetColumn) as $col) {
+    $sheet
+        ->getColumnDimension($col)
+        ->setAutoSize(true);
+}
+// |--------------------------------------------------------------------------
+// | //? Descargar
+// |--------------------------------------------------------------------------
+ExcelHelper::descargar($excel, "Maestro_Detalle_{$anio}");

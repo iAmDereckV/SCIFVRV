@@ -49,20 +49,18 @@ class RolController
     }
     public function obtenerPermisos($rol_id)
     {
-        return $this->rol
-            ->obtenerPermisos(
-                $rol_id
-            );
+        return $this->rol->obtenerPermisos(
+            $rol_id
+        );
     }
     public function guardarPermisos(
         $rol_id,
         $permisos
     ) {
-        return $this->rol
-            ->guardarPermisos(
-                $rol_id,
-                $permisos
-            );
+        return $this->rol->guardarPermisos(
+            $rol_id,
+            $permisos
+        );
     }
     public function obtenerPorId($id)
     {

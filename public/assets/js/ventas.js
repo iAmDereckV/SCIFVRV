@@ -129,13 +129,13 @@ function renderDetalle() {
                     ${item.nombre}
                 </td>
                 <td>
-                    ${item.precio}
+                  C$ ${item.precio}
                 </td>
                 <td>
                     ${item.cantidad}
                 </td>
                 <td>
-                    ${item.subtotal}
+                  C$ ${item.subtotal}
                 </td>
                 <td>
                     <button

@@ -8,40 +8,36 @@ class ReporteController
 
     public function __construct()
     {
-        $this->reporte =
-            new Reporte();
+        $this->reporte = new Reporte();
     }
 
     public function ventasPorFecha(
         $inicio,
         $fin
     ) {
-        return $this->reporte
-            ->ventasPorFecha(
-                $inicio,
-                $fin
-            );
+        return $this->reporte->ventasPorFecha(
+            $inicio,
+            $fin
+        );
     }
     public function comprasPorFecha(
         $inicio,
         $fin
     ) {
 
-        return $this->reporte
-            ->comprasPorFecha(
-                $inicio,
-                $fin
-            );
+        return $this->reporte->comprasPorFecha(
+            $inicio,
+            $fin
+        );
     }
     public function gastosPorFecha(
         $inicio,
         $fin
     ) {
 
-        return $this->reporte
-            ->gastosPorFecha(
-                $inicio,
-                $fin
-            );
+        return $this->reporte->gastosPorFecha(
+            $inicio,
+            $fin
+        );
     }
 }

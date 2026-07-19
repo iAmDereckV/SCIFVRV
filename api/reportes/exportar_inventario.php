@@ -1,67 +1,49 @@
 <?php
 require_once '../../app/helpers/Permisos.php';
 require_once '../../app/controllers/ProductoController.php';
-requierePermiso(
-    'excel_exportar'
-);
+require '../../vendor/autoload.php';
+require_once '../../app/helpers/ExcelHelper.php';
+requierePermiso('excel_exportar');
 $controller = new ProductoController();
-
-$productos = $controller->listar();
-
-header("Content-Type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; filename=inventario.xls");
-header("Pragma: no-cache");
-header("Expires: 0");
-echo "\xEF\xBB\xBF";
-echo "
-<table border='1'>
-
-<tr>
-
-    <th>Código</th>
-
-    <th>Producto</th>
-
-    <th>Marca</th>
-
-    <th>Categoría</th>
-
-    <th>Precio Compra</th>
-
-    <th>Precio Venta</th>
-
-    <th>Stock</th>
-
-    <th>Stock Mínimo</th>
-
-</tr>
-";
-
-foreach ($productos as $producto) {
-
-    echo "
-
-    <tr>
-
-        <td>{$producto['codigo']}</td>
-
-        <td>{$producto['nombre']}</td>
-
-        <td>{$producto['marca']}</td>
-
-        <td>{$producto['categoria']}</td>
-
-        <td>{$producto['precio_compra']}</td>
-
-        <td>{$producto['precio_venta']}</td>
-
-        <td>{$producto['stock']}</td>
-
-        <td>{$producto['stock_minimo']}</td>
-
-    </tr>
-
-    ";
+$datos = $controller->listar();
+$sheetColumn = 'K';
+$excel = ExcelHelper::crearLibro("Inventario", $sheetColumn);
+$sheet = $excel->getActiveSheet();
+$fila = ExcelHelper::filaInicioTabla();
+$sheet->fromArray([
+    [
+        'Código',
+        'Producto',
+        'Marca',
+        'Categoría',
+        'Precio Compra',
+        'Precio Venta',
+        'Stock',
+        'Stock Mínimo',
+        'Ubicacion',
+        'Descripción',
+        'estado'
+    ]
+], null, 'A' . $fila);
+ExcelHelper::estiloCabecera($sheet, "A{$fila}:{$sheetColumn}{$fila}");
+$fila++;
+foreach ($datos as $item) {
+    $sheet->setCellValue("A{$fila}", $item['codigo']);
+    $sheet->setCellValue("B{$fila}", $item['nombre']);
+    $sheet->setCellValue("C{$fila}", $item['marca']);
+    $sheet->setCellValue("D{$fila}", $item['categoria']);
+    $sheet->setCellValue("E{$fila}", $item['precio_compra']);
+    $sheet->setCellValue("F{$fila}", $item['precio_venta']);
+    $sheet->setCellValue("G{$fila}", $item['stock']);
+    $sheet->setCellValue("H{$fila}", $item['stock_minimo']);
+    $sheet->setCellValue("I{$fila}", $item['ubicacion']);
+    $sheet->setCellValue("J{$fila}", $item['descripcion']);
+    $sheet->setCellValue("K{$fila}", $item['estado']);
+    $fila++;
 }
-
-echo "</table>";
+foreach (range('A', $sheetColumn) as $col) {
+    $sheet
+        ->getColumnDimension($col)
+        ->setAutoSize(true);
+}
+ExcelHelper::descargar($excel, "Inventario");

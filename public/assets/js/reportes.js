@@ -265,7 +265,7 @@ async function buscarCompras() {
       <td>${compra.fecha}</td>
       <td>${compra.proveedor}</td>
       <td>${compra.usuario}</td>
-      <td>${compra.total}</td>
+      <td>C$ ${compra.total}</td>
       <td>${estado}</td>
       <td>
     <div class="btn-group">
@@ -456,6 +456,6 @@ function exportarComprasDetalladas() {
   exportar("/api/reportes/exportar_compras_detalladas.php");
 }
 
-function exportarBitacora() {
-  exportar("/api/reportes/exportar_bitacora.php");
+function exportarProveedores() {
+  exportar("/api/reportes/exportar_proveedores.php");
 }

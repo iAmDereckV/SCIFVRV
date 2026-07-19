@@ -50,7 +50,6 @@ class Reset
             'ventas'
         ];
         foreach ($tablas as $tabla) {
-
             $this->conexion->exec("TRUNCATE TABLE $tabla");
         }
     }
@@ -66,25 +65,15 @@ class Reset
         ];
 
         foreach ($carpetas as $carpeta) {
-
             if (!is_dir($carpeta)) {
                 continue;
             }
-
             foreach (glob($carpeta . '/*') as $archivo) {
-
                 $nombre = basename($archivo);
-
-                if (
-                    $nombre === 'index.html'
-                    ||
-                    $nombre === '.gitkeep'
-                ) {
+                if ($nombre === 'index.html' || $nombre === '.gitkeep') {
                     continue;
                 }
-
                 if (is_file($archivo)) {
-
                     unlink($archivo);
                 }
             }
@@ -93,13 +82,10 @@ class Reset
     private function ejecutarSeed()
     {
         $archivo = __DIR__ . '/../../database/seed.sql';
-
         if (!file_exists($archivo)) {
             throw new Exception('No se encontró el archivo seed.sql');
         }
-
         $sql = file_get_contents($archivo);
-
         $this->conexion->exec($sql);
     }
 }

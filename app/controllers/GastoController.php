@@ -39,23 +39,20 @@ class GastoController
     }
     public function obtenerCategorias()
     {
-        return $this->gasto
-            ->obtenerCategorias();
+        return $this->gasto->obtenerCategorias();
     }
     public function obtenerPorId($id)
     {
-        return $this->gasto
-            ->obtenerPorId($id);
+        return $this->gasto->obtenerPorId($id);
     }
     public function actualizarComprobante(
         $id,
         $archivo
     ) {
-        return $this->gasto
-            ->actualizarComprobante(
-                $id,
-                $archivo
-            );
+        return $this->gasto->actualizarComprobante(
+            $id,
+            $archivo
+        );
     }
     public function actualizar(
         $id,
@@ -64,26 +61,21 @@ class GastoController
         $monto,
         $fecha
     ) {
-        return $this->gasto
-            ->actualizar(
-                $id,
-                $categoria_id,
-                $descripcion,
-                $monto,
-                $fecha
-            );
+        return $this->gasto->actualizar(
+            $id,
+            $categoria_id,
+            $descripcion,
+            $monto,
+            $fecha
+        );
     }
     public function cgobtener($id)
     {
-        return $this->gasto
-            ->cgobtener($id);
+        return $this->gasto->cgobtener($id);
     }
-    public function cgGuardar(
-        $nombre
-    ) {
-        return $this->gasto->cgGuardar(
-            $nombre
-        );
+    public function cgGuardar($nombre)
+    {
+        return $this->gasto->cgGuardar($nombre);
     }
     public function cgActualizar(
         $id,

@@ -8,8 +8,7 @@ class ProveedorController
 
     public function __construct()
     {
-        $this->proveedor =
-            new Proveedor();
+        $this->proveedor = new Proveedor();
     }
 
     public function listar()
@@ -35,8 +34,7 @@ class ProveedorController
 
     public function obtener($id)
     {
-        return $this->proveedor
-            ->obtener($id);
+        return $this->proveedor->obtener($id);
     }
 
     public function actualizar(

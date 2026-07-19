@@ -4,7 +4,6 @@ require_once __DIR__ . '/../models/Usuario.php';
 require_once __DIR__ . '/../helpers/Session.php';
 require_once __DIR__ . '/../helpers/Security.php';
 
-
 class AuthController
 {
     public function login($usuario, $password)
