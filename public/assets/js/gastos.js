@@ -202,7 +202,7 @@ async function editarGasto(id) {
     alertaWarning("No tiene permiso para editar gastos");
     return;
   }
-  let response = await fetch("/SCIFVRV/api/gastos/obtener.php?id=" + id);
+  let response = await fetch(IRL + "/api/gastos/obtener.php?id=" + id);
   let gasto = await response.json();
   document.getElementById("categoria_id").value = gasto.categoria_id;
   document.getElementById("descripcion").value = gasto.descripcion;
