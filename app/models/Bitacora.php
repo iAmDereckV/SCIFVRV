@@ -1,6 +1,9 @@
 <?php
 
 require_once __DIR__ . '/../config/database.php';
+
+
+
 class Bitacora
 {
     private $conexion;
@@ -22,6 +25,7 @@ class Bitacora
             FROM compras c
             INNER JOIN proveedores p ON p.id = c.proveedor_id
             INNER JOIN usuarios u ON u.id = c.usuario_id
+            WHERE c.estado = 'COMPLETADA'
             UNION ALL
             SELECT g.fecha, 'GASTO', CONCAT('Gasto #', g.id), g.descripcion, 0, g.monto, u.nombre
             FROM gastos g
@@ -33,7 +37,7 @@ class Bitacora
             INNER JOIN usuarios u ON u.id = v.usuario_id
             WHERE v.estado = 'ANULADA'
             UNION ALL
-            SELECT c.fecha, 'ANULACION', CONCAT('COMPRA #', c.id), CONCAT('Compra anulada de ', p.nombre), 0, c.total, u.nombre
+            SELECT c.fecha, 'ANULACION', CONCAT('Compra #', c.id), CONCAT('Compra anulada de ', p.nombre), 0, c.total, u.nombre
             FROM compras c
             INNER JOIN proveedores p ON p.id = c.proveedor_id
             INNER JOIN usuarios u ON u.id = c.usuario_id
