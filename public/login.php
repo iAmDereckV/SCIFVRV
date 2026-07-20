@@ -66,10 +66,12 @@
             if (data.success) {
                 window.location = "index.php";
             } else {
-                alert(data.mensaje);
+                alertaWarning(data.mensaje);
             }
         });
     </script>
+       <script src="assets/js/lib/sweetalert2.all.min.js"></script>
+    <script src="assets/js/alertas.js"></script>
 </body>
 
 </html>
