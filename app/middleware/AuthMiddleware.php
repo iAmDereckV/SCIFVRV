@@ -8,9 +8,11 @@ class AuthMiddleware
 {
     public static function verificar()
     {
+        $config = require __DIR__ . '/../config/config.php';
+        $IRL = $config['irl'];
         Session::iniciar();
         if (!Session::existe('usuario_id')) {
-            header('Location:' . constant("APP_URL") . '/public/login.php');
+            header('Location:' . $IRL . '/public/login.php');
             exit;
         }
         $usuarioModel = new Usuario();
@@ -20,7 +22,7 @@ class AuthMiddleware
             $usuario['rol_estado'] !== 'ACTIVO'
         ) {
             Session::destruir();
-            header('Location:' . constant("APP_URL") . '/public/login.php');
+            header('Location:' . $IRL . '/public/login.php');
             exit;
         }
     }

@@ -36,6 +36,7 @@ database/backup/*
 # ==========================
 .env
 .env.*
+/storage/installed.lock
 
 # ==========================
 # Xdebug

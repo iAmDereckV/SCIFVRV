@@ -1,11 +1,14 @@
+<?php
+$config = require __DIR__ . '/../../app/config/config.php';
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <title><?php echo constant('APP_NAME') ?></title>
+    <title></title>
     <script>
-    const IRL = "/SCIFVRV";
+    const IRL = "<?= rtrim($config['irl'], '/') ?>";
     </script>
 
     <link rel="stylesheet" href="assets/css/style.css">

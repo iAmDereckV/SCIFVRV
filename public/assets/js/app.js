@@ -12,6 +12,7 @@
   let response = await fetch(IRL + "/api/configuracion_empresa/obtener.php");
   let data = await response.json();
   if (!data) return;
+  document.title = data.nombre_empresa ?? "Sistema de Repuestos";
   document.getElementById("navtitle").textContent = data.nombre_empresa ?? "";
   document.getElementById("navslogan").innerText = data.slogan ?? "";
   if (data.logo) {

@@ -1,4 +1,10 @@
 <?php
+$lock = __DIR__ . '/storage/installed.lock';
 
-header("Location: public/index.php");
+if (!file_exists($lock)) {
+    header('Location: database/instalar.php');
+    exit;
+}
+
+header('Location: public/index.php');
 exit;

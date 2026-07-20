@@ -1,13 +1,26 @@
 <?php
+// require_once __DIR__ . '/config.php';
 
 class Database
 {
-    private $host = "localhost";
-    private $dbname = "scifvrv";
-    private $user = "root";
-    private $password = "";
+
+    private $host;
+    private $port;
+    private $dbname;
+    private $user;
+    private $password;
     private $charset = "utf8mb4";
 
+    public function __construct()
+    {
+        $config = require __DIR__ . '/config.php';
+
+        $this->host = $config['host'];
+        $this->port = $config['port'];
+        $this->dbname = $config['database'];
+        $this->user = $config['username'];
+        $this->password = $config['password'];
+    }
     public function conectar()
     {
         try {
