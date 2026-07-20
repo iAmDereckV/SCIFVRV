@@ -109,7 +109,7 @@ async function cargarRoles() {
 }
 function nuevoUsuario() {
   if (!PUEDE_CREAR_USUARIOS) {
-    alert("No tiene permiso para crear usuarios");
+    alertaWarning("No tiene permiso para crear usuarios");
     return;
   }
   document.getElementById("formUsuario").reset();
@@ -145,7 +145,7 @@ async function guardarUsuario(e) {
   );
   let data = await response.json();
   if (data.success) {
-    alert("Usuario guardado");
+    alertaSuccess("Usuario guardado");
 
     document.getElementById("formUsuario").reset();
 
@@ -153,14 +153,14 @@ async function guardarUsuario(e) {
     bootstrap.Modal.getInstance(document.getElementById("modalUsuario")).hide();
     cargarUsuarios();
   } else {
-    alert("Error al guardar");
+    alertaError("Error al guardar");
   }
 }
 async function guardarImagen() {
   let id = document.getElementById("usuario_imagen_id").value;
   let archivo = document.getElementById("nueva_imagen").files[0];
   if (!archivo) {
-    alert("Seleccione una imagen");
+    alertaError("Seleccione una imagen");
     return;
   }
   let formData = new FormData();
@@ -172,17 +172,17 @@ async function guardarImagen() {
   });
   let data = await response.json();
   if (data.success) {
-    alert("Foto actualizada");
+    alertaSuccess("Foto actualizada");
     bootstrap.Modal.getInstance(document.getElementById("modalImagen")).hide();
     cargarUsuarios();
   } else {
-    alert("Error al actualizar foto");
+    alertaError("Error al actualizar foto");
   }
   document.getElementById("nueva_imagen").value = "";
 }
 async function editarUsuario(id) {
   if (!PUEDE_EDITAR_USUARIOS) {
-    alert("No tiene permiso para editar usuarios");
+    alertaWarning("No tiene permiso para editar usuarios");
     return;
   }
   let response = await fetch(IRL + "/api/usuarios/obtener.php?id=" + id);
@@ -199,7 +199,7 @@ async function editarUsuario(id) {
 }
 function cambiarFoto(id) {
   if (!PUEDE_EDITAR_USUARIOS) {
-    alert("No tiene permiso para cambiar imagen");
+    alertaWarning("No tiene permiso para cambiar imagen");
     return;
   }
   document.getElementById("usuario_imagen_id").value = id;
@@ -210,7 +210,7 @@ function cambiarFoto(id) {
 async function cambiarEstado(id, estadoActual) {
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_USUARIOS) {
-    alert(`No tiene permiso para poner usuarios ${nuevoEstado}`);
+    alertaWarning(`No tiene permiso para poner usuarios ${nuevoEstado}`);
     return;
   }
   let formData = new FormData();
@@ -224,6 +224,6 @@ async function cambiarEstado(id, estadoActual) {
   if (data.success) {
     cargarUsuarios();
   } else {
-    alert(`Error al poner usuario ${nuevoEstado}`);
+    alertaError(`Error al poner usuario ${nuevoEstado}`);
   }
 }

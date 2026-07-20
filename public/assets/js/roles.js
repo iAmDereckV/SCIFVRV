@@ -93,7 +93,7 @@ function quitarTodos() {
 }
 function nuevoRol() {
   if (!PUEDE_CREAR_ROLES) {
-    alert("No tiene permiso para crear roles");
+    alertaWarning("No tiene permiso para crear roles");
     return;
   }
   document.getElementById("formRol").reset();
@@ -118,7 +118,7 @@ async function guardarRol(e) {
   );
   let data = await response.json();
   if (data.success) {
-    alert("Rol guardada");
+    alertaSuccess("Rol guardada");
 
     document.getElementById("formRol").reset();
 
@@ -126,7 +126,7 @@ async function guardarRol(e) {
     bootstrap.Modal.getInstance(document.getElementById("modalRol")).hide();
     cargarRoles();
   } else {
-    alert("Error al guardar rol");
+    alertaError("Error al guardar rol");
   }
 }
 async function guardarPermisos() {
@@ -145,18 +145,18 @@ async function guardarPermisos() {
   });
   let data = await response.json();
   if (data.success) {
-    alert("Permisos guardados");
+    alertaSuccess("Permisos guardados");
 
     bootstrap.Modal.getInstance(
       document.getElementById("modalPermisos"),
     ).hide();
   } else {
-    alert("Error al guardar permisos");
+    alertaError("Error al guardar permisos");
   }
 }
 async function editarRol(id) {
   if (!PUEDE_EDITAR_ROLES) {
-    alert("No tiene permiso para editar rol");
+    alertaWarning("No tiene permiso para editar rol");
     return;
   }
   let response = await fetch(IRL + "/api/roles/obtener.php?id=" + id);
@@ -168,7 +168,7 @@ async function editarRol(id) {
 }
 async function editarPermisos(id) {
   if (!PUEDE_EDITAR_ROLES) {
-    alert("No tiene permiso para editar permisos");
+    alertaWarning("No tiene permiso para editar permisos");
     return;
   }
   rolSeleccionado = id;
@@ -198,7 +198,7 @@ async function editarPermisos(id) {
 async function cambiarEstado(id, estadoActual) {
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_ROLES) {
-    alert(`No tiene permiso para poner roles ${nuevoEstado}`);
+    alertaWarning(`No tiene permiso para poner roles ${nuevoEstado}`);
     return;
   }
   let formData = new FormData();
@@ -212,6 +212,6 @@ async function cambiarEstado(id, estadoActual) {
   if (data.success) {
     cargarRoles();
   } else {
-    alert(`Error al poner rol ${nuevoEstado}`);
+    alertaError(`Error al poner rol ${nuevoEstado}`);
   }
 }

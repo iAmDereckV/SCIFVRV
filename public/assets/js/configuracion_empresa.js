@@ -34,7 +34,7 @@ async function cargarConfiguracion() {
 
 async function guardarConfiguracion(e) {
   if (!PUEDE_EDITAR_EMPRESA) {
-    alert("No tiene permiso para editar datos de empresa");
+    alertaWarning("No tiene permiso para editar datos de empresa");
     return;
   }
   e.preventDefault();
@@ -58,9 +58,11 @@ async function guardarConfiguracion(e) {
   );
   let data = await response.json();
   if (data.success) {
-    alert("Configuración guardada correctamente");
-    location.reload();
+    alertaSuccess("Configuración guardada correctamente");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1600);
   } else {
-    alert("Error al guardar la configuración");
+    alertaError("Error al guardar la configuración");
   }
 }

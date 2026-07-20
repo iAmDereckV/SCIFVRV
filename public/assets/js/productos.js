@@ -167,7 +167,7 @@ async function verProducto(id) {
 }
 function nuevoProducto() {
   if (!PUEDE_CREAR_PRODUCTOS) {
-    alert("No tiene permiso para crear productos");
+    alertaWarning("No tiene permiso para crear productos");
     return;
   }
   document.getElementById("formProducto").reset();
@@ -222,7 +222,7 @@ async function guardarProducto(e) {
   );
   let data = await response.json();
   if (data.success) {
-    alert("Producto guardado");
+    alertaSuccess("Producto guardado");
     document.getElementById("formProducto").reset();
     delete document.getElementById("formProducto").dataset.id;
     bootstrap.Modal.getInstance(
@@ -230,14 +230,14 @@ async function guardarProducto(e) {
     ).hide();
     cargarProductos();
   } else {
-    alert("Error al guardar producto");
+    alertaError("Error al guardar producto");
   }
 }
 async function guardarImagen() {
   let id = document.getElementById("producto_imagen_id").value;
   let archivo = document.getElementById("nueva_imagen").files[0];
   if (!archivo) {
-    alert("Seleccione una imagen");
+    alertaError("Seleccione una imagen");
     return;
   }
   let formData = new FormData();
@@ -249,17 +249,17 @@ async function guardarImagen() {
   });
   let data = await response.json();
   if (data.success) {
-    alert("Imagen actualizada");
+    alertaSuccess("Imagen actualizada");
     bootstrap.Modal.getInstance(document.getElementById("modalImagen")).hide();
     cargarProductos();
   } else {
-    alert("Error");
+    alertaError("Error");
   }
   document.getElementById("nueva_imagen").value = "";
 }
 async function editarProducto(id) {
   if (!PUEDE_EDITAR_PRODUCTOS) {
-    alert("No tiene permiso para editar productos");
+    alertaWarning("No tiene permiso para editar productos");
     return;
   }
   let response = await fetch(IRL + "/api/productos/obtener.php?id=" + id);
@@ -283,7 +283,7 @@ async function editarProducto(id) {
 async function cambiarEstado(id, estadoActual) {
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_PRODUCTOS) {
-    alert(`No tiene permiso para poner productos ${nuevoEstado}`);
+    alertaWarning(`No tiene permiso para poner productos ${nuevoEstado}`);
     return;
   }
   let formData = new FormData();
@@ -297,12 +297,12 @@ async function cambiarEstado(id, estadoActual) {
   if (data.success) {
     cargarProductos();
   } else {
-    alert(`Error al poner producto ${nuevoEstado}`);
+    alertaError(`Error al poner producto ${nuevoEstado}`);
   }
 }
 function cambiarImagen(id) {
   if (!PUEDE_EDITAR_PRODUCTOS) {
-    alert("No tiene permiso para cambiar imagen");
+    alertaWarning("No tiene permiso para cambiar imagen");
     return;
   }
   document.getElementById("producto_imagen_id").value = id;

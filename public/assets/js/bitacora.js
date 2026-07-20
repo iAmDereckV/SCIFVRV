@@ -74,7 +74,7 @@ C$ ${mov.salida}
 
 function exportarBitacora() {
   if (!PUEDE_EXPORTAR_EXCEL) {
-    alert("No tiene permiso para exportar Excel");
+    alertaWarning("No tiene permiso para exportar Excel");
     return;
   }
   window.open(IRL + "/api/reportes/exportar_bitacora.php", "_blank");

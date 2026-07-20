@@ -54,12 +54,12 @@ function agregarProducto() {
   let producto_id = document.getElementById("producto_id").value;
   let cantidad = parseInt(document.getElementById("cantidad").value);
   if (!producto_id) {
-    alert("Seleccione producto");
+    alertaWarning("Seleccione producto");
     return;
   }
   let producto = productos.find((p) => p.id == producto_id);
   if (cantidad > producto.stock) {
-    alert("Stock insuficiente");
+    alertaWarning("Stock insuficiente");
     return;
   }
   let subtotal = cantidad * producto.precio_venta;
@@ -67,7 +67,7 @@ function agregarProducto() {
   if (existente) {
     let nuevaCantidad = existente.cantidad + cantidad;
     if (nuevaCantidad > producto.stock) {
-      alert("No hay suficiente stock disponible");
+      alertaWarning("No hay suficiente stock disponible");
       return;
     }
     existente.cantidad = nuevaCantidad;
@@ -151,16 +151,16 @@ function renderDetalle() {
 
 async function guardarVenta() {
   if (!PUEDE_CREAR_VENTAS) {
-    alert("No tiene permiso para crear ventas");
+    alertaWarning("No tiene permiso para crear ventas");
     return;
   }
   let cliente_id = document.getElementById("cliente_id").value;
   if (!cliente_id) {
-    alert("Seleccione un cliente");
+    alertaError("Seleccione un cliente");
     return;
   }
   if (detalleVenta.length === 0) {
-    alert("Debe agregar productos");
+    alertaError("Debe agregar productos");
     return;
   }
   let sesion = await fetch(IRL + "/api/auth/session.php");
@@ -180,12 +180,20 @@ async function guardarVenta() {
   });
   let data = await response.json();
   if (data.success) {
-    if (confirm("Venta realizada correctamente. ¿Desea imprimir la factura?")) {
-      window.open(
-        IRL + "/api/ventas/factura_pdf.php?id=" + data.venta_id,
-        "_blank",
-      );
-    }
+    alertaSuccess();
+    setTimeout(async () => {
+      if (
+        await confirmar(
+          "Venta realizada correctamente",
+          "¿Desea imprimir la factura?",
+        )
+      ) {
+        window.open(
+          IRL + "/api/ventas/factura_pdf.php?id=" + data.venta_id,
+          "_blank",
+        );
+      }
+    }, 700);
     detalleVenta = [];
     renderDetalle();
     cargarProductos();
@@ -196,6 +204,6 @@ async function guardarVenta() {
     actualizarResumen(0, 0, 0, 0);
   } else {
     console.log(data);
-    alert("Error al guardar venta");
+    alertaError("Error al guardar venta");
   }
 }

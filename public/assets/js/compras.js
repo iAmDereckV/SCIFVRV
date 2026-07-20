@@ -35,11 +35,11 @@ async function cargarProductos() {
   document.getElementById("producto_id").innerHTML = html;
 }
 
-function agregarProducto() {
+async function agregarProducto() {
   let producto = document.getElementById("producto_id");
   let producto_id = producto.value;
   if (!producto_id) {
-    alert("Seleccione producto");
+    alertaWarning("Seleccione producto");
     return;
   }
   let existente = detalleCompra.find((item) => item.producto_id == producto_id);
@@ -47,7 +47,12 @@ function agregarProducto() {
   let cantidad = parseInt(document.getElementById("cantidad").value);
   let costo = parseFloat(document.getElementById("costo").value);
   if (existente) {
-    if (confirm("Este producto ya está agregado.\n¿Desea sumar la cantidad?")) {
+    if (
+      await confirmar(
+        "Este producto ya está agregado.",
+        "¿Desea sumar la cantidad?",
+      )
+    ) {
       existente.cantidad += cantidad;
       existente.costo = costo;
       existente.subtotal = existente.cantidad * existente.costo;
@@ -56,11 +61,11 @@ function agregarProducto() {
     return;
   }
   if (!cantidad || cantidad <= 0) {
-    alert("Cantidad inválida");
+    alertaWarning("Cantidad inválida");
     return;
   }
   if (!costo || costo <= 0) {
-    alert("Costo inválido");
+    alertaWarning("Costo inválido");
     return;
   }
   let subtotal = cantidad * costo;
@@ -113,16 +118,16 @@ function renderDetalle() {
 
 async function guardarCompra() {
   if (!PUEDE_CREAR_COMPRAS) {
-    alert("No tiene permiso para realizar ventas");
+    alertaWarning("No tiene permiso para realizar ventas");
     return;
   }
   if (detalleCompra.length === 0) {
-    alert("Debe agregar productos");
+    alertaError("Debe agregar productos");
     return;
   }
   let proveedor_id = document.getElementById("proveedor_id").value;
   if (!proveedor_id) {
-    alert("Seleccione proveedor");
+    alertaError("Seleccione proveedor");
     return;
   }
   let formData = new FormData();
@@ -140,13 +145,13 @@ async function guardarCompra() {
   });
   let data = await response.json();
   if (data.success) {
-    alert("Compra registrada");
+    alertaSuccess("Compra registrada");
     detalleCompra = [];
     renderDetalle();
     document.getElementById("factura").value = "";
     document.getElementById("proveedor_id").value = "";
     document.getElementById("archivo_factura").value = "";
   } else {
-    alert("Error al guardar compra");
+    alertaError("Error al guardar compra");
   }
 }

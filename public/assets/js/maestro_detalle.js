@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 document.getElementById("btnExcel").addEventListener("click", () => {
   if (!PUEDE_EXPORTAR_EXCEL) {
-    alert("No tiene permiso para exportar Excel");
+    alertaWarning("No tiene permiso para exportar Excel");
     return;
   }
   let anio = document.getElementById("anio").value;

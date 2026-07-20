@@ -78,7 +78,7 @@ async function cargarCategorias() {
 
 function nuevoCategoria() {
   if (!PUEDE_CREAR_CATEGORIAS) {
-    alert("No tiene permiso para crear categorias");
+    alertaWarning("No tiene permiso para crear categorías");
     return;
   }
   document.getElementById("formCategoria").reset();
@@ -106,7 +106,7 @@ async function guardarCategoria(e) {
   );
   let data = await response.json();
   if (data.success) {
-    alert("Categoría guardada");
+    alertaSuccess("Categoría guardada");
     document.getElementById("formCategoria").reset();
     delete document.getElementById("formCategoria").dataset.id;
     bootstrap.Modal.getInstance(
@@ -114,13 +114,13 @@ async function guardarCategoria(e) {
     ).hide();
     cargarCategorias();
   } else {
-    alert("Error al guardar");
+    alertaError("Error al guardar categoría");
   }
 }
 
 async function editarCategoria(id) {
   if (!PUEDE_EDITAR_CATEGORIAS) {
-    alert("No tiene permiso para editar categorias");
+    alertaWarning("No tiene permiso para editar categorías");
     return;
   }
   let response = await fetch(IRL + "/api/categorias/obtener.php?id=" + id);
@@ -134,7 +134,7 @@ async function editarCategoria(id) {
 async function cambiarEstado(id, estadoActual) {
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_CATEGORIAS) {
-    alert(`No tiene permiso para poner categorias ${nuevoEstado}`);
+    alertaWarning(`No tiene permiso para poner categorías ${nuevoEstado}`);
     return;
   }
   let formData = new FormData();
@@ -148,6 +148,6 @@ async function cambiarEstado(id, estadoActual) {
   if (data.success) {
     cargarCategorias();
   } else {
-    alert(`Error al poner categoría ${nuevoEstado}`);
+    alertaError(`Error al poner categoría ${nuevoEstado}`);
   }
 }

@@ -93,7 +93,7 @@ async function cargarCategorias() {
 }
 function nuevoGasto() {
   if (!PUEDE_CREAR_GASTOS) {
-    alert("No tiene permiso para crear gastos");
+    alertaWarning("No tiene permiso para crear gastos");
     return;
   }
   document.getElementById("formGasto").reset();
@@ -102,7 +102,7 @@ function nuevoGasto() {
 }
 function nuevaCategoria() {
   if (!PUEDE_CREAR_GASTOS) {
-    alert("No tiene permiso para crear categoría de gasto");
+    alertaWarning("No tiene permiso para crear categoría de gasto");
     return;
   }
   document.getElementById("formCategoria").reset();
@@ -136,12 +136,13 @@ async function guardarGasto(e) {
   );
   let data = await response.json();
   if (data.success) {
+    alertaSuccess("Gasto registrado");
     document.getElementById("formGasto").reset();
     delete document.getElementById("formGasto").dataset.id;
     bootstrap.Modal.getInstance(document.getElementById("modalGasto")).hide();
     cargarGastos();
   } else {
-    alert("Error al guardar gasto");
+    alertaError("Error al guardar gasto");
   }
 }
 async function guardarCategoria(e) {
@@ -163,19 +164,20 @@ async function guardarCategoria(e) {
   );
   let data = await response.json();
   if (data.success) {
+    alertaSuccess("Categoría gasto registrado");
     bootstrap.Modal.getInstance(
       document.getElementById("modalCategoriaGasto"),
     ).hide();
     await cargarCategorias();
   } else {
-    alert("Error al guardar categoría gasto");
+    alertaError("Error al guardar categoría gasto");
   }
 }
 async function guardarImagen() {
   let id = document.getElementById("gasto_imagen_id").value;
   let archivo = document.getElementById("nueva_imagen").files[0];
   if (!archivo) {
-    alert("Seleccione una imagen");
+    alertaError("Seleccione una imagen");
     return;
   }
   let formData = new FormData();
@@ -187,17 +189,17 @@ async function guardarImagen() {
   });
   let data = await response.json();
   if (data.success) {
-    alert("Imagen actualizada");
+    alertaSuccess("Imagen actualizada");
     bootstrap.Modal.getInstance(document.getElementById("modalImagen")).hide();
     cargarGastos();
   } else {
-    alert("Error");
+    alertaError("Error");
   }
   document.getElementById("nueva_imagen").value = "";
 }
 async function editarGasto(id) {
   if (!PUEDE_EDITAR_GASTOS) {
-    alert("No tiene permiso para editar gastos");
+    alertaWarning("No tiene permiso para editar gastos");
     return;
   }
   let response = await fetch("/SCIFVRV/api/gastos/obtener.php?id=" + id);
@@ -212,12 +214,12 @@ async function editarGasto(id) {
 
 async function editarCategoria() {
   if (!PUEDE_EDITAR_GASTOS) {
-    alert("No tiene permiso para editar categoria gasto");
+    alertaWarning("No tiene permiso para editar categoria gasto");
     return;
   }
   let id = document.getElementById("categoria_id").value;
   if (!id) {
-    alert("Seleccione una categoría");
+    alertaWarning("Seleccione una categoría");
     return;
   }
   let response = await fetch(
@@ -230,7 +232,7 @@ async function editarCategoria() {
 }
 function cambiarComprobante(id) {
   if (!PUEDE_EDITAR_GASTOS) {
-    alert("No tiene permiso para cambiar imagen");
+    alertaWarning("No tiene permiso para cambiar imagen");
     return;
   }
   document.getElementById("gasto_imagen_id").value = id;

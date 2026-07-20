@@ -101,7 +101,7 @@ async function cargarTipoCliente() {
 
 function nuevoCliente() {
   if (!PUEDE_CREAR_CLIENTES) {
-    alert("No tiene permiso para crear clientes");
+    alertaWarning("No tiene permiso para crear clientes");
     return;
   }
   document.getElementById("formCliente").reset();
@@ -140,19 +140,19 @@ async function guardarCliente(e) {
   );
   let data = await response.json();
   if (data.success) {
-    alert("Cliente guardado");
+    alertaSuccess("Cliente guardado");
     document.getElementById("formCliente").reset();
     delete document.getElementById("formCliente").dataset.id;
     bootstrap.Modal.getInstance(document.getElementById("modalCliente")).hide();
     cargarClientes();
   } else {
-    alert("Error al guardar cliente");
+    alertaError("Error al guardar cliente");
   }
 }
 
 async function editarCliente(id) {
   if (!PUEDE_EDITAR_CLIENTES) {
-    alert("No tiene permiso para editar clientes");
+    alertaWarning("No tiene permiso para editar clientes");
     return;
   }
   let response = await fetch(IRL + "/api/clientes/obtener.php?id=" + id);
@@ -171,7 +171,7 @@ async function editarCliente(id) {
 async function cambiarEstado(id, estadoActual) {
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_CLIENTES) {
-    alert(`No tiene permiso para poner clientes ${nuevoEstado}`);
+    alertaWarning(`No tiene permiso para poner clientes ${nuevoEstado}`);
     return;
   }
   let formData = new FormData();
@@ -185,6 +185,6 @@ async function cambiarEstado(id, estadoActual) {
   if (data.success) {
     cargarClientes();
   } else {
-    alert(`Error al poner cliente ${nuevoEstado}`);
+    alertaError(`Error al poner cliente ${nuevoEstado}`);
   }
 }

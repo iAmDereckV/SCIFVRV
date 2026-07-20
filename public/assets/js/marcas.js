@@ -74,7 +74,7 @@ async function cargarMarcas() {
 }
 function nuevaMarca() {
   if (!PUEDE_CREAR_MARCAS) {
-    alert("No tiene permiso para crear marcas");
+    alertaWarning("No tiene permiso para crear marcas");
     return;
   }
   document.getElementById("formMarca").reset();
@@ -99,18 +99,18 @@ async function guardarMarca(e) {
   );
   let data = await response.json();
   if (data.success) {
-    alert("Marca guardada");
+    alertaSuccess("Marca guardada");
     document.getElementById("formMarca").reset();
     delete document.getElementById("formMarca").dataset.id;
     bootstrap.Modal.getInstance(document.getElementById("modalMarca")).hide();
     cargarMarcas();
   } else {
-    alert("Error al guardar marca");
+    alertaError("Error al guardar marca");
   }
 }
 async function editarMarca(id) {
   if (!PUEDE_EDITAR_MARCAS) {
-    alert("No tiene permiso para editar marcas");
+    alertaWarning("No tiene permiso para editar marcas");
     return;
   }
   let response = await fetch(IRL + "/api/marcas/obtener.php?id=" + id);
@@ -124,7 +124,7 @@ async function editarMarca(id) {
 async function cambiarEstado(id, estadoActual) {
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_MARCAS) {
-    alert(`No tiene permiso para poner marcas ${nuevoEstado}`);
+    alertaWarning(`No tiene permiso para poner marcas ${nuevoEstado}`);
     return;
   }
   let formData = new FormData();
@@ -138,6 +138,6 @@ async function cambiarEstado(id, estadoActual) {
   if (data.success) {
     cargarMarcas();
   } else {
-    alert(`Error al poner marca ${nuevoEstado}`);
+    alertaError(`Error al poner marca ${nuevoEstado}`);
   }
 }

@@ -86,7 +86,7 @@ async function cargarProveedores() {
 }
 function nuevoProveedor() {
   if (!PUEDE_CREAR_PROVEEDORES) {
-    alert("No tiene permiso para crear proveedores");
+    alertaWarning("No tiene permiso para crear proveedores");
     return;
   }
   document.getElementById("formProveedor").reset();
@@ -116,7 +116,7 @@ async function guardarProveedor(e) {
   );
   let data = await response.json();
   if (data.success) {
-    alert("Proveedor guardado");
+    alertaSuccess("Proveedor guardado");
     document.getElementById("formProveedor").reset();
     delete document.getElementById("formProveedor").dataset.id;
     bootstrap.Modal.getInstance(
@@ -124,13 +124,13 @@ async function guardarProveedor(e) {
     ).hide();
     cargarProveedores();
   } else {
-    alert("Error al guardar");
+    alertaError("Error al guardar");
   }
 }
 
 async function editarProveedor(id) {
   if (!PUEDE_EDITAR_PROVEEDORES) {
-    alert("No tiene permiso para editar proveedores");
+    alertaWarning("No tiene permiso para editar proveedores");
     return;
   }
   let response = await fetch(IRL + "/api/proveedores/obtener.php?id=" + id);
@@ -147,7 +147,7 @@ async function editarProveedor(id) {
 async function cambiarEstado(id, estadoActual) {
   let nuevoEstado = estadoActual === "ACTIVO" ? "INACTIVO" : "ACTIVO";
   if (!PUEDE_CAMBIAR_ESTADO_PROVEEDORES) {
-    alert(`No tiene permiso para poner proveedores ${nuevoEstado}`);
+    alertaWarning(`No tiene permiso para poner proveedores ${nuevoEstado}`);
     return;
   }
   let formData = new FormData();
@@ -162,7 +162,7 @@ async function cambiarEstado(id, estadoActual) {
     cargarProveedores();
   } else {
     {
-      alert(`Error al poner proveedor ${nuevoEstado}`);
+      alertaError(`Error al poner proveedor ${nuevoEstado}`);
     }
   }
 }

@@ -22,8 +22,8 @@ async function buscarVentas() {
     }
     let estado =
       venta.estado == "COMPLETADA"
-        ? `<span class="badge bg-success">COMPLETADA</span>`
-        : `<span class="badge bg-danger">ANULADA</span>`;
+        ? `<span class="badge bg-success">Compretada</span>`
+        : `<span class="badge bg-danger">Anulada</span>`;
     html += `
     <tr>
 <td>${venta.id}</td>
@@ -98,24 +98,29 @@ function verFactura(id) {
 }
 async function anularVenta(id) {
   if (!PUEDE_CAMBIAR_ESTADO_VENTAS) {
-    alert(`No tiene permiso para anular ventas`);
+    alertaWarning(`No tiene permiso para anular ventas`);
     return;
   }
-  if (!confirm("¿Desea anular esta venta?")) {
+  if (
+    !(await confirmar(
+      "¿Desea anular esta venta?",
+      "Se anulara permanentemente",
+    ))
+  ) {
     return;
   }
   let response = await fetch(IRL + "/api/ventas/anular.php?id=" + id);
   let data = await response.json();
   if (data.success) {
-    alert("Venta anulada");
+    alertaSuccess("Venta anulada");
     buscarVentas();
   } else {
-    alert("No se pudo anular");
+    alertaError("No se pudo anular");
   }
 }
 function exportarExcelVentas() {
   if (!PUEDE_EXPORTAR_EXCEL) {
-    alert(`No tiene permiso para exportar excel`);
+    alertaWarning(`No tiene permiso para exportar excel`);
     return;
   }
   let inicio = document.getElementById("fecha_inicio").value;
@@ -218,7 +223,7 @@ async function buscarGastos() {
 }
 async function exportarExcelGastos() {
   if (!PUEDE_EXPORTAR_EXCEL) {
-    alert(`No tiene permiso para exportar excel`);
+    alertaWarning(`No tiene permiso para exportar excel`);
     return;
   }
   let inicio = document.getElementById("fecha_inicio").value;
@@ -257,8 +262,8 @@ async function buscarCompras() {
     }
     let estado =
       compra.estado == "COMPLETADA"
-        ? `<span class="badge bg-success">COMPLETADA</span>`
-        : `<span class="badge bg-danger">ANULADA</span>`;
+        ? `<span class="badge bg-success">Compretada</span>`
+        : `<span class="badge bg-danger">Anulada</span>`;
     html += `
     <tr>
       <td>${compra.id}</td>
@@ -353,7 +358,7 @@ async function buscarCompras() {
 }
 async function cambiarComprobante(id) {
   if (!PUEDE_EDITAR_COMPRAS) {
-    alert("No tiene permiso para cambiar el comprobante");
+    alertaWarning("No tiene permiso para cambiar el comprobante");
     return;
   }
   document.getElementById("compra_imagen_id").value = id;
@@ -364,7 +369,7 @@ async function guardarImagen() {
   let id = document.getElementById("compra_imagen_id").value;
   let archivo = document.getElementById("nueva_imagen").files[0];
   if (!archivo) {
-    alert("Seleccione una imagen");
+    alertaError("Seleccione una imagen");
     return;
   }
   let formData = new FormData();
@@ -376,35 +381,40 @@ async function guardarImagen() {
   });
   let data = await response.json();
   if (data.success) {
-    alert("Comprobante actualizado");
+    alertaSuccess("Comprobante actualizado");
     bootstrap.Modal.getInstance(document.getElementById("modalImagen")).hide();
     buscarCompras();
   } else {
-    alert("No se pudo actualizar el comprobante");
+    alertaError("No se pudo actualizar el comprobante");
   }
   document.getElementById("nueva_imagen").value = "";
 }
 
 async function anularCompra(id) {
   if (!PUEDE_CAMBIAR_ESTADO_COMPRAS) {
-    alert(`No tiene permiso para anular compras`);
+    alertaWarning(`No tiene permiso para anular compras`);
     return;
   }
-  if (!confirm("¿Desea anular esta compra?")) {
+  if (
+    !(await confirmar(
+      "¿Desea anular esta compra?",
+      "Se anulara permanentemente",
+    ))
+  ) {
     return;
   }
   let response = await fetch(IRL + "/api/compras/anular.php?id=" + id);
   let data = await response.json();
   if (data.success) {
-    alert("Compra anulada");
+    alertaSuccess("Compra anulada");
     buscarCompras();
   } else {
-    alert("No se pudo anular");
+    alertaError("No se pudo anular");
   }
 }
 function exportarExcelCompras() {
   if (!PUEDE_EXPORTAR_EXCEL) {
-    alert(`No tiene permiso para exportar excel`);
+    alertaWarning(`No tiene permiso para exportar excel`);
     return;
   }
   let inicio = document.getElementById("fecha_inicio").value;
@@ -423,7 +433,7 @@ function exportarExcelCompras() {
 
 function exportar(ruta) {
   if (!PUEDE_EXPORTAR_EXCEL) {
-    alert("No tiene permiso para exportar Excel");
+    alertaWarning("No tiene permiso para exportar Excel");
     return;
   }
   window.open(IRL + ruta, "_blank");

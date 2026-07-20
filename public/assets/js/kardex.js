@@ -20,7 +20,7 @@ async function consultarKardex() {
   }
   let producto_id = document.getElementById("producto_id").value;
   if (!producto_id) {
-    alert("Seleccione un producto");
+    alertaWarning("Seleccione un producto");
     return;
   }
   let response = await fetch(

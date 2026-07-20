@@ -1,7 +1,7 @@
 :root {
   /* ========= COLORES PRINCIPALES ========= */
-  /* --color-primary:#1f2937;
-    --color-secondary:#111827; */
+  /* --color-primary: #1f2937;
+  --color-secondary: #111827; */
   --color-primary: #1e3a5f;
   --color-secondary: #002147;
   /* ========= COLORES DE APOYO ========= */
@@ -201,7 +201,11 @@
 
   margin-bottom: 0.35rem;
 }
-
+button i,
+h2 i,
+h3 i {
+  margin-right: 5px;
+}
 .form-label i {
   width: 22px;
   color: var(--color-primary);
@@ -475,6 +479,7 @@ table.dataTable {
 
   margin-top: 20px;
 }
+
 @media (max-width: 991px) {
   #sidebar {
     position: fixed;

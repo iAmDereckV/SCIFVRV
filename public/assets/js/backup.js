@@ -39,7 +39,7 @@ async function cargarRespaldos() {
 
 function generarBackup() {
   if (!PUEDE_GENRERAR_BACKUP) {
-    alert("No tiene permiso para generar backup");
+    alertaWarning("No tiene permiso para generar backup");
     return;
   }
   window.location.href = IRL + "/api/backup/exportar_sql.php";
@@ -50,7 +50,7 @@ function generarBackup() {
 
 async function backupCompleto() {
   if (!PUEDE_GENRERAR_BACKUP) {
-    alert("No tiene permiso para generar backup");
+    alertaWarning("No tiene permiso para generar backup");
     return;
   }
   window.location.href = IRL + "/api/backup/exportar_zip.php";
@@ -58,7 +58,7 @@ async function backupCompleto() {
 
 async function descargarBackup(nombre) {
   if (!PUEDE_GENRERAR_BACKUP) {
-    alert("No tiene permiso para generar backup");
+    alertaWarning("No tiene permiso para generar backup");
     return;
   }
   window.location.href = `${IRL}/api/backup/descargar.php?archivo=${nombre}`;
@@ -66,15 +66,20 @@ async function descargarBackup(nombre) {
 
 async function restaurarSQL() {
   if (!PUEDE_RESTAURAR_BACKUP) {
-    alert("No tiene permiso para restaurar backup");
+    alertaWarning("No tiene permiso para restaurar backup");
     return;
   }
   let archivo = document.getElementById("archivo_sql").files[0];
   if (!archivo) {
-    alert("Seleccione un archivo SQL");
+    alertaWarning("Seleccione un archivo SQL");
     return;
   }
-  if (!confirm("La base de datos actual será reemplazada. ¿Continuar?")) {
+  if (
+    !(await confirmar(
+      "La base de datos actual será reemplazada.",
+      "¿Continuar?",
+    ))
+  ) {
     return;
   }
   let formData = new FormData();
@@ -85,24 +90,31 @@ async function restaurarSQL() {
   });
   let data = await response.json();
   if (data.success) {
-    alert("Base de datos restaurada");
-    location.reload();
+    alertaSuccess("Base de datos restaurada");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1600);
   } else {
-    alert(data.mensaje || "Error al restaurar");
+    alertaError(data.mensaje || "Error al restaurar");
   }
 }
 
 async function restaurarArchivos() {
   if (!PUEDE_RESTAURAR_BACKUP) {
-    alert("No tiene permiso para restaurar backup");
+    alertaWarning("No tiene permiso para restaurar backup");
     return;
   }
   let archivo = document.getElementById("archivo_zip").files[0];
   if (!archivo) {
-    alert("Seleccione un ZIP");
+    alertaWarning("Seleccione un ZIP");
     return;
   }
-  if (!confirm("Los archivos actuales serán reemplazados. ¿Continuar?")) {
+  if (
+    !(await confirmar(
+      "Los archivos actuales serán reemplazados.",
+      "¿Continuar?",
+    ))
+  ) {
     return;
   }
   let formData = new FormData();
@@ -113,36 +125,48 @@ async function restaurarArchivos() {
   });
   let data = await response.json();
   if (data.success) {
-    alert("Archivos restaurados");
-    location.reload();
+    alertaSuccess("Archivos restaurados");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1600);
   } else {
-    alert("Error al restaurar");
+    alertaError("Error al restaurar");
   }
 }
 
 async function reiniciarSistema() {
   if (!PUEDE_REINICIAR_EMPRESA) {
-    alert("No tiene permiso para reiniciar datos");
+    alertaWarning("No tiene permiso para reiniciar datos");
     return;
   }
-  if (!confirm("Se eliminarán todos los datos. ¿Desea continuar?")) {
+  if (
+    !(await confirmar("Se eliminarán todos los datos.", "¿Desea continuar?"))
+  ) {
     return;
   }
   let response = await fetch(IRL + "/api/backup/reiniciar.php");
   let data = await response.json();
   if (data.success) {
-    alert("Sistema reiniciado");
+    alertaSuccess("Sistema reiniciado");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1600);
   } else {
-    alert("Error al reiniciar");
+    alertaError("Error al reiniciar");
   }
 }
 
 async function eliminarRespaldo(id) {
   if (!PUEDE_ELIMINAR_BACKUP) {
-    alert("No tiene permiso para eliminar backup");
+    alertaWarning("No tiene permiso para eliminar backup");
     return;
   }
-  if (!confirm("¿Eliminar respaldo?")) {
+  if (
+    !(await confirmar(
+      "¿Eliminar respaldo?",
+      "Esta acción no se puede deshacer.",
+    ))
+  ) {
     return;
   }
   let formData = new FormData();
@@ -153,9 +177,9 @@ async function eliminarRespaldo(id) {
   });
   let data = await response.json();
   if (data.success) {
-    alert("Respaldo eliminado");
+    alertaSuccess("Respaldo eliminado");
     cargarRespaldos();
   } else {
-    alert("Error al respaldar");
+    alertaError("Error al respaldar");
   }
 }
