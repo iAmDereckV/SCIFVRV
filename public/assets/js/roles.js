@@ -176,7 +176,6 @@ async function editarPermisos(id) {
   let permisos = await response.json();
   let html = "";
   permisos.forEach((permiso) => {
-    console.log(permiso);
     html += `
         <div class="form-check">
             <input
