@@ -17,7 +17,9 @@ desktop.ini
 # SUBIDAS DE USUARIOS
 # ==========================
 public/uploads/*
+!public/uploads/**/.gitkeep
 database/backup/*
+!database/backup/.gitKeep
 
 # ==========================
 # Configuración personal de VS Code
