@@ -26,7 +26,6 @@ public/uploads/usuarios/*
 !public/uploads/gastos/.gitKeep
 !public/uploads/productos/.gitKeep
 !public/uploads/usuarios/.gitKeep
-!public/uploads/empresa/.gitKeep
 database/backup/*
 !database/backup/.gitKeep
 
