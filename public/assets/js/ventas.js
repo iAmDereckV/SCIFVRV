@@ -203,7 +203,6 @@ async function guardarVenta() {
     document.getElementById("producto_id").value = "";
     actualizarResumen(0, 0, 0, 0);
   } else {
-    console.log(data);
     alertaError("Error al guardar venta");
   }
 }
