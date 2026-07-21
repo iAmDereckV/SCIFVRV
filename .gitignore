@@ -16,8 +16,17 @@ desktop.ini
 # ==========================
 # SUBIDAS DE USUARIOS
 # ==========================
-public/uploads/*
-!public/uploads/**/.gitkeep
+public/uploads/empresa/*
+public/uploads/facturas/*
+public/uploads/gastos/*
+public/uploads/productos/*
+public/uploads/usuarios/*
+!public/uploads/empresa/.gitKeep
+!public/uploads/facturas/.gitKeep
+!public/uploads/gastos/.gitKeep
+!public/uploads/productos/.gitKeep
+!public/uploads/usuarios/.gitKeep
+!public/uploads/empresa/.gitKeep
 database/backup/*
 !database/backup/.gitKeep
 
